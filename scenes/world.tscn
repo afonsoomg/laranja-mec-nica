@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c5k85di8ir738"]
+
+[ext_resource type="PackedScene" uid="uid://b1w8wwinheegy" path="res://entities/player/player_top_down.tscn" id="1_nnsk1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
+
+[node name="World" type="Node2D" unique_id=1833840015]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=886994082]
+modulate = Color(0.14044744, 0.14044744, 0.14044744, 1)
+position = Vector2(583, 303)
+scale = Vector2(2728.75, 1584.25)
+mesh = SubResource("QuadMesh_e5uuo")
+metadata/_edit_lock_ = true
+
+[node name="PlayerTopDown" parent="." unique_id=624537047 instance=ExtResource("1_nnsk1")]
+position = Vector2(487, 244)
