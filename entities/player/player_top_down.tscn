@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://cbd3f6o3dp0va" path="res://assets/images/player/Swordsman_lvl3_Run_with_shadow.png" id="6_lihgh"]
 [ext_resource type="Texture2D" uid="uid://c7uyoyv1w1edo" path="res://assets/images/player/Swordsman_lvl3_Walk_Attack_with_shadow.png" id="7_8yfyh"]
 [ext_resource type="Texture2D" uid="uid://dfet2jtie4t2q" path="res://assets/images/player/Swordsman_lvl3_Walk_with_shadow.png" id="8_6sykh"]
+[ext_resource type="Script" uid="uid://clp8jguedjxhj" path="res://scripts/InputComponent.gd" id="10_a6lny"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/MoveComponent.gd" id="11_4uswk"]
+[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/AnimationComponent.gd" id="12_4uswk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("1_4wh6m")
@@ -1811,3 +1814,18 @@ frame_progress = 0.48304483
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=467225896]
 visible = false
 shape = SubResource("RectangleShape2D_2ijwq")
+
+[node name="InputComponent" type="Node" parent="." unique_id=1173939922]
+script = ExtResource("10_a6lny")
+metadata/_custom_type_script = "uid://clp8jguedjxhj"
+
+[node name="MoveComponent" type="Node" parent="." unique_id=543284275]
+script = ExtResource("11_4uswk")
+acceleration = 1000.0
+metadata/_custom_type_script = "uid://dw3oaar23io3x"
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=934659668 node_paths=PackedStringArray("animated_sprite", "move_component")]
+script = ExtResource("12_4uswk")
+animated_sprite = NodePath("../AnimatedSprite2D")
+move_component = NodePath("../MoveComponent")
+metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
