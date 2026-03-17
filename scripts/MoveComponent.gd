@@ -4,14 +4,17 @@ class_name MoveComponent
 signal direction_changed(new_direction: Vector2)
 signal started_moving
 signal stopped_moving
+signal run_state_changed(is_running: bool)
 
-@export var max_speed: float = 300
+@export var walk_speed: float = 120.0
+@export var run_speed: float = 200.0
 @export var acceleration: float = 800.0
 @export var friction: float = 1000.0
 @export var can_move: bool = true
 
 var move_input: Vector2 = Vector2.ZERO
 var facing_direction: Vector2 = Vector2.DOWN
+var is_running: bool = false
 
 @onready var body: CharacterBody2D = get_parent() as CharacterBody2D
 
@@ -36,26 +39,46 @@ func set_move_input(input_vector: Vector2) -> void:
 		direction_changed.emit(facing_direction)
 
 
+func set_running(value: bool) -> void:
+	if is_running == value:
+		return
+
+	is_running = value
+	#print("MoveComponent is_running:", is_running)
+	run_state_changed.emit(is_running)
+
+
 func update_velocity(delta: float) -> void:
 	if body == null:
 		return
 
 	if not can_move:
+		set_running(false)
 		body.velocity = body.velocity.move_toward(Vector2.ZERO, friction * delta)
+		_check_move_state()
+		return
+
+	var target_speed := get_current_speed()
+
+	if move_input != Vector2.ZERO:
+		body.velocity = body.velocity.move_toward(move_input * target_speed, acceleration * delta)
 	else:
-		if move_input != Vector2.ZERO:
-			body.velocity = body.velocity.move_toward(move_input * max_speed, acceleration * delta)
-		else:
-			body.velocity = body.velocity.move_toward(Vector2.ZERO, friction * delta)
+		body.velocity = body.velocity.move_toward(Vector2.ZERO, friction * delta)
 
 	_check_move_state()
 
 
 func stop() -> void:
 	move_input = Vector2.ZERO
+
 	if body != null:
 		body.velocity = Vector2.ZERO
+
 	_check_move_state()
+
+
+func get_current_speed() -> float:
+	return run_speed if is_running else walk_speed
 
 
 func is_moving() -> bool:

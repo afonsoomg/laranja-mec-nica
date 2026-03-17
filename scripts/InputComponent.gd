@@ -1,8 +1,24 @@
 extends Node
 class_name InputComponent
 
+@export var move_left_action: StringName = &"game_left"
+@export var move_right_action: StringName = &"game_right"
+@export var move_up_action: StringName = &"game_up"
+@export var move_down_action: StringName = &"game_down"
+@export var run_action: StringName = &"game_run"
+@export var attack_action: StringName = &"game_attack"
+
+
 func get_input_vector() -> Vector2:
 	return Vector2(
-		Input.get_action_strength("game_right") - Input.get_action_strength("game_left"),
-		Input.get_action_strength("game_down") - Input.get_action_strength("game_up")
+		Input.get_action_strength(move_right_action) - Input.get_action_strength(move_left_action),
+		Input.get_action_strength(move_down_action) - Input.get_action_strength(move_up_action)
 	).normalized()
+
+
+func is_run_pressed() -> bool:
+	return Input.is_action_pressed(run_action)
+
+
+func is_attack_just_pressed() -> bool:
+	return Input.is_action_just_pressed(attack_action)

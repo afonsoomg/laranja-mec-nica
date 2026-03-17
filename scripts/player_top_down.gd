@@ -5,25 +5,17 @@ extends CharacterBody2D
 @onready var animation_component: AnimationComponent = $AnimationComponent
 
 func _physics_process(delta: float) -> void:
-	move_component.set_move_input(input_component.get_input_vector())
+	var move_vector := input_component.get_input_vector()
+	var run_pressed := input_component.is_run_pressed()
+
+	#print("run_pressed:", run_pressed)
+
+	move_component.set_move_input(move_vector)
+	move_component.set_running(run_pressed)
 	move_component.update_velocity(delta)
 	move_and_slide()
+
+	if input_component.is_attack_just_pressed():
+		animation_component.play_attack()
+
 	animation_component.update_animation()
-
-
-#func process_animation() -> void:
-#	if velocity != Vector2.ZERO:
-#		play_animation("run", last_direction)
-#	else:
-#		play_animation("idle", last_direction)
-
-
-#func play_animation(prefix: String, dir:Vector2) -> void:
-#	if dir.x > 0:
-#		animated_sprite_2d.play(prefix + "_right")
-#	elif dir.x < 0:
-#		animated_sprite_2d.play(prefix + "_left")
-#	elif dir.y < 0:
-#		animated_sprite_2d.play(prefix + "_up")
-#	elif dir.y > 0:
-#		animated_sprite_2d.play(prefix + "_down")
