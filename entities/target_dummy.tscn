@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://biq102xfiseag" path="res://scripts/Characters/target_dummy.gd" id="1_3q1ve"]
 [ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_u7hxf"]
 [ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_mujiu"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="4_mujiu"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3q1ve"]
 
@@ -27,12 +28,16 @@ shape = SubResource("CircleShape2D_3q1ve")
 script = ExtResource("2_u7hxf")
 metadata/_custom_type_script = "uid://3lvrru5unix3"
 
-[node name="HurtboxComponent" type="Area2D" parent="." unique_id=949887463 node_paths=PackedStringArray("health_component")]
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=949887463]
 collision_layer = 128
 collision_mask = 8
 script = ExtResource("3_mujiu")
-health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://cfiv457cdpndg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1515128941]
 shape = SubResource("RectangleShape2D_u7hxf")
+
+[node name="StatsComponent" type="Node" parent="." unique_id=574651616]
+script = ExtResource("4_mujiu")
+max_health = 30
+metadata/_custom_type_script = "uid://ceu58uush3mjr"

@@ -6,13 +6,20 @@ signal damaged(amount: int)
 signal healed(amount: int)
 signal died
 
-@export var max_health: int = 30
+@onready var stats_component: StatsComponent = $"../StatsComponent"
 
 var current_health: int = 0
+var max_health: int = 0
 var is_dead: bool = false
 
 
 func _ready() -> void:
+	if stats_component == null:
+		push_error("HealthComponent precisa de um StatsComponent.")	
+		return
+		
+	max_health = stats_component.max_health
+	
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
 
@@ -27,7 +34,7 @@ func take_damage(amount: int) -> void:
 	current_health = max(current_health - amount, 0)
 
 	damaged.emit(amount)
-	health_changed.emit(current_health, max_health)
+	health_changed.emit(current_health, stats_component.max_health)
 
 	if current_health <= 0:
 		is_dead = true

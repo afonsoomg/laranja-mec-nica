@@ -4,8 +4,9 @@ class_name HurtboxComponent
 signal hit_received(damage: int)
 signal killed
 
-@export var health_component: HealthComponent
-@export var animation_component: AnimationComponent
+@onready var health_component: HealthComponent = $"../HealthComponent"
+@onready var animation_component: AnimationComponent = get_node_or_null("../AnimationComponent") as AnimationComponent
+
 @export var can_receive_hits: bool = true
 
 

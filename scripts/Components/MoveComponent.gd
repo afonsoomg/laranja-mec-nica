@@ -6,17 +6,15 @@ signal started_moving
 signal stopped_moving
 signal run_state_changed(is_running: bool)
 
-@export var walk_speed: float = 120.0
-@export var run_speed: float = 200.0
-@export var acceleration: float = 800.0
-@export var friction: float = 1000.0
+@onready var stats_component: StatsComponent = $"../StatsComponent"
+@onready var body: CharacterBody2D = get_parent() as CharacterBody2D
+
 @export var can_move: bool = true
 
 var move_input: Vector2 = Vector2.ZERO
 var facing_direction: Vector2 = Vector2.DOWN
 var is_running: bool = false
 
-@onready var body: CharacterBody2D = get_parent() as CharacterBody2D
 
 var _was_moving: bool = false
 
@@ -24,6 +22,11 @@ var _was_moving: bool = false
 func _ready() -> void:
 	if body == null:
 		push_error("MoveComponent precisa ser filho de um CharacterBody2D.")
+		return
+		
+	if stats_component == null:
+		push_error("MoveComponent precisa de um StatsComponent.")	
+		return
 
 
 func set_move_input(input_vector: Vector2) -> void:
@@ -49,21 +52,27 @@ func set_running(value: bool) -> void:
 
 
 func update_velocity(delta: float) -> void:
-	if body == null:
+	if body == null or stats_component == null:
 		return
 
 	if not can_move:
 		set_running(false)
-		body.velocity = body.velocity.move_toward(Vector2.ZERO, friction * delta)
+		body.velocity = body.velocity.move_toward(Vector2.ZERO, stats_component.friction * delta)
 		_check_move_state()
 		return
 
 	var target_speed := get_current_speed()
 
 	if move_input != Vector2.ZERO:
-		body.velocity = body.velocity.move_toward(move_input * target_speed, acceleration * delta)
+		body.velocity = body.velocity.move_toward(
+			move_input * target_speed,
+			stats_component.acceleration * delta
+		)
 	else:
-		body.velocity = body.velocity.move_toward(Vector2.ZERO, friction * delta)
+		body.velocity = body.velocity.move_toward(
+			Vector2.ZERO,
+			stats_component.friction * delta
+		)
 
 	_check_move_state()
 
@@ -78,7 +87,10 @@ func stop() -> void:
 
 
 func get_current_speed() -> float:
-	return run_speed if is_running else walk_speed
+	if stats_component == null:
+		return 0.0
+
+	return stats_component.run_speed if is_running else stats_component.walk_speed
 
 
 func is_moving() -> bool:

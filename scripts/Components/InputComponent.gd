@@ -1,6 +1,7 @@
 extends Node
 class_name InputComponent
 
+@export_group("Input Configuration")
 @export var move_left_action: StringName = &"game_left"
 @export var move_right_action: StringName = &"game_right"
 @export var move_up_action: StringName = &"game_up"

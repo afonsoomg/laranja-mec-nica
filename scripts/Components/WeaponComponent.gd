@@ -5,14 +5,15 @@ signal attack_started
 signal attack_finished
 signal target_hit(target: Node, damage: int)
 
-@export var damage: int = 10
-@export var attack_cooldown: float = 0.35
-@export var hitbox_duration: float = 0.12
+@onready var stats_component: StatsComponent = $"../StatsComponent"
+@onready var move_component: MoveComponent = $"../MoveComponent"
+@onready var animation_component: AnimationComponent = $"../AnimationComponent"
+
+@export_group("References")
 @export var attack_hitbox: Area2D
 @export var attack_collision_shape: CollisionShape2D
-@export var move_component: MoveComponent
-@export var animation_component: AnimationComponent
 
+@export_group("HitBox Configuration")
 @export var horizontal_hitbox_size: Vector2 = Vector2(18, 10)
 @export var vertical_hitbox_size: Vector2 = Vector2(10, 18)
 @export var horizontal_hitbox_offset: Vector2 = Vector2(16, 0)
@@ -34,10 +35,16 @@ func _ready() -> void:
 
 	if move_component == null:
 		push_error("WeaponComponent precisa de um MoveComponent.")
-
+		return
+		
 	if animation_component == null:
 		push_error("WeaponComponent precisa de um AnimationComponent.")
-
+		return
+		
+	if stats_component == null:
+		push_error("WeaponComponent precisa de um StatsComponent.")	
+		return
+		
 	attack_hitbox.monitoring = false
 	attack_hitbox.body_entered.connect(_on_hitbox_body_entered)
 	attack_hitbox.area_entered.connect(_on_hitbox_area_entered)
@@ -74,13 +81,13 @@ func _can_start_attack() -> bool:
 func _start_attack_sequence() -> void:
 	_enable_hitbox()
 
-	await get_tree().create_timer(hitbox_duration).timeout
+	await get_tree().create_timer(stats_component.hitbox_duration).timeout
 	_disable_hitbox()
 
 	is_attacking = false
 	attack_finished.emit()
 
-	await get_tree().create_timer(max(attack_cooldown - hitbox_duration, 0.0)).timeout
+	await get_tree().create_timer(max(stats_component.attack_cooldown - stats_component.hitbox_duration, 0.0)).timeout
 	can_attack = true
 
 
@@ -134,8 +141,8 @@ func _try_hit_target(target: Node) -> void:
 		return
 
 	_hit_targets.append(hurtbox)
-	hurtbox.receive_hit(damage)
-	target_hit.emit(hurtbox, damage)
+	hurtbox.receive_hit(stats_component.attack_damage)
+	target_hit.emit(hurtbox, stats_component.attack_damage)
 
 
 func _extract_hurtbox(target: Node) -> HurtboxComponent:

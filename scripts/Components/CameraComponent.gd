@@ -2,9 +2,10 @@ class_name CameraComponent
 extends Camera2D
 
 @export var target: Node2D
-@export var move_component: MoveComponent
-@export var weapon_component: WeaponComponent
-@export var hurtbox_component: HurtboxComponent
+@onready var move_component: MoveComponent = $"../MoveComponent"
+
+@onready var weapon_component: WeaponComponent = get_node_or_null("../WeaponComponent") as WeaponComponent
+@onready var hurtbox_component: HurtboxComponent = get_node_or_null("../HurtboxComponent") as HurtboxComponent
 
 @export_group("Follow")
 @export var follow_enabled: bool = true
@@ -43,6 +44,7 @@ func _ready() -> void:
 
 	if move_component == null:
 		push_error("CameraComponent precisa de um MoveComponent.")
+		return
 
 	base_offset = offset
 	target_zoom_value = run_zoom if move_component != null and move_component.is_running else normal_zoom

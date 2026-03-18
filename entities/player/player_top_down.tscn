@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://b8l3dxdd13qia" path="res://scripts/Components/CameraComponent.gd" id="14_8xqvn"]
 [ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="15_igjlh"]
 [ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="16_h6ced"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="17_igjlh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("1_4wh6m")
@@ -1824,34 +1825,37 @@ animation = &"walk_attack_up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=467225896]
 shape = SubResource("RectangleShape2D_2ijwq")
 
+[node name="StatsComponent" type="Node" parent="." unique_id=1070747165]
+script = ExtResource("17_igjlh")
+run_speed = 300.0
+metadata/_custom_type_script = "uid://ceu58uush3mjr"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1233331656]
+script = ExtResource("16_h6ced")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
+
 [node name="InputComponent" type="Node" parent="." unique_id=1173939922]
 script = ExtResource("10_a6lny")
 metadata/_custom_type_script = "uid://clp8jguedjxhj"
 
 [node name="MoveComponent" type="Node" parent="." unique_id=543284275]
 script = ExtResource("11_4uswk")
-walk_speed = 150.0
-run_speed = 350.0
-acceleration = 1000.0
 metadata/_custom_type_script = "uid://dw3oaar23io3x"
 
-[node name="AnimationComponent" type="Node" parent="." unique_id=934659668 node_paths=PackedStringArray("animated_sprite", "move_component")]
-script = ExtResource("12_4uswk")
-animated_sprite = NodePath("../AnimatedSprite2D")
-move_component = NodePath("../MoveComponent")
-metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
-
-[node name="WeaponComponent" type="Node" parent="." unique_id=1402917219 node_paths=PackedStringArray("attack_hitbox", "attack_collision_shape", "move_component", "animation_component")]
+[node name="WeaponComponent" type="Node" parent="." unique_id=1402917219 node_paths=PackedStringArray("attack_hitbox", "attack_collision_shape")]
 script = ExtResource("13_lihgh")
 attack_hitbox = NodePath("../AttackHitbox")
 attack_collision_shape = NodePath("../AttackHitbox/WeaponCollisionShape")
-move_component = NodePath("../MoveComponent")
-animation_component = NodePath("../AnimationComponent")
 horizontal_hitbox_size = Vector2(16, 28)
 vertical_hitbox_size = Vector2(28, 15)
 horizontal_hitbox_offset = Vector2(18, 0)
 vertical_hitbox_offset = Vector2(0, 15)
 metadata/_custom_type_script = "uid://bhv2g1swjwce4"
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=934659668 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("12_4uswk")
+animated_sprite = NodePath("../AnimatedSprite2D")
+metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=2144410339]
 collision_layer = 8
@@ -1862,29 +1866,21 @@ monitoring = false
 shape = SubResource("RectangleShape2D_lihgh")
 debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
 
-[node name="CameraComponent" type="Camera2D" parent="." unique_id=1359383206 node_paths=PackedStringArray("target", "move_component", "weapon_component", "hurtbox_component")]
+[node name="CameraComponent" type="Camera2D" parent="." unique_id=1359383206 node_paths=PackedStringArray("target")]
 script = ExtResource("14_8xqvn")
 target = NodePath("..")
-move_component = NodePath("../MoveComponent")
-weapon_component = NodePath("../WeaponComponent")
-hurtbox_component = NodePath("../HurtboxComponent")
 look_ahead_distance = 100.0
 look_ahead_smoothing = 1.0
 shake_on_hit_target = 2.0
+normal_zoom = Vector2(1.2, 1.2)
 run_zoom = Vector2(0.92, 0.92)
 metadata/_custom_type_script = "uid://b8l3dxdd13qia"
 
-[node name="HurtboxComponent" type="Area2D" parent="." unique_id=938597308 node_paths=PackedStringArray("health_component", "animation_component")]
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=938597308]
 script = ExtResource("15_igjlh")
-health_component = NodePath("../HealthComponent")
-animation_component = NodePath("../AnimationComponent")
 metadata/_custom_type_script = "uid://cfiv457cdpndg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=670963345]
 position = Vector2(-0.5, 0.375)
 shape = SubResource("RectangleShape2D_y51ln")
 debug_color = Color(4.1151793e-06, 0.6478718, 0.20750788, 0.41960785)
-
-[node name="HealthComponent" type="Node" parent="." unique_id=1233331656]
-script = ExtResource("16_h6ced")
-metadata/_custom_type_script = "uid://3lvrru5unix3"

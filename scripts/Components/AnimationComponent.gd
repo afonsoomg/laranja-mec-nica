@@ -3,8 +3,10 @@ class_name AnimationComponent
 
 signal animation_finished(animation_name: String)
 
+@onready var move_component: MoveComponent = $"../MoveComponent"
+
 @export var animated_sprite: AnimatedSprite2D
-@export var move_component: MoveComponent
+
 
 var current_facing: String = "down"
 var action_facing: String = "down"
@@ -18,10 +20,12 @@ var is_dying: bool = false
 func _ready() -> void:
 	if animated_sprite == null:
 		push_error("AnimationComponent precisa de um AnimatedSprite2D atribuído.")
-
+		return
+		
 	if move_component == null:
 		push_error("AnimationComponent precisa de um MoveComponent atribuído.")
-
+		return
+		
 	if animated_sprite != null:
 		animated_sprite.animation_finished.connect(_on_animation_finished)
 
