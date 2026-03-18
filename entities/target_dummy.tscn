@@ -1,15 +1,19 @@
 [gd_scene format=3 uid="uid://gc3ywhsieoof"]
 
 [ext_resource type="Script" uid="uid://biq102xfiseag" path="res://scripts/Characters/target_dummy.gd" id="1_3q1ve"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_u7hxf"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_mujiu"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3q1ve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3q1ve"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7hxf"]
+size = Vector2(17, 15)
+
 [node name="TargetDummy" type="CharacterBody2D" unique_id=1744661547]
 scale = Vector2(4, 4)
 collision_layer = 2
-collision_mask = 0
 script = ExtResource("1_3q1ve")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=685317418]
@@ -18,3 +22,17 @@ texture = SubResource("PlaceholderTexture2D_3q1ve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1091496372]
 shape = SubResource("CircleShape2D_3q1ve")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=406446186]
+script = ExtResource("2_u7hxf")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=949887463 node_paths=PackedStringArray("health_component")]
+collision_layer = 128
+collision_mask = 8
+script = ExtResource("3_mujiu")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://cfiv457cdpndg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1515128941]
+shape = SubResource("RectangleShape2D_u7hxf")

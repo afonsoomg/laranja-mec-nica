@@ -9,19 +9,28 @@ signal target_hit(target: Node, damage: int)
 @export var attack_cooldown: float = 0.35
 @export var hitbox_duration: float = 0.12
 @export var attack_hitbox: Area2D
+@export var attack_collision_shape: CollisionShape2D
 @export var move_component: MoveComponent
 @export var animation_component: AnimationComponent
-@export var debug_node: Node2D
+
+@export var horizontal_hitbox_size: Vector2 = Vector2(18, 10)
+@export var vertical_hitbox_size: Vector2 = Vector2(10, 18)
+@export var horizontal_hitbox_offset: Vector2 = Vector2(16, 0)
+@export var vertical_hitbox_offset: Vector2 = Vector2(0, 16)
 
 var can_attack: bool = true
 var is_attacking: bool = false
-
-var _hit_targets: Array[Node] = []
+var _hit_targets: Array[HurtboxComponent] = []
 
 
 func _ready() -> void:
 	if attack_hitbox == null:
 		push_error("WeaponComponent precisa de um AttackHitbox (Area2D).")
+		return
+
+	if attack_collision_shape == null:
+		push_error("WeaponComponent precisa de um CollisionShape2D da hitbox.")
+		return
 
 	if move_component == null:
 		push_error("WeaponComponent precisa de um MoveComponent.")
@@ -29,14 +38,9 @@ func _ready() -> void:
 	if animation_component == null:
 		push_error("WeaponComponent precisa de um AnimationComponent.")
 
-	if attack_hitbox != null:
-		attack_hitbox.monitoring = false
-		attack_hitbox.body_entered.connect(_on_hitbox_body_entered)
-		attack_hitbox.area_entered.connect(_on_hitbox_area_entered)
-		
-		var hitbox_shape := attack_hitbox.get_node("WeaponCollisionShape") as CollisionShape2D
-		if hitbox_shape != null:
-			hitbox_shape.debug_color = Color(1, 0, 0, 0.6)
+	attack_hitbox.monitoring = false
+	attack_hitbox.body_entered.connect(_on_hitbox_body_entered)
+	attack_hitbox.area_entered.connect(_on_hitbox_area_entered)
 
 
 func try_attack() -> void:
@@ -48,10 +52,7 @@ func try_attack() -> void:
 	_hit_targets.clear()
 
 	_update_hitbox_direction()
-
-	if animation_component != null:
-		animation_component.play_attack()
-
+	animation_component.play_attack()
 	attack_started.emit()
 
 	_start_attack_sequence()
@@ -86,12 +87,8 @@ func _start_attack_sequence() -> void:
 func _enable_hitbox() -> void:
 	if attack_hitbox == null:
 		return
-		
-	attack_hitbox.monitoring = true
-	
-	if debug_node != null:
-		debug_node.visible = true
 
+	attack_hitbox.monitoring = true
 
 	for body in attack_hitbox.get_overlapping_bodies():
 		_try_hit_target(body)
@@ -105,9 +102,6 @@ func _disable_hitbox() -> void:
 		return
 
 	attack_hitbox.monitoring = false
-	
-	if debug_node != null:
-		debug_node.visible = false
 
 
 func _on_hitbox_body_entered(body: Node) -> void:
@@ -131,29 +125,52 @@ func _try_hit_target(target: Node) -> void:
 	if target == get_parent():
 		return
 
-	if _hit_targets.has(target):
+	var hurtbox := _extract_hurtbox(target)
+
+	if hurtbox == null:
 		return
 
-	_hit_targets.append(target)
+	if _hit_targets.has(hurtbox):
+		return
 
-	if target.has_method("take_damage"):
-		target.take_damage(damage)
-		target_hit.emit(target, damage)
+	_hit_targets.append(hurtbox)
+	hurtbox.receive_hit(damage)
+	target_hit.emit(hurtbox, damage)
+
+
+func _extract_hurtbox(target: Node) -> HurtboxComponent:
+	if target is HurtboxComponent:
+		return target as HurtboxComponent
+
+	for child in target.get_children():
+		if child is HurtboxComponent:
+			return child as HurtboxComponent
+
+	return null
 
 
 func _update_hitbox_direction() -> void:
-	if attack_hitbox == null or move_component == null:
+	if attack_hitbox == null or attack_collision_shape == null or move_component == null:
+		return
+
+	var rect_shape := attack_collision_shape.shape as RectangleShape2D
+	if rect_shape == null:
+		push_warning("A hitbox melee precisa usar RectangleShape2D.")
 		return
 
 	var dir := move_component.facing_direction
 
 	if abs(dir.x) > abs(dir.y):
+		rect_shape.size = horizontal_hitbox_size
+
 		if dir.x > 0.0:
-			attack_hitbox.position = Vector2(16, 0)
+			attack_hitbox.position = horizontal_hitbox_offset
 		else:
-			attack_hitbox.position = Vector2(-16, 0)
+			attack_hitbox.position = Vector2(-horizontal_hitbox_offset.x, horizontal_hitbox_offset.y)
 	else:
+		rect_shape.size = vertical_hitbox_size
+
 		if dir.y > 0.0:
-			attack_hitbox.position = Vector2(0, 16)
+			attack_hitbox.position = vertical_hitbox_offset
 		else:
-			attack_hitbox.position = Vector2(0, -16)
+			attack_hitbox.position = Vector2(vertical_hitbox_offset.x, -vertical_hitbox_offset.y)

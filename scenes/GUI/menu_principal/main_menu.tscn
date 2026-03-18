@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://cgqmjsrhsdiuk"]
+
+[ext_resource type="Texture2D" uid="uid://dvd77yisqs2dv" path="res://assets/images/main_menu/fundo-texturizado-abstrato_1258-30447.webp" id="1_ojskl"]
+[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="2_qta86"]
+[ext_resource type="Script" uid="uid://b663nupl24aox" path="res://scenes/GUI/menu_principal/main_menu.gd" id="2_xygj3"]
+[ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/menu_principal/buttonCustom.tscn" id="3_qta86"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wt1o"]
+line_spacing = 0.0
+font = ExtResource("2_qta86")
+font_size = 90
+shadow_size = 15
+shadow_color = Color(0.9254902, 0.03137255, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wt1o"]
+bg_color = Color(1, 0.98039216, 0.98039216, 0.6862745)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 9.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qta86"]
+bg_color = Color(1, 0.47843137, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.38431373, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdru7"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xygj3"]
+bg_color = Color(1, 0.654902, 0.2, 1)
+border_color = Color(0.8, 0.38431373, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="MarginContainer" type="TextureRect" unique_id=1539942307]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ojskl")
+expand_mode = 2
+script = ExtResource("2_xygj3")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1328761339]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 45
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1867352036]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_qta86")
+theme_override_font_sizes/font_size = 23
+text = "Laranja Mecânica"
+label_settings = SubResource("LabelSettings_8wt1o")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=328758922]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+size_flags_stretch_ratio = 2.63
+theme_override_styles/panel = SubResource("StyleBoxFlat_8wt1o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=43710775]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+size_flags_stretch_ratio = 5.0
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="jogar" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=213952553]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_qta86")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_qta86")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kdru7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xygj3")
+text = "Jogar"
+
+[node name="opcoes" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1011107431 instance=ExtResource("3_qta86")]
+layout_mode = 2
+text = "Opcões"
+
+[node name="sobre" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1577900676 instance=ExtResource("3_qta86")]
+layout_mode = 2
+text = "Sobre Nós
+"
+
+[node name="sair" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1423483707 instance=ExtResource("3_qta86")]
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/jogar" to="." method="_on_jogar_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/sair" to="." method="_on_sair_pressed"]

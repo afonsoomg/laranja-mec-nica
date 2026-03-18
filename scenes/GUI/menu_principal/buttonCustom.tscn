@@ -1,11 +1,47 @@
 [gd_scene format=3 uid="uid://bey48chabo4yp"]
 
-[ext_resource type="FontFile" uid="uid://eynioxr5w3n4" path="res://scenes/GUI/menu_principal/KiwiSoda.ttf" id="1_ckl7a"]
+[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="1_ckl7a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckl7a"]
+bg_color = Color(0.22745098, 0.22745098, 0.22745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulc3p"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y073j"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="Button" type="Button" unique_id=1577900676]
-offset_right = 132.0
-offset_bottom = 48.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.5
+offset_top = -27.5
+offset_right = 96.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_color = Color(1, 0.47843137, 0, 1)
 theme_override_fonts/font = ExtResource("1_ckl7a")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_ckl7a")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ulc3p")
+theme_override_styles/hover = SubResource("StyleBoxFlat_y073j")
 text = "Jogar"
-flat = true
