@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="11_4uswk"]
 [ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/Components/AnimationComponent.gd" id="12_4uswk"]
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/Components/WeaponComponent.gd" id="13_lihgh"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="14_8yfyh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("1_4wh6m")
@@ -1850,3 +1851,7 @@ monitoring = false
 [node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1775165813]
 shape = SubResource("RectangleShape2D_lihgh")
 debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1516487181]
+script = ExtResource("14_8yfyh")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
