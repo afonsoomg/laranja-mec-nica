@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c5k85di8ir738"]
 
 [ext_resource type="PackedScene" uid="uid://b1w8wwinheegy" path="res://entities/player/player_top_down.tscn" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://gc3ywhsieoof" path="res://entities/target_dummy.tscn" id="2_rwgxs"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
 
@@ -14,4 +15,20 @@ mesh = SubResource("QuadMesh_e5uuo")
 metadata/_edit_lock_ = true
 
 [node name="PlayerTopDown" parent="." unique_id=624537047 instance=ExtResource("1_nnsk1")]
-position = Vector2(487, 244)
+position = Vector2(508, 269)
+
+[node name="TargetDummy" parent="." unique_id=1744661547 instance=ExtResource("2_rwgxs")]
+position = Vector2(250, 282)
+collision_mask = 2
+
+[node name="TargetDummy2" parent="." unique_id=1625758668 instance=ExtResource("2_rwgxs")]
+position = Vector2(491, 467)
+collision_mask = 2
+
+[node name="TargetDummy3" parent="." unique_id=1030677645 instance=ExtResource("2_rwgxs")]
+position = Vector2(757, 276)
+collision_mask = 2
+
+[node name="TargetDummy4" parent="." unique_id=1159320106 instance=ExtResource("2_rwgxs")]
+position = Vector2(483, 97)
+collision_mask = 2

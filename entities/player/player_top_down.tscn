@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b1w8wwinheegy"]
 
-[ext_resource type="Script" uid="uid://gm3din8ybagl" path="res://scripts/player_top_down.gd" id="1_0s1ch"]
+[ext_resource type="Script" uid="uid://gm3din8ybagl" path="res://scripts/Characters/player_top_down.gd" id="1_0s1ch"]
 [ext_resource type="Texture2D" uid="uid://c0fvdt5rf726w" path="res://assets/images/player/Swordsman_lvl3_attack_with_shadow.png" id="1_4wh6m"]
 [ext_resource type="Texture2D" uid="uid://0y0vta4060g" path="res://assets/images/player/Swordsman_lvl3_Death_with_shadow.png" id="2_0s1ch"]
 [ext_resource type="Texture2D" uid="uid://bwew2o775vihs" path="res://assets/images/player/Swordsman_lvl3_Hurt_with_shadow.png" id="3_02ujj"]
@@ -9,9 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://cbd3f6o3dp0va" path="res://assets/images/player/Swordsman_lvl3_Run_with_shadow.png" id="6_lihgh"]
 [ext_resource type="Texture2D" uid="uid://c7uyoyv1w1edo" path="res://assets/images/player/Swordsman_lvl3_Walk_Attack_with_shadow.png" id="7_8yfyh"]
 [ext_resource type="Texture2D" uid="uid://dfet2jtie4t2q" path="res://assets/images/player/Swordsman_lvl3_Walk_with_shadow.png" id="8_6sykh"]
-[ext_resource type="Script" uid="uid://clp8jguedjxhj" path="res://scripts/InputComponent.gd" id="10_a6lny"]
-[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/MoveComponent.gd" id="11_4uswk"]
-[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/AnimationComponent.gd" id="12_4uswk"]
+[ext_resource type="Script" uid="uid://clp8jguedjxhj" path="res://scripts/Components/InputComponent.gd" id="10_a6lny"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="11_4uswk"]
+[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/Components/AnimationComponent.gd" id="12_4uswk"]
+[ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/Components/WeaponComponent.gd" id="13_lihgh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("1_4wh6m")
@@ -970,7 +971,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_down",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -999,7 +1000,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_left",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1028,7 +1029,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_right",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1057,7 +1058,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_up",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1410,7 +1411,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"run_attack_down",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1439,7 +1440,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"run_attack_left",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1468,7 +1469,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"run_attack_right",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1497,7 +1498,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"run_attack_up",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1636,7 +1637,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"walk_attack_down",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1659,7 +1660,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"walk_attack_left",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1682,7 +1683,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"walk_attack_right",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1705,7 +1706,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"walk_attack_up",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1802,17 +1803,18 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ijwq"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lihgh"]
+
 [node name="PlayerTopDown" type="CharacterBody2D" unique_id=624537047]
 scale = Vector2(4, 4)
+collision_mask = 3
 script = ExtResource("1_0s1ch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=36272804]
 sprite_frames = SubResource("SpriteFrames_6aaks")
-animation = &"walk_left"
-frame_progress = 0.26418608
+animation = &"walk_attack_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=467225896]
-visible = false
 shape = SubResource("RectangleShape2D_2ijwq")
 
 [node name="InputComponent" type="Node" parent="." unique_id=1173939922]
@@ -1831,3 +1833,20 @@ script = ExtResource("12_4uswk")
 animated_sprite = NodePath("../AnimatedSprite2D")
 move_component = NodePath("../MoveComponent")
 metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
+
+[node name="WeaponComponent" type="Node" parent="." unique_id=1402917219 node_paths=PackedStringArray("attack_hitbox", "move_component", "animation_component", "debug_node")]
+script = ExtResource("13_lihgh")
+attack_hitbox = NodePath("../AttackHitbox")
+move_component = NodePath("../MoveComponent")
+animation_component = NodePath("../AnimationComponent")
+debug_node = NodePath("../AttackHitbox/WeaponCollisionShape")
+metadata/_custom_type_script = "uid://bhv2g1swjwce4"
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=2144410339]
+collision_layer = 8
+collision_mask = 2
+monitoring = false
+
+[node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1775165813]
+shape = SubResource("RectangleShape2D_lihgh")
+debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
