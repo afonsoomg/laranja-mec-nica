@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="15_igjlh"]
 [ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="16_h6ced"]
 [ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="17_igjlh"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/Components/KnockbackComponent.gd" id="18_h6ced"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("1_4wh6m")
@@ -1806,28 +1807,32 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ijwq"]
+size = Vector2(15.75, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lihgh"]
 size = Vector2(12, 13.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y51ln"]
-size = Vector2(14.5, 22.25)
+size = Vector2(18, 24.75)
 
 [node name="PlayerTopDown" type="CharacterBody2D" unique_id=624537047]
 scale = Vector2(4, 4)
-collision_mask = 3
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_0s1ch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=36272804]
 sprite_frames = SubResource("SpriteFrames_6aaks")
-animation = &"walk_attack_up"
+animation = &"dying_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=467225896]
+position = Vector2(-0.625, 0)
 shape = SubResource("RectangleShape2D_2ijwq")
 
 [node name="StatsComponent" type="Node" parent="." unique_id=1070747165]
 script = ExtResource("17_igjlh")
 run_speed = 300.0
+max_health = 50
 metadata/_custom_type_script = "uid://ceu58uush3mjr"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233331656]
@@ -1858,8 +1863,8 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=2144410339]
-collision_layer = 8
-collision_mask = 128
+collision_layer = 16
+collision_mask = 8
 monitoring = false
 
 [node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1775165813]
@@ -1877,10 +1882,17 @@ run_zoom = Vector2(0.92, 0.92)
 metadata/_custom_type_script = "uid://b8l3dxdd13qia"
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=938597308]
+collision_layer = 8
+collision_mask = 48
 script = ExtResource("15_igjlh")
 metadata/_custom_type_script = "uid://cfiv457cdpndg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=670963345]
-position = Vector2(-0.5, 0.375)
+position = Vector2(-0.5, 0.125)
 shape = SubResource("RectangleShape2D_y51ln")
 debug_color = Color(4.1151793e-06, 0.6478718, 0.20750788, 0.41960785)
+
+[node name="KnockbackComponent" type="Node" parent="." unique_id=1961631336]
+script = ExtResource("18_h6ced")
+decay = 2000.0
+metadata/_custom_type_script = "uid://c6y6n5pfau54y"

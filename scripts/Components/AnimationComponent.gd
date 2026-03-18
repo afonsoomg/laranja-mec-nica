@@ -11,6 +11,7 @@ signal animation_finished(animation_name: String)
 var current_facing: String = "down"
 var action_facing: String = "down"
 var locked_action_animation: String = ""
+var dying_animation_finished: bool = false
 
 var is_attacking: bool = false
 var is_hurt: bool = false
@@ -38,7 +39,8 @@ func update_animation() -> void:
 		_update_facing()
 
 	if is_dying:
-		_play_if_needed(locked_action_animation)
+		if not dying_animation_finished:
+			_play_if_needed(locked_action_animation)
 		return
 
 	if is_hurt:
@@ -80,6 +82,9 @@ func play_hurt() -> void:
 
 
 func play_dying() -> void:
+	if is_dying:
+		return
+		
 	_update_facing()
 	action_facing = current_facing
 	locked_action_animation = "dying_" + action_facing
@@ -87,6 +92,7 @@ func play_dying() -> void:
 	is_dying = true
 	is_hurt = false
 	is_attacking = false
+	dying_animation_finished = false
 
 
 func _update_facing() -> void:
@@ -151,6 +157,6 @@ func _on_animation_finished() -> void:
 		locked_action_animation = ""
 
 	elif finished_animation.begins_with("dying_"):
-		pass
+		dying_animation_finished = true
 
 	animation_finished.emit(finished_animation)

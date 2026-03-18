@@ -129,20 +129,28 @@ func _try_hit_target(target: Node) -> void:
 	if target == null:
 		return
 
-	if target == get_parent():
-		return
-
 	var hurtbox := _extract_hurtbox(target)
 
 	if hurtbox == null:
+		return
+
+	var weapon_owner := get_parent()
+	var hurtbox_owner := hurtbox.get_parent()
+
+	if hurtbox_owner == weapon_owner:
 		return
 
 	if _hit_targets.has(hurtbox):
 		return
 
 	_hit_targets.append(hurtbox)
-	hurtbox.receive_hit(stats_component.attack_damage)
-	target_hit.emit(hurtbox, stats_component.attack_damage)
+
+	var damage := stats_component.attack_damage
+	var hit_direction := move_component.facing_direction
+	var knockback_force := stats_component.knockback_force
+
+	hurtbox.receive_hit(damage, hit_direction, knockback_force)
+	target_hit.emit(hurtbox, damage)
 
 
 func _extract_hurtbox(target: Node) -> HurtboxComponent:

@@ -4,17 +4,21 @@
 [ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_u7hxf"]
 [ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_mujiu"]
 [ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="4_mujiu"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="5_s6l4g"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/Components/KnockbackComponent.gd" id="6_cc12g"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3q1ve"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3q1ve"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cc12g"]
+size = Vector2(17, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7hxf"]
-size = Vector2(17, 15)
+size = Vector2(17.5, 15)
 
 [node name="TargetDummy" type="CharacterBody2D" unique_id=1744661547]
 scale = Vector2(4, 4)
-collision_layer = 2
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_3q1ve")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=685317418]
@@ -22,22 +26,36 @@ scale = Vector2(17, 15.000001)
 texture = SubResource("PlaceholderTexture2D_3q1ve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1091496372]
-shape = SubResource("CircleShape2D_3q1ve")
+shape = SubResource("RectangleShape2D_cc12g")
+
+[node name="StatsComponent" type="Node" parent="." unique_id=574651616]
+script = ExtResource("4_mujiu")
+walk_speed = 0.0
+run_speed = 0.0
+acceleration = 0.0
+max_health = 30
+knockback_force = 10.0
+metadata/_custom_type_script = "uid://ceu58uush3mjr"
+
+[node name="MoveComponent" type="Node" parent="." unique_id=140979410]
+script = ExtResource("5_s6l4g")
+can_move = false
+metadata/_custom_type_script = "uid://dw3oaar23io3x"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=406446186]
 script = ExtResource("2_u7hxf")
 metadata/_custom_type_script = "uid://3lvrru5unix3"
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=949887463]
-collision_layer = 128
-collision_mask = 8
+collision_layer = 8
+collision_mask = 48
 script = ExtResource("3_mujiu")
 metadata/_custom_type_script = "uid://cfiv457cdpndg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1515128941]
 shape = SubResource("RectangleShape2D_u7hxf")
 
-[node name="StatsComponent" type="Node" parent="." unique_id=574651616]
-script = ExtResource("4_mujiu")
-max_health = 30
-metadata/_custom_type_script = "uid://ceu58uush3mjr"
+[node name="KnockbackComponent" type="Node" parent="." unique_id=2078963317]
+script = ExtResource("6_cc12g")
+decay = 2000.0
+metadata/_custom_type_script = "uid://c6y6n5pfau54y"

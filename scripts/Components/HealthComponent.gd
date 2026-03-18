@@ -18,8 +18,7 @@ func _ready() -> void:
 		push_error("HealthComponent precisa de um StatsComponent.")	
 		return
 		
-	max_health = stats_component.max_health
-	
+	max_health = stats_component.max_health	
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
 
@@ -32,13 +31,11 @@ func take_damage(amount: int) -> void:
 		return
 
 	current_health = max(current_health - amount, 0)
-
 	damaged.emit(amount)
 	health_changed.emit(current_health, stats_component.max_health)
 
 	if current_health <= 0:
-		is_dead = true
-		died.emit()
+		_die()
 
 
 func heal(amount: int) -> void:
@@ -49,10 +46,16 @@ func heal(amount: int) -> void:
 		return
 
 	current_health = min(current_health + amount, max_health)
-
 	healed.emit(amount)
 	health_changed.emit(current_health, max_health)
 
+func _die() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
+	died.emit()
+	
 
 func get_health_percent() -> float:
 	if max_health <= 0:

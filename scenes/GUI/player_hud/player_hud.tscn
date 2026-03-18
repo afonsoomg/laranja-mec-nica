@@ -3,14 +3,24 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ubfc"]
 bg_color = Color(0.9274502, 0.43629345, 0.1898736, 1)
 
-[node name="PlayerHud" type="Node2D" unique_id=206348407]
+[node name="PlayerHud" type="Control" unique_id=1409997022]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HealthProgressBar" type="ProgressBar" parent="." unique_id=518553769]
-offset_left = 25.0
-offset_top = 165.0
-offset_right = 67.0
-offset_bottom = 394.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -120.0
+offset_right = 28.0
+offset_bottom = 120.0
 grow_vertical = 2
+pivot_offset = Vector2(16, 16)
 size_flags_horizontal = 0
 size_flags_vertical = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_0ubfc")

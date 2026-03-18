@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://b1w8wwinheegy" path="res://entities/player/player_top_down.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://gc3ywhsieoof" path="res://entities/target_dummy.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://c3m5bijh62cvp" path="res://scenes/GUI/player_hud/player_hud.tscn" id="3_k0juu"]
+[ext_resource type="Script" uid="uid://dp3wwdbrvn8ca" path="res://scripts/UI/player_hud.gd" id="4_71j4m"]
+[ext_resource type="PackedScene" uid="uid://g5cbr4aveehy" path="res://entities/damage_dummy.tscn" id="5_71j4m"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
 
@@ -31,4 +34,20 @@ position = Vector2(483, 97)
 collision_mask = 2
 
 [node name="PlayerTopDown" parent="." unique_id=624537047 instance=ExtResource("1_nnsk1")]
-position = Vector2(161, 139)
+position = Vector2(483, 272)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=284375990]
+
+[node name="PlayerHud" parent="UI" unique_id=206348407 node_paths=PackedStringArray("player") instance=ExtResource("3_k0juu")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_right = 16.0
+grow_horizontal = 1
+script = ExtResource("4_71j4m")
+player = NodePath("../../PlayerTopDown")
+
+[node name="damage_dummy" parent="." unique_id=948839557 instance=ExtResource("5_71j4m")]
+position = Vector2(192, 101)

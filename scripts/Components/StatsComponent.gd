@@ -16,6 +16,7 @@ signal stat_changed(stat_name: StringName, new_value: Variant)
 @export var attack_damage: int = 10
 @export var attack_cooldown: float = 0.35
 @export var hitbox_duration: float = 0.12
+@export var knockback_force: float = 140.0
 
 
 func set_walk_speed(value: float) -> void:
