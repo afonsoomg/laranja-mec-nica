@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cgqmjsrhsdiuk"]
+
+[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="1_4d6e7"]
+[ext_resource type="FontFile" uid="uid://eynioxr5w3n4" path="res://scenes/GUI/menu_principal/KiwiSoda.ttf" id="1_gew75"]
+[ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/menu_principal/buttonCustom.tscn" id="2_4d6e7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wt1o"]
+font = ExtResource("1_gew75")
+font_size = 107
+shadow_size = 19
+shadow_color = Color(0.9999998, 0.010503044, 0.14232561, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wt1o"]
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[node name="MarginContainer" type="TextureRect" unique_id=1539942307]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1328761339]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 25
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1867352036]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_4d6e7")
+theme_override_font_sizes/font_size = 23
+text = "Laranja Mecânica"
+label_settings = SubResource("LabelSettings_8wt1o")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=328758922]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_8wt1o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=43710775]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+
+[node name="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1577900676 instance=ExtResource("2_4d6e7")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Button2" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1675994830]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_gew75")
+theme_override_font_sizes/font_size = 28
+text = "Jogar"
+
+[node name="Button3" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=495381317]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_gew75")
+theme_override_font_sizes/font_size = 28
+text = "Opções"
+
+[node name="Button4" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=192650178]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_gew75")
+theme_override_font_sizes/font_size = 28
+text = "Sobre Nós"
+
+[node name="Button5" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=726122583]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_gew75")
+theme_override_font_sizes/font_size = 28
+text = "Sair"

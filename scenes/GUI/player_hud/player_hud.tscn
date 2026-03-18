@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c3m5bijh62cvp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ubfc"]
+bg_color = Color(0.9274502, 0.43629345, 0.1898736, 1)
+
+[node name="PlayerHud" type="Node2D" unique_id=206348407]
+
+[node name="HealthProgressBar" type="ProgressBar" parent="." unique_id=518553769]
+offset_left = 25.0
+offset_top = 165.0
+offset_right = 67.0
+offset_bottom = 394.0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_0ubfc")
+value = 20.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+metadata/_edit_use_anchors_ = true

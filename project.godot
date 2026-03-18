@@ -11,9 +11,20 @@ config_version=5
 [application]
 
 config/name="Laranja Mecânica"
-run/main_scene="uid://c5k85di8ir738"
+run/main_scene="uid://cgqmjsrhsdiuk"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+PlayerHud="*uid://c3m5bijh62cvp"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [dotnet]
 

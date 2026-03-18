@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bey48chabo4yp"]
+
+[ext_resource type="FontFile" uid="uid://eynioxr5w3n4" path="res://scenes/GUI/menu_principal/KiwiSoda.ttf" id="1_ckl7a"]
+
+[node name="Button" type="Button" unique_id=1577900676]
+offset_right = 132.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("1_ckl7a")
+theme_override_font_sizes/font_size = 28
+text = "Jogar"
+flat = true
