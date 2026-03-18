@@ -15,7 +15,7 @@ mesh = SubResource("QuadMesh_e5uuo")
 metadata/_edit_lock_ = true
 
 [node name="PlayerTopDown" parent="." unique_id=624537047 instance=ExtResource("1_nnsk1")]
-position = Vector2(508, 269)
+position = Vector2(493, 274)
 
 [node name="TargetDummy" parent="." unique_id=1744661547 instance=ExtResource("2_rwgxs")]
 position = Vector2(250, 282)
