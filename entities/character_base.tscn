@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://d0ntfc42udjd8"]
+
+[ext_resource type="Script" uid="uid://kbfx5pgoejj5" path="res://scripts/characters/character_base.gd" id="1_2lcof"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/components/StatsComponent.gd" id="1_bikko"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/components/HealthComponent.gd" id="2_2lcof"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/components/HurtboxComponent.gd" id="3_is1ha"]
+[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/components/AnimationComponent.gd" id="5_rti8c"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/components/KnockbackComponent.gd" id="6_8nvtw"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/components/MoveComponent.gd" id="7_2lcof"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lcof"]
+size = Vector2(26, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhwlu"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_is1ha"]
+size = Vector2(12, 13.5)
+
+[node name="CharacterBase" type="CharacterBody2D" unique_id=232863277]
+script = ExtResource("1_2lcof")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1779847478]
+position = Vector2(-0.625, 0)
+shape = SubResource("RectangleShape2D_2lcof")
+
+[node name="StatsComponent" type="Node" parent="." unique_id=562620079]
+script = ExtResource("1_bikko")
+metadata/_custom_type_script = "uid://ceu58uush3mjr"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=10131612]
+script = ExtResource("2_2lcof")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=1218474791]
+collision_layer = 8
+script = ExtResource("3_is1ha")
+metadata/_custom_type_script = "uid://cfiv457cdpndg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2064428074]
+shape = SubResource("RectangleShape2D_nhwlu")
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1943934387]
+script = ExtResource("7_2lcof")
+metadata/_custom_type_script = "uid://dw3oaar23io3x"
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=205670419]
+script = ExtResource("5_rti8c")
+metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
+
+[node name="KnockbackComponent" type="Node" parent="." unique_id=1132624166]
+script = ExtResource("6_8nvtw")
+metadata/_custom_type_script = "uid://c6y6n5pfau54y"
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=1326398371]
+collision_layer = 16
+collision_mask = 8
+monitoring = false
+
+[node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1010316076]
+shape = SubResource("RectangleShape2D_is1ha")
+debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)

@@ -3,8 +3,7 @@ class_name AnimationComponent
 
 signal animation_finished(animation_name: String)
 
-@onready var move_component: MoveComponent = $"../MoveComponent"
-
+@export var move_component: MoveComponent
 @export var animated_sprite: AnimatedSprite2D
 
 
@@ -93,6 +92,9 @@ func play_dying() -> void:
 	is_hurt = false
 	is_attacking = false
 	dying_animation_finished = false
+
+	_play_if_needed(locked_action_animation)
+
 
 
 func _update_facing() -> void:

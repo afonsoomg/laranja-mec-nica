@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://c5k85di8ir738"]
 
-[ext_resource type="PackedScene" uid="uid://b1w8wwinheegy" path="res://entities/player/player_top_down.tscn" id="1_nnsk1"]
-[ext_resource type="PackedScene" uid="uid://gc3ywhsieoof" path="res://entities/target_dummy.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://gc3ywhsieoof" path="res://entities/dummies/target_dummy.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://c3m5bijh62cvp" path="res://scenes/GUI/player_hud/player_hud.tscn" id="3_k0juu"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://g5cbr4aveehy" path="res://entities/damage_dummy.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://glclanonv3yg" path="res://scenes/GUI/gameUI/game_ui.tscn" id="5_i7141"]
+=======
+[ext_resource type="Script" uid="uid://dp3wwdbrvn8ca" path="res://scripts/UI/player_hud.gd" id="4_71j4m"]
+[ext_resource type="PackedScene" uid="uid://g5cbr4aveehy" path="res://entities/dummies/damage_dummy.tscn" id="5_71j4m"]
+[ext_resource type="PackedScene" uid="uid://di3hdfgsqaqes" path="res://entities/player/player_character.tscn" id="5_qfnet"]
+[ext_resource type="PackedScene" uid="uid://cy5ivngtvhb2o" path="res://entities/enemies/enemy_static.tscn" id="6_qfnet"]
+>>>>>>> e51f5e0dde9473c9567fec271ff711b64a943ab0
 
 [sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
 
@@ -17,6 +23,7 @@ scale = Vector2(2728.75, 1584.25)
 mesh = SubResource("QuadMesh_e5uuo")
 metadata/_edit_lock_ = true
 
+<<<<<<< HEAD
 [node name="TargetDummy" parent="." unique_id=1744661547 instance=ExtResource("2_rwgxs")]
 position = Vector2(250, 282)
 collision_mask = 2
@@ -32,19 +39,40 @@ collision_mask = 2
 position = Vector2(757, 276)
 collision_mask = 2
 
+=======
+>>>>>>> e51f5e0dde9473c9567fec271ff711b64a943ab0
 [node name="TargetDummy4" parent="." unique_id=1159320106 instance=ExtResource("2_rwgxs")]
-position = Vector2(483, 97)
+position = Vector2(491, 425)
 collision_mask = 2
-
-[node name="PlayerTopDown" parent="." unique_id=624537047 instance=ExtResource("1_nnsk1")]
-position = Vector2(483, 272)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=284375990]
 
+<<<<<<< HEAD
 [node name="PlayerHud" parent="UI" unique_id=1409997022 node_paths=PackedStringArray("player") instance=ExtResource("3_k0juu")]
 player = NodePath("../../PlayerTopDown")
+=======
+[node name="PlayerHud" parent="UI" unique_id=206348407 node_paths=PackedStringArray("player") instance=ExtResource("3_k0juu")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_right = 16.0
+grow_horizontal = 1
+script = ExtResource("4_71j4m")
+player = NodePath("../../PlayerCharacter")
+>>>>>>> e51f5e0dde9473c9567fec271ff711b64a943ab0
 
 [node name="GameUI" parent="UI" unique_id=634695376 instance=ExtResource("5_i7141")]
 
 [node name="damage_dummy" parent="." unique_id=948839557 instance=ExtResource("5_71j4m")]
-position = Vector2(192, 101)
+position = Vector2(485, 102)
+
+[node name="PlayerCharacter" parent="." unique_id=232863277 instance=ExtResource("5_qfnet")]
+position = Vector2(482, 268)
+
+[node name="EnemyBase" parent="." unique_id=308330011 instance=ExtResource("6_qfnet")]
+position = Vector2(231, 353)
+
+[node name="EnemyBase2" parent="." unique_id=659902148 instance=ExtResource("6_qfnet")]
+position = Vector2(222, 168)

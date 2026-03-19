@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cy5ivngtvhb2o"]
+
+[ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemies/enemy_base.tscn" id="1_ntetc"]
+[ext_resource type="Texture2D" uid="uid://5imlps3qinv" path="res://assets/images/enemies/Icon1.png" id="2_cu1if"]
+[ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="3_r8m5l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r8m5l"]
+
+[node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_ntetc")]
+scale = Vector2(4, 4)
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
+position = Vector2(1, -0.5)
+
+[node name="StatsComponent" parent="." index="1" unique_id=562620079]
+max_health = 20
+
+[node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
+position = Vector2(1, 0)
+debug_color = Color(0.9992154, 0, 0.13348177, 0.41960785)
+
+[node name="MoveComponent" parent="." index="4" unique_id=1943934387]
+can_move = false
+
+[node name="AnimationComponent" parent="." index="5" unique_id=205670419 node_paths=PackedStringArray("animated_sprite")]
+animated_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="KnockbackComponent" parent="." index="6" unique_id=1132624166]
+can_receive_knockback = false
+decay = 2000.0
+
+[node name="Sprite2D" parent="." index="8" unique_id=1736445001]
+texture = ExtResource("2_cu1if")
+
+[node name="WeaponComponent" type="Node" parent="." index="10" unique_id=1378870063 node_paths=PackedStringArray("stats_component", "move_component", "animation_component", "attack_hitbox", "attack_collision_shape")]
+script = ExtResource("3_r8m5l")
+stats_component = NodePath("../StatsComponent")
+move_component = NodePath("../MoveComponent")
+animation_component = NodePath("../AnimationComponent")
+attack_hitbox = NodePath("../AttackHitbox")
+attack_collision_shape = NodePath("../AttackHitbox/WeaponCollisionShape")
+metadata/_custom_type_script = "uid://bhv2g1swjwce4"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="11" unique_id=842247750]
+sprite_frames = SubResource("SpriteFrames_r8m5l")

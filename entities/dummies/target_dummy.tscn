@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://gc3ywhsieoof"]
 
-[ext_resource type="Script" uid="uid://biq102xfiseag" path="res://scripts/Characters/target_dummy.gd" id="1_3q1ve"]
-[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_u7hxf"]
-[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_mujiu"]
-[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="4_mujiu"]
-[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="5_s6l4g"]
-[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/Components/KnockbackComponent.gd" id="6_cc12g"]
+[ext_resource type="Script" uid="uid://biq102xfiseag" path="res://scripts/characters/dummies/target_dummy.gd" id="1_3q1ve"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/components/HealthComponent.gd" id="2_u7hxf"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/components/HurtboxComponent.gd" id="3_mujiu"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/components/StatsComponent.gd" id="4_mujiu"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/components/MoveComponent.gd" id="5_s6l4g"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/components/KnockbackComponent.gd" id="6_cc12g"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3q1ve"]
 

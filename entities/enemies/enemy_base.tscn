@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bj1vpw5v18aod"]
+
+[ext_resource type="PackedScene" uid="uid://d0ntfc42udjd8" path="res://entities/character_base.tscn" id="1_6kwvc"]
+[ext_resource type="Script" uid="uid://cty6ys2j0hbjx" path="res://scripts/characters/enemies/enemy_base.gd" id="2_3iigx"]
+[ext_resource type="Script" uid="uid://dogslyel4yd8h" path="res://scripts/components/EnemyAIComponent.gd" id="3_prjjb"]
+
+[node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_6kwvc")]
+script = ExtResource("2_3iigx")
+
+[node name="AnimationComponent" parent="." index="5" unique_id=205670419 node_paths=PackedStringArray("move_component")]
+move_component = NodePath("../MoveComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="8" unique_id=1736445001]
+
+[node name="EnemyAIComponent" type="Node" parent="." index="9" unique_id=1403723744]
+script = ExtResource("3_prjjb")
+metadata/_custom_type_script = "uid://dogslyel4yd8h"
