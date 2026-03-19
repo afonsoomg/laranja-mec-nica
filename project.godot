@@ -13,11 +13,6 @@ config_version=5
 config/name="Laranja Mecânica"
 run/main_scene="uid://cgqmjsrhsdiuk"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
-
-[autoload]
-
-PlayerHud="*uid://c3m5bijh62cvp"
 
 [display]
 

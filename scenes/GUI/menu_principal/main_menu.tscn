@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dvd77yisqs2dv" path="res://assets/images/main_menu/fundo-texturizado-abstrato_1258-30447.webp" id="1_ojskl"]
 [ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="2_qta86"]
-[ext_resource type="Script" uid="uid://b663nupl24aox" path="res://scripts/GUI/main_menu/main_menu.gd" id="2_xygj3"]
+[ext_resource type="Script" uid="uid://b663nupl24aox" path="res://scripts/UI/main_menu.gd" id="2_xygj3"]
 [ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/menu_principal/buttonCustom.tscn" id="3_qta86"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8wt1o"]

@@ -1,7 +1,7 @@
 extends Control
 class_name PlayerHUD
 
-@export var player: Node
+@export var player: CharacterBase
 @onready var health_bar: ProgressBar = $MarginContainer/HealthProgressBar
 @onready var pause_menu: Control = $MarginContainer/PauseMenu
 @onready var confirm_exit: ConfirmationDialog = $MarginContainer/PauseMenu/ConfirmExitDialog
@@ -14,6 +14,7 @@ var health_component: HealthComponent
 
 
 func _ready() -> void:
+	print("HUD carregando: ", self, " path=", get_path())
 	pause_menu.visible = false
 	
 	if player == null:
