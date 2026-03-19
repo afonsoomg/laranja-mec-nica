@@ -49,6 +49,6 @@ func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_f
 
 func _on_owner_died() -> void:
 	can_receive_hits = false
-	monitoring = false
-	monitorable = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	killed.emit()

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://g5cbr4aveehy"]
 
-[ext_resource type="Script" uid="uid://de0fp8ju3e6tr" path="res://scripts/Characters/damage_dummy.gd" id="1_4cg6k"]
+[ext_resource type="Script" uid="uid://de0fp8ju3e6tr" path="res://scripts/characters/dummies/damage_dummy.gd" id="1_4cg6k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_812uh"]
 size = Vector2(15, 14.25)
@@ -8,7 +8,7 @@ size = Vector2(15, 14.25)
 [sub_resource type="CanvasTexture" id="CanvasTexture_812uh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4cg6k"]
-size = Vector2(17.25, 15.25)
+size = Vector2(17.25, 16)
 
 [node name="damage_dummy" type="CharacterBody2D" unique_id=1326439928]
 scale = Vector2(4, 4)
@@ -33,5 +33,5 @@ collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1039498262]
-position = Vector2(-0.125, -0.125)
+position = Vector2(-0.125, 0)
 shape = SubResource("RectangleShape2D_4cg6k")

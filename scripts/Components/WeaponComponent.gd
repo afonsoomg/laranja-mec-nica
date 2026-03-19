@@ -5,9 +5,10 @@ signal attack_started
 signal attack_finished
 signal target_hit(target: Node, damage: int)
 
-@onready var stats_component: StatsComponent = $"../StatsComponent"
-@onready var move_component: MoveComponent = $"../MoveComponent"
-@onready var animation_component: AnimationComponent = $"../AnimationComponent"
+@export_group("Component References")
+@export var stats_component: StatsComponent
+@export var move_component: MoveComponent
+@export var animation_component: AnimationComponent
 
 @export_group("References")
 @export var attack_hitbox: Area2D

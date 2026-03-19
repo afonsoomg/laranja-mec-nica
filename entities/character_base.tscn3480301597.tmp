@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://d0ntfc42udjd8"]
+
+[ext_resource type="Script" uid="uid://kbfx5pgoejj5" path="res://scripts/Characters/character_base.gd" id="1_2lcof"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="1_bikko"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_2lcof"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_is1ha"]
+[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/Components/AnimationComponent.gd" id="5_rti8c"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/Components/KnockbackComponent.gd" id="6_8nvtw"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="7_2lcof"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhwlu"]
+
+[sub_resource type="GDScript" id="GDScript_is1ha"]
+script/source = "extends CharacterBody2D
+class_name PlayerCharacter
+
+@onready var stats_component = $Components/StatsComponent
+@onready var health_component = $Components/HealthComponent
+@onready var hurtbox_component = $Components/HurtboxComponent
+@onready var animation_component = $Components/AnimationComponent
+@onready var knockback_component = $Components/KnockbackComponent
+
+var is_dead: bool = false
+
+func _ready() -> void:
+	if health_component:
+		health_component.died.connect(_on_died)
+
+func _on_died() -> void:
+	is_dead = true
+	if animation_component:
+		animation_component.play_death()
+"
+
+[node name="CharacterBase" type="CharacterBody2D" unique_id=232863277]
+script = ExtResource("1_2lcof")
+
+[node name="StatsComponent" type="Node" parent="." unique_id=562620079]
+script = ExtResource("1_bikko")
+metadata/_custom_type_script = "uid://ceu58uush3mjr"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=10131612]
+script = ExtResource("2_2lcof")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=1218474791]
+script = ExtResource("3_is1ha")
+metadata/_custom_type_script = "uid://cfiv457cdpndg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2064428074]
+shape = SubResource("RectangleShape2D_nhwlu")
+script = SubResource("GDScript_is1ha")
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=205670419]
+script = ExtResource("5_rti8c")
+metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
+
+[node name="KnockbackComponent" type="Node" parent="." unique_id=1132624166]
+script = ExtResource("6_8nvtw")
+metadata/_custom_type_script = "uid://c6y6n5pfau54y"
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1943934387]
+script = ExtResource("7_2lcof")
+metadata/_custom_type_script = "uid://dw3oaar23io3x"
