@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://c3m5bijh62cvp"]
+
+[ext_resource type="Script" uid="uid://dp3wwdbrvn8ca" path="res://scenes/GUI/player_hud/player_hud.gd" id="1_du66t"]
+[ext_resource type="PackedScene" uid="uid://bo2ek8op504dv" path="res://scenes/GUI/player_hud/button_hud.tscn" id="1_hxs4v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ubfc"]
+bg_color = Color(0.9274502, 0.43629345, 0.1898736, 1)
+
+[node name="PlayerHud" type="Control" unique_id=1409997022]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_du66t")
+
+[node name="HealthProgressBar" type="ProgressBar" parent="." unique_id=518553769]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -120.0
+offset_right = 28.0
+offset_bottom = 120.0
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_0ubfc")
+value = 20.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=685788790]
+layout_mode = 1
+offset_right = 77.0
+offset_bottom = 35.0
+theme_override_constants/separation = 7
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="voltar_menu1" parent="HBoxContainer" unique_id=318540341 instance=ExtResource("1_hxs4v")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="pause" parent="HBoxContainer" unique_id=39371608 instance=ExtResource("1_hxs4v")]
+layout_mode = 2
+text = "⏸"
+
+[node name="PauseMenu" type="Control" parent="." unique_id=747765606]
+process_mode = 1
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=600203239]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.019607844)
+
+[node name="Panel" type="Panel" parent="PauseMenu" unique_id=1481194426]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/Panel" unique_id=55917228]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -20.0
+offset_right = 43.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="continuar" parent="PauseMenu/Panel/VBoxContainer" unique_id=1574001125 instance=ExtResource("1_hxs4v")]
+process_mode = 2
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Continuar"
+
+[node name="voltar_menu2" parent="PauseMenu/Panel/VBoxContainer" unique_id=475835934 instance=ExtResource("1_hxs4v")]
+process_mode = 2
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Votlar ao Menu"
+
+[node name="pixin" parent="PauseMenu/Panel/VBoxContainer" unique_id=1426728662 instance=ExtResource("1_hxs4v")]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Fazer o pix"
+
+[node name="ConfirmExitDialog" type="ConfirmationDialog" parent="PauseMenu" unique_id=514082597]
+process_mode = 2
+title = "Tem Certeza?"
+ok_button_text = "Sair"
+dialog_text = "Seu progresso não será salvo. Tem Certeza que quer sair?"
+
+[connection signal="pressed" from="HBoxContainer/voltar_menu1" to="." method="_on_voltar_menu_1_pressed"]
+[connection signal="pressed" from="HBoxContainer/pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/continuar" to="." method="_on_continuar_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/voltar_menu2" to="." method="_on_voltar_menu_pressed"]
+[connection signal="confirmed" from="PauseMenu/ConfirmExitDialog" to="." method="_on_confirm_exit_dialog_confirmed"]

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bo2ek8op504dv"]
+
+[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="1_688v3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uxd7"]
+bg_color = Color(0.9254902, 0.43529412, 0.1882353, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_688v3"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5jwb"]
+bg_color = Color(0.9844937, 0.6201156, 0.45916653, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="button" type="Button" unique_id=318540341]
+custom_minimum_size = Vector2(35, 35)
+offset_right = 39.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("1_688v3")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
+text = "↩"
