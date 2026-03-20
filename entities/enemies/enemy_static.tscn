@@ -3,17 +3,22 @@
 [ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemies/enemy_base.tscn" id="1_ntetc"]
 [ext_resource type="Texture2D" uid="uid://5imlps3qinv" path="res://assets/images/enemies/Icon1.png" id="2_cu1if"]
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="3_r8m5l"]
+[ext_resource type="Script" uid="uid://doq3xcghd36dc" path="res://scripts/components/RangedWeaponComponent.gd" id="4_jufub"]
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="5_6vvkl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r8m5l"]
 
-[node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_ntetc")]
+[node name="EnemyStatic" unique_id=232863277 instance=ExtResource("1_ntetc")]
 scale = Vector2(4, 4)
+target_path = NodePath("")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(1, -0.5)
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
 max_health = 20
+attack_damage = 15
+knockback_force = 60.0
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
 position = Vector2(1, 0)
@@ -43,3 +48,20 @@ metadata/_custom_type_script = "uid://bhv2g1swjwce4"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="11" unique_id=842247750]
 sprite_frames = SubResource("SpriteFrames_r8m5l")
+
+[node name="RangedWeaponComponent" type="Node" parent="." index="12" unique_id=541326372 node_paths=PackedStringArray("projectile_spawn_marker", "stats_component")]
+script = ExtResource("4_jufub")
+projectile_scene = ExtResource("5_6vvkl")
+projectile_spawn_marker = NodePath("../ProjectileSpawnMaker")
+stats_component = NodePath("../StatsComponent")
+damage = 17
+cooldown = 3.0
+use_attack_animation = false
+knockback_force = 60.0
+metadata/_custom_type_script = "uid://doq3xcghd36dc"
+
+[node name="ProjectileSpawnMaker" type="Node2D" parent="." index="13" unique_id=2043519706]
+position = Vector2(23.5, 0)
+
+[node name="DamageDigitComponent" parent="." index="14" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
+hurtbox_component = NodePath("../HurtboxComponent")

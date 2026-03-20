@@ -130,15 +130,15 @@ func _try_hit_target(target: Node) -> void:
 	if target == null:
 		return
 
+	if _belongs_to_owner(target):
+		return
+
 	var hurtbox := _extract_hurtbox(target)
 
 	if hurtbox == null:
 		return
 
-	var weapon_owner := get_parent()
-	var hurtbox_owner := hurtbox.get_parent()
-
-	if hurtbox_owner == weapon_owner:
+	if _belongs_to_owner(hurtbox):
 		return
 
 	if _hit_targets.has(hurtbox):
@@ -190,3 +190,15 @@ func _update_hitbox_direction() -> void:
 			attack_hitbox.position = vertical_hitbox_offset
 		else:
 			attack_hitbox.position = Vector2(vertical_hitbox_offset.x, -vertical_hitbox_offset.y)
+
+
+func _belongs_to_owner(target: Node) -> bool:
+	var owner_node := get_parent()
+
+	if owner_node == null or target == null:
+		return false
+
+	if target == owner_node:
+		return true
+
+	return owner_node.is_ancestor_of(target)

@@ -1,13 +1,17 @@
 extends CharacterBase
 class_name EnemyBase
 
-@export var target: Node2D
+@export var target_path: NodePath
+
+@onready var ranged_weapon_component: RangedWeaponComponent = $RangedWeaponComponent
+@onready var target: Node2D = get_node_or_null(target_path) as Node2D
 
 @onready var ai_component: EnemyAIComponent = $EnemyAIComponent
 @onready var weapon_component: WeaponComponent = $WeaponComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
+var is_active: bool = true
 
 func _ready() -> void:
 	super._ready()
@@ -18,6 +22,8 @@ func _ready() -> void:
 	if hurtbox_component and hurtbox_component.has_signal("hit_received"):
 		if not hurtbox_component.hit_received.is_connected(_on_hit_received):
 			hurtbox_component.hit_received.connect(_on_hit_received)
+			
+	_shoot_loop()
 
 
 func _physics_process(delta: float) -> void:
@@ -43,6 +49,15 @@ func _physics_process(delta: float) -> void:
 			weapon_component.try_attack()
 
 
+func _shoot_loop() -> void:
+	while is_active and is_inside_tree():
+		if target != null and ranged_weapon_component != null:
+			var dir := (target.global_position - global_position).normalized()
+			ranged_weapon_component.try_shoot(dir)
+
+		await get_tree().create_timer(1.2).timeout
+		
+	
 func _on_died() -> void:
 	is_dead = true
 

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ccrp06awp6ltx"]
+
+[ext_resource type="Script" uid="uid://cfcld5cj565yd" path="res://scripts/characters/projectiles/projectile_base.gd" id="1_a6h5p"]
+[ext_resource type="Script" uid="uid://cis54ok1qeg2l" path="res://scripts/components/ProjectileComponent.gd" id="1_heyrr"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a6h5p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a6h5p"]
+size = Vector2(8, 20)
+
+[node name="Projectile" type="Area2D" unique_id=60524818]
+collision_layer = 16
+collision_mask = 9
+script = ExtResource("1_a6h5p")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1763474048]
+position = Vector2(0, -0.5000005)
+scale = Vector2(4, 9)
+texture = SubResource("PlaceholderTexture2D_a6h5p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1900281838]
+shape = SubResource("RectangleShape2D_a6h5p")
+
+[node name="ProjectileComponent" type="Node" parent="." unique_id=74662904 node_paths=PackedStringArray("projectile_area", "sprite", "collision_shape")]
+script = ExtResource("1_heyrr")
+projectile_area = NodePath("..")
+sprite = NodePath("../Sprite2D")
+collision_shape = NodePath("../CollisionShape2D")
+metadata/_custom_type_script = "uid://cis54ok1qeg2l"

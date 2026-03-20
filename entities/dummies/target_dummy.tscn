@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/components/StatsComponent.gd" id="4_mujiu"]
 [ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/components/MoveComponent.gd" id="5_s6l4g"]
 [ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/components/KnockbackComponent.gd" id="6_cc12g"]
+[ext_resource type="Script" uid="uid://bghurjth8k5ty" path="res://scripts/components/DamageDigitComponent.gd" id="7_e05a1"]
+[ext_resource type="PackedScene" uid="uid://dpvbrqt0ybytq" path="res://scenes/GUI/enemies/demage_digit.tscn" id="8_t6a4c"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3q1ve"]
 
@@ -59,3 +61,9 @@ shape = SubResource("RectangleShape2D_u7hxf")
 script = ExtResource("6_cc12g")
 decay = 2000.0
 metadata/_custom_type_script = "uid://c6y6n5pfau54y"
+
+[node name="DamageDigitComponent" type="Node" parent="." unique_id=1954453966 node_paths=PackedStringArray("hurtbox_component")]
+script = ExtResource("7_e05a1")
+damage_digit_prefab = ExtResource("8_t6a4c")
+hurtbox_component = NodePath("../HurtboxComponent")
+metadata/_custom_type_script = "uid://bghurjth8k5ty"

@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/components/AnimationComponent.gd" id="5_rti8c"]
 [ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/components/KnockbackComponent.gd" id="6_8nvtw"]
 [ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/components/MoveComponent.gd" id="7_2lcof"]
+[ext_resource type="Script" uid="uid://bghurjth8k5ty" path="res://scripts/components/DamageDigitComponent.gd" id="8_sml1u"]
+[ext_resource type="PackedScene" uid="uid://dpvbrqt0ybytq" path="res://scenes/GUI/enemies/demage_digit.tscn" id="9_rti8c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lcof"]
 size = Vector2(26, 27)
@@ -60,3 +62,8 @@ monitoring = false
 [node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1010316076]
 shape = SubResource("RectangleShape2D_is1ha")
 debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
+
+[node name="DamageDigitComponent" type="Node" parent="." unique_id=301667582]
+script = ExtResource("8_sml1u")
+damage_digit_prefab = ExtResource("9_rti8c")
+metadata/_custom_type_script = "uid://bghurjth8k5ty"
