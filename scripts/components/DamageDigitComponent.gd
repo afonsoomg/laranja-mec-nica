@@ -23,7 +23,7 @@ func _ready() -> void:
 	hurtbox_component.hit_received.connect(_on_hit_received)
 
 
-func _on_hit_received(damage: int, hit_direction: Vector2, knockback_force: float) -> void:
+func _on_hit_received(damage: int, _hit_direction: Vector2, _knockback_force: float) -> void:
 	#print("DamageDigitComponent recebeu hit:", damage)
 	_spawn_damage_digit(damage)
 

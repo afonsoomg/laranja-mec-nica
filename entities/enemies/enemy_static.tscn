@@ -6,14 +6,17 @@
 [ext_resource type="Script" uid="uid://doq3xcghd36dc" path="res://scripts/components/RangedWeaponComponent.gd" id="4_jufub"]
 [ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="5_6vvkl"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_jufub"]
+radius = 12.765309
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_r8m5l"]
 
 [node name="EnemyStatic" unique_id=232863277 instance=ExtResource("1_ntetc")]
 scale = Vector2(4, 4)
-target_path = NodePath("")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
-position = Vector2(1, -0.5)
+position = Vector2(0.5, 0.125)
+shape = SubResource("CircleShape2D_jufub")
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
 max_health = 20
@@ -21,7 +24,7 @@ attack_damage = 15
 knockback_force = 60.0
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
-position = Vector2(1, 0)
+position = Vector2(1.125, -1.25)
 debug_color = Color(0.9992154, 0, 0.13348177, 0.41960785)
 
 [node name="MoveComponent" parent="." index="4" unique_id=1943934387]

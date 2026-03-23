@@ -12,9 +12,9 @@ func _ready() -> void:
 	top_level = true
 	label.text = str(value)
 	label.visible = true
-	label.modulate = Color(1, 0, 0, 1)
+	#label.modulate = Color(1, 0, 0, 1)
 
 	visible = true
-	modulate = Color(1, 1, 1, 1)
+	#modulate = Color(1, 1, 1, 1)
 	scale = Vector2(2, 2)
-	z_index = 100
+	#z_index = 100

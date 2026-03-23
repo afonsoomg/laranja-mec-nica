@@ -6,6 +6,7 @@
 
 [node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_6kwvc")]
 script = ExtResource("2_3iigx")
+target_path = NodePath("")
 
 [node name="AnimationComponent" parent="." index="5" unique_id=205670419 node_paths=PackedStringArray("move_component")]
 move_component = NodePath("../MoveComponent")
@@ -15,3 +16,19 @@ move_component = NodePath("../MoveComponent")
 [node name="EnemyAIComponent" type="Node" parent="." index="9" unique_id=1403723744]
 script = ExtResource("3_prjjb")
 metadata/_custom_type_script = "uid://dogslyel4yd8h"
+
+[node name="ProgressBar" type="ProgressBar" parent="." index="11" unique_id=494705679]
+modulate = Color(1, 0, 0, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+show_percentage = false

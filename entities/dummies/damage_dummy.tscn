@@ -8,7 +8,7 @@ size = Vector2(15, 14.25)
 [sub_resource type="CanvasTexture" id="CanvasTexture_812uh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4cg6k"]
-size = Vector2(17.25, 16)
+size = Vector2(16, 15.5)
 
 [node name="damage_dummy" type="CharacterBody2D" unique_id=1326439928]
 scale = Vector2(4, 4)
@@ -33,5 +33,5 @@ collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1039498262]
-position = Vector2(-0.125, 0)
+position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_4cg6k")
