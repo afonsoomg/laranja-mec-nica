@@ -37,11 +37,11 @@ position = Vector2(485, 102)
 position = Vector2(482, 268)
 
 [node name="EnemyStatic" parent="." unique_id=1011368937 instance=ExtResource("6_i7141")]
-position = Vector2(166, 198)
+position = Vector2(144, 140)
 target_path = NodePath("../PlayerCharacter")
 
 [node name="EnemyStatic2" parent="." unique_id=870164792 instance=ExtResource("6_i7141")]
-position = Vector2(170, 334)
+position = Vector2(146, 369)
 target_path = NodePath("../PlayerCharacter")
 
 [node name="EnemyStatic3" parent="." unique_id=1986083427 instance=ExtResource("7_4mrxx")]

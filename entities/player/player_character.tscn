@@ -1873,6 +1873,5 @@ target = NodePath("..")
 look_ahead_distance = 100.0
 look_ahead_smoothing = 1.0
 shake_on_hit_target = 2.0
-normal_zoom = Vector2(1.2, 1.2)
 run_zoom = Vector2(0.92, 0.92)
 metadata/_custom_type_script = "uid://b8l3dxdd13qia"

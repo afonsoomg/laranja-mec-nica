@@ -11,6 +11,7 @@ var is_paused_after_hit: bool = false
 func _ready() -> void:
 	super._ready()
 
+	$AnimatedSprite2D.scale = Vector2(1, 1)
 	if touch_damage_component != null:
 		if not touch_damage_component.hit_landed.is_connected(_on_hit_landed):
 			touch_damage_component.hit_landed.connect(_on_hit_landed)
@@ -64,7 +65,6 @@ func _on_hit_landed(hurtbox: HurtboxComponent) -> void:
 
 	_pause_after_hit()
 
-
 func _pause_after_hit() -> void:
 	is_paused_after_hit = true
 
@@ -74,3 +74,8 @@ func _pause_after_hit() -> void:
 		return
 
 	is_paused_after_hit = false
+
+func _on_died() -> void:
+	$AnimatedSprite2D.scale = Vector2(1.3, 1.3)
+	
+	super._on_died()

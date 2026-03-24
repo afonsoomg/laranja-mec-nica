@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cuyd23kinuw0"]
+
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="1_dsndu"]
+[ext_resource type="Texture2D" uid="uid://bwpiwu4qqxpjc" path="res://assets/images/projectiles/espinho bala.png" id="2_8cqkf"]
+
+[node name="Projectile" unique_id=60524818 instance=ExtResource("1_dsndu")]
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=1900281838]
+position = Vector2(0.5, -0.5)
+
+[node name="ProjectileComponent" parent="." index="1" unique_id=74662904 node_paths=PackedStringArray("sprite")]
+sprite = NodePath("../Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2" unique_id=1890379665]
+position = Vector2(5.9604645e-08, 2.3841858e-07)
+texture = ExtResource("2_8cqkf")

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://ed3h8qyek0d1"]
+
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="1_5hp01"]
+[ext_resource type="Texture2D" uid="uid://cdif7swql3kpe" path="res://assets/images/projectiles/bola da raiz.png" id="2_gl5et"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mtlb"]
+atlas = ExtResource("2_gl5et")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t120n"]
+atlas = ExtResource("2_gl5et")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btan6"]
+atlas = ExtResource("2_gl5et")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe2g1"]
+atlas = ExtResource("2_gl5et")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kglba"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mtlb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t120n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btan6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe2g1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Projectile" unique_id=60524818 instance=ExtResource("1_5hp01")]
+
+[node name="ProjectileComponent" parent="." index="1" unique_id=74662904 node_paths=PackedStringArray("sprite")]
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="2" unique_id=115296204]
+sprite_frames = SubResource("SpriteFrames_kglba")
+autoplay = "default"
+frame_progress = 0.9788159
