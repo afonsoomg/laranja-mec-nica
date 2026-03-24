@@ -14,8 +14,6 @@ signal run_state_changed(is_running: bool)
 var move_input: Vector2 = Vector2.ZERO
 var facing_direction: Vector2 = Vector2.DOWN
 var is_running: bool = false
-
-
 var _was_moving: bool = false
 
 

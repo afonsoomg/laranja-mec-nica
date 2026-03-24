@@ -16,11 +16,11 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
-height = 25.25
+height = 23.5
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u37yl"]
 radius = 7.0
-height = 25.5
+height = 26.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("2_ltqxl")
@@ -1809,6 +1809,9 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqxl"]
+size = Vector2(12, 13.5)
+
 [node name="PlayerCharacter" unique_id=232863277 instance=ExtResource("1_ftgs2")]
 scale = Vector2(4, 4)
 collision_layer = 2
@@ -1816,7 +1819,7 @@ collision_mask = 7
 script = ExtResource("2_u37yl")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
-position = Vector2(0.5, -0.375)
+position = Vector2(0, 0)
 shape = SubResource("CapsuleShape2D_ltqxl")
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
@@ -1826,17 +1829,16 @@ max_health = 200
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0" unique_id=2064428074]
-position = Vector2(0.25, -0.25)
 shape = SubResource("CapsuleShape2D_u37yl")
 debug_color = Color(4.1151793e-06, 0.6478718, 0.20750788, 0.41960785)
 
-[node name="AnimationComponent" parent="." index="5" unique_id=205670419 node_paths=PackedStringArray("move_component", "animated_sprite")]
+[node name="AnimationComponent" parent="." index="6" unique_id=205670419 node_paths=PackedStringArray("move_component", "animated_sprite")]
 move_component = NodePath("../MoveComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="8" unique_id=390680545]
+[node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"dying_right"
+animation = &"attack_down"
 
 [node name="InputComponent" type="Node" parent="." index="9" unique_id=1485520127]
 script = ExtResource("10_5f50k")
@@ -1855,7 +1857,16 @@ horizontal_hitbox_offset = Vector2(18, 0)
 vertical_hitbox_offset = Vector2(0, 15)
 metadata/_custom_type_script = "uid://bhv2g1swjwce4"
 
-[node name="CameraComponent" type="Camera2D" parent="." index="11" unique_id=301239641 node_paths=PackedStringArray("target")]
+[node name="AttackHitbox" type="Area2D" parent="." index="11" unique_id=509490742]
+collision_layer = 16
+collision_mask = 8
+monitoring = false
+
+[node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=2140667112]
+shape = SubResource("RectangleShape2D_ltqxl")
+debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
+
+[node name="CameraComponent" type="Camera2D" parent="." index="12" unique_id=301239641 node_paths=PackedStringArray("target")]
 scale = Vector2(4, 4)
 script = ExtResource("12_hblhq")
 target = NodePath("..")

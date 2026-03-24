@@ -46,7 +46,6 @@ func update_knockback(delta: float) -> void:
 	if not is_under_knockback:
 		return
 
-	body.velocity += knockback_velocity
 	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, decay * delta)
 
 	if knockback_velocity.length() <= min_force_threshold:
@@ -62,3 +61,6 @@ func clear_knockback() -> void:
 	knockback_velocity = Vector2.ZERO
 	is_under_knockback = false
 	knockback_ended.emit()
+	
+func get_knockback_velocity() -> Vector2:
+	return knockback_velocity

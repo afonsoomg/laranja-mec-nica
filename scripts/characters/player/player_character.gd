@@ -4,8 +4,6 @@ extends CharacterBase
 @onready var weapon_component: WeaponComponent = $WeaponComponent
 
 func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
-	
 	if is_dead:
 		return
 
@@ -16,9 +14,10 @@ func _physics_process(delta: float) -> void:
 	move_component.set_running(run_pressed)
 	move_component.update_velocity(delta)
 
-	move_and_slide()
-
 	if input_component.is_attack_just_pressed():
 		weapon_component.try_attack()
 
-	animation_component.update_animation()
+	if animation_component:
+		animation_component.update_animation()
+
+	super._physics_process(delta)

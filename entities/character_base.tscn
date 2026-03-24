@@ -16,8 +16,7 @@ size = Vector2(26, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nhwlu"]
 size = Vector2(30, 30)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_is1ha"]
-size = Vector2(12, 13.5)
+[sub_resource type="SpriteFrames" id="SpriteFrames_sml1u"]
 
 [node name="CharacterBase" type="CharacterBody2D" unique_id=232863277]
 script = ExtResource("1_2lcof")
@@ -46,22 +45,16 @@ shape = SubResource("RectangleShape2D_nhwlu")
 script = ExtResource("7_2lcof")
 metadata/_custom_type_script = "uid://dw3oaar23io3x"
 
-[node name="AnimationComponent" type="Node" parent="." unique_id=205670419]
-script = ExtResource("5_rti8c")
-metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
-
 [node name="KnockbackComponent" type="Node" parent="." unique_id=1132624166]
 script = ExtResource("6_8nvtw")
 metadata/_custom_type_script = "uid://c6y6n5pfau54y"
 
-[node name="AttackHitbox" type="Area2D" parent="." unique_id=1326398371]
-collision_layer = 16
-collision_mask = 8
-monitoring = false
+[node name="AnimationComponent" type="Node" parent="." unique_id=205670419]
+script = ExtResource("5_rti8c")
+metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
 
-[node name="WeaponCollisionShape" type="CollisionShape2D" parent="AttackHitbox" unique_id=1010316076]
-shape = SubResource("RectangleShape2D_is1ha")
-debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1852374921]
+sprite_frames = SubResource("SpriteFrames_sml1u")
 
 [node name="DamageDigitComponent" type="Node" parent="." unique_id=301667582]
 script = ExtResource("8_sml1u")

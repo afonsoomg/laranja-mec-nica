@@ -70,3 +70,10 @@ func get_move_direction() -> Vector2:
 
 func should_attack() -> bool:
 	return wants_attack
+
+
+func get_aim_direction(owner_position: Vector2) -> Vector2:
+	if target == null or not is_instance_valid(target):
+		return Vector2.ZERO
+
+	return (target.global_position - owner_position).normalized()
