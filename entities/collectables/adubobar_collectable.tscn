@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cse0ivpwit2qb" path="res://entities/collectables/collectable_base.tscn" id="1_1kxsa"]
 [ext_resource type="Texture2D" uid="uid://gwed6sowi5nd" path="res://assets/images/collectables/Barra de adubo.png" id="2_ao7dr"]
 [ext_resource type="Script" uid="uid://jejb7tq8f34m" path="res://scripts/collectables/AduboBarCollectable.gd" id="2_e877c"]
-[ext_resource type="AudioStream" uid="uid://bbjvtier2c6nv" path="res://assets/audio/48_Speed_up_02.wav" id="3_0mgka"]
+[ext_resource type="AudioStream" uid="uid://bbjvtier2c6nv" path="res://assets/audio/sfx/48_Speed_up_02.wav" id="3_0mgka"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e877c"]
 atlas = ExtResource("2_ao7dr")
@@ -59,7 +59,7 @@ animations = [{
 scale = Vector2(2, 2)
 script = ExtResource("2_e877c")
 crit_bonus = 0.9
-buff_duration = 20.0
+buff_duration = 5.0
 collect_sfx = ExtResource("3_0mgka")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]

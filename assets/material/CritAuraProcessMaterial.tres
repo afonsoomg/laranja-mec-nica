@@ -1,15 +1,29 @@
 [gd_resource type="ParticleProcessMaterial" format=3 uid="uid://bm3fmg28h38mn"]
 
+[sub_resource type="Curve" id="Curve_4tumj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2292683, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ptlk"]
+curve = SubResource("Curve_4tumj")
+
+[sub_resource type="Curve" id="Curve_k2d2o"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.29268295, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_md1uj"]
+curve = SubResource("Curve_k2d2o")
+
 [resource]
-direction = Vector3(0, -1, 0)
-spread = 60.0
+direction = Vector3(0, 0, 0)
+spread = 10.0
 initial_velocity_min = 10.0
 initial_velocity_max = 25.0
-angular_velocity_min = 0.0999839
-angular_velocity_max = 0.1999839
-orbit_velocity_min = 0.1000001
-orbit_velocity_max = 0.2000001
-gravity = Vector3(0, -10, 0)
+radial_velocity_min = 4.9999776
+radial_velocity_max = 49.999977
+gravity = Vector3(0, 0, 0)
 scale_min = 0.03
 scale_max = 0.08
-color = Color(1, 0.8352941, 0.2901961, 0.50980395)
+scale_curve = SubResource("CurveTexture_md1uj")
+color = Color(1, 0, 0, 0.6666667)
+emission_curve = SubResource("CurveTexture_3ptlk")

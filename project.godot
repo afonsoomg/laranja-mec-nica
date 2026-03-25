@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 buses/default_bus_layout="uid://bk4qk7wptigrk"
 
+[autoload]
+
+AudioManagerCustom="*uid://2c0mtekewu35"
+
 [display]
 
 window/size/viewport_width=960

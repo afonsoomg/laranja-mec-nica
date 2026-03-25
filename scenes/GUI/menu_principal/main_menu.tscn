@@ -2,8 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://dvd77yisqs2dv" path="res://assets/images/main_menu/fundo-texturizado-abstrato_1258-30447.webp" id="1_ojskl"]
 [ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="2_qta86"]
-[ext_resource type="Script" uid="uid://b663nupl24aox" path="res://scripts/UI/main_menu.gd" id="2_xygj3"]
+[ext_resource type="Script" uid="uid://b663nupl24aox" path="res://scripts/GUI/main_menu/main_menu.gd" id="2_xygj3"]
 [ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/menu_principal/buttonCustom.tscn" id="3_qta86"]
+[ext_resource type="AudioStream" uid="uid://dp5kgd5qsp0a0" path="res://assets/audio/ui/013_Confirm_03.wav" id="4_ssqug"]
+[ext_resource type="AudioStream" uid="uid://cumea0is6xkx0" path="res://assets/audio/ui/001_Hover_01.wav" id="5_bo7ay"]
+[ext_resource type="AudioStream" uid="uid://b75qrcxerncy4" path="res://assets/audio/music/game-menu-ambience.wav" id="6_kdru7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8wt1o"]
 line_spacing = 0.0
@@ -59,6 +62,9 @@ grow_vertical = 2
 texture = ExtResource("1_ojskl")
 expand_mode = 2
 script = ExtResource("2_xygj3")
+menu_music = ExtResource("6_kdru7")
+ui_click_sound = ExtResource("4_ssqug")
+ui_hover_sound = ExtResource("5_bo7ay")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1328761339]
 layout_mode = 1
@@ -119,5 +125,9 @@ text = "Sobre Nós
 layout_mode = 2
 text = "Sair"
 
+[connection signal="mouse_entered" from="MarginContainer/PanelContainer/VBoxContainer/jogar" to="." method="_on_mouse_hover"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/jogar" to="." method="_on_jogar_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/PanelContainer/VBoxContainer/opcoes" to="." method="_on_mouse_hover"]
+[connection signal="mouse_entered" from="MarginContainer/PanelContainer/VBoxContainer/sobre" to="." method="_on_mouse_hover"]
+[connection signal="mouse_entered" from="MarginContainer/PanelContainer/VBoxContainer/sair" to="." method="_on_mouse_hover"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/sair" to="." method="_on_sair_pressed"]

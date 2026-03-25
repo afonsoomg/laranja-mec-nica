@@ -1,11 +1,28 @@
 [gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cd5rx3jcmqeex"]
 
+[sub_resource type="Gradient" id="Gradient_gma1s"]
+colors = PackedColorArray(0.22352941, 1, 0.9647059, 1, 0.101960786, 1, 0.56078434, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_woop5"]
+gradient = SubResource("Gradient_gma1s")
+
+[sub_resource type="Curve" id="Curve_2t5ox"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1511111, 1), 0.0, 0.0, 0, 0, Vector2(0.5644445, 1), 0.0, 0.0, 0, 0, Vector2(0.99111116, 0.04494381), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mikfr"]
+curve = SubResource("Curve_2t5ox")
+
 [resource]
+lifetime_randomness = 0.3
 direction = Vector3(0, -1, 0)
 spread = 50.0
 initial_velocity_min = 40.0
 initial_velocity_max = 80.0
 gravity = Vector3(0, -20, 0)
+damping_min = 50.000004
+damping_max = 100.00001
 scale_min = 0.02
 scale_max = 0.049999997
-color = Color(0.43137255, 0.90588236, 1, 1)
+scale_curve = SubResource("CurveTexture_mikfr")
+color_ramp = SubResource("GradientTexture1D_woop5")

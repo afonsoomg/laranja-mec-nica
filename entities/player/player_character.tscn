@@ -14,14 +14,15 @@
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="11_at3bx"]
 [ext_resource type="Script" uid="uid://b8l3dxdd13qia" path="res://scripts/components/CameraComponent.gd" id="12_hblhq"]
 [ext_resource type="Script" uid="uid://kwl352vydpxa" path="res://scripts/components/BuffComponent.gd" id="14_u37yl"]
-[ext_resource type="AudioStream" uid="uid://cu3xc0qhf1i56" path="res://assets/audio/player_attack.wav" id="15_2ll1q"]
+[ext_resource type="AudioStream" uid="uid://cu3xc0qhf1i56" path="res://assets/audio/sfx/player_attack.wav" id="15_2ll1q"]
 [ext_resource type="Script" uid="uid://dyordov7s6aup" path="res://scripts/components/AudioComponent.gd" id="15_ulwpx"]
-[ext_resource type="AudioStream" uid="uid://chysue0mru37n" path="res://assets/audio/player_hurt.wav" id="16_5f50k"]
+[ext_resource type="AudioStream" uid="uid://chysue0mru37n" path="res://assets/audio/sfx/player_hurt.wav" id="16_5f50k"]
 [ext_resource type="Script" uid="uid://bcn0vlwmj44jy" path="res://scripts/components/VfxComponent.gd" id="16_ysq06"]
-[ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/69_Enemy_death_01.wav" id="17_at3bx"]
-[ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/02_Heal_02.wav" id="18_hblhq"]
-[ext_resource type="AudioStream" uid="uid://6po2dov2rnpc" path="res://assets/audio/16_Atk_buff_04.wav" id="19_yr7e7"]
-[ext_resource type="AudioStream" uid="uid://b4imtw11lyfcg" path="res://assets/audio/21_Debuff_01.wav" id="20_wssc2"]
+[ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/sfx/69_Enemy_death_01.wav" id="17_at3bx"]
+[ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/sfx/02_Heal_02.wav" id="18_hblhq"]
+[ext_resource type="AudioStream" uid="uid://6po2dov2rnpc" path="res://assets/audio/sfx/16_Atk_buff_04.wav" id="19_yr7e7"]
+[ext_resource type="AudioStream" uid="uid://b4imtw11lyfcg" path="res://assets/audio/sfx/21_Debuff_01.wav" id="20_wssc2"]
+[ext_resource type="Texture2D" uid="uid://bol08y84l6lgq" path="res://assets/textures/12.png" id="23_hblhq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
@@ -1850,7 +1851,8 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"attack_down"
+animation = &"run_down"
+frame = 6
 
 [node name="InputComponent" type="Node" parent="." index="9" unique_id=1485520127]
 script = ExtResource("10_5f50k")
@@ -1913,6 +1915,11 @@ crit_aura = NodePath("../VFX/CritAura")
 [node name="HealBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="0" unique_id=267088283]
 position = Vector2(0, 8)
 lifetime = 0.7
+speed_scale = 0.5
+randomness = 0.1
 
 [node name="CritBuffBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="1" unique_id=1347889945]
 amount = 35
+
+[node name="CritAura" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="2" unique_id=1416373822]
+texture = ExtResource("23_hblhq")

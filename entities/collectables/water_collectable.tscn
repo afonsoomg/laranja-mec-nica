@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cse0ivpwit2qb" path="res://entities/collectables/collectable_base.tscn" id="1_bcwto"]
 [ext_resource type="Script" uid="uid://gdp56di3w5kh" path="res://scripts/collectables/WaterCollectable.gd" id="2_3htwm"]
 [ext_resource type="Texture2D" uid="uid://cch3uc25wo6yj" path="res://assets/images/collectables/Agua.png" id="2_k563a"]
-[ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/02_Heal_02.wav" id="3_mh7rl"]
+[ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/sfx/02_Heal_02.wav" id="3_mh7rl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3htwm"]
 atlas = ExtResource("2_k563a")

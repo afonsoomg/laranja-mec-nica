@@ -1,43 +1,57 @@
 [gd_scene format=3 uid="uid://c5k85di8ir738"]
 
-[ext_resource type="PackedScene" uid="uid://gc3ywhsieoof" path="res://entities/dummies/target_dummy.tscn" id="2_rwgxs"]
+[ext_resource type="Script" uid="uid://bnom4sshrk05a" path="res://scripts/world.gd" id="1_w7kh3"]
+[ext_resource type="AudioStream" uid="uid://cse7cb4jc61vk" path="res://assets/audio/music/game-music-loop.wav" id="2_q5onr"]
+[ext_resource type="AudioStream" uid="uid://bvriiml4ddadw" path="res://assets/audio/ambience/Retro Ambience Acute 01.wav" id="3_jhx03"]
 [ext_resource type="PackedScene" uid="uid://c3m5bijh62cvp" path="res://scenes/GUI/player_hud/player_hud.tscn" id="3_k0juu"]
 [ext_resource type="PackedScene" uid="uid://g5cbr4aveehy" path="res://entities/dummies/damage_dummy.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://di3hdfgsqaqes" path="res://entities/player/player_character.tscn" id="5_qfnet"]
-[ext_resource type="PackedScene" uid="uid://dpvbrqt0ybytq" path="res://scenes/GUI/enemies/demage_digit.tscn" id="7_i7141"]
 [ext_resource type="PackedScene" uid="uid://cuia2q73xmxbb" path="res://entities/collectables/water_collectable.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://b7vwn73414imm" path="res://entities/enemies/enemy_raizmutante.tscn" id="8_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://dbv3o1nbs10ug" path="res://entities/collectables/adubobar_collectable.tscn" id="9_7r4gi"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
+[ext_resource type="PackedScene" uid="uid://bn5p53q3mroyi" path="res://entities/enemies/enemy_tomate.tscn" id="9_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://pu6u1jxy4xdp" path="res://scenes/Levels/Lab/Lab_Scene.tscn" id="10_e3hyu"]
 
 [node name="World" type="Node2D" unique_id=1833840015]
+script = ExtResource("1_w7kh3")
+world_music = ExtResource("2_q5onr")
+world_ambient = ExtResource("3_jhx03")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=886994082]
-modulate = Color(0.14044744, 0.14044744, 0.14044744, 1)
-position = Vector2(583, 303)
-scale = Vector2(2728.75, 1584.25)
-mesh = SubResource("QuadMesh_e5uuo")
-metadata/_edit_lock_ = true
-
-[node name="TargetDummy4" parent="." unique_id=1159320106 instance=ExtResource("2_rwgxs")]
-position = Vector2(491, 425)
-collision_mask = 2
-
-[node name="DemageDigit" parent="TargetDummy4" unique_id=776883132 instance=ExtResource("7_i7141")]
+[node name="Node2D" parent="." unique_id=2048529966 instance=ExtResource("10_e3hyu")]
+position = Vector2(1334, -19)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=284375990]
 
 [node name="PlayerHud" parent="UI" unique_id=206348407 node_paths=PackedStringArray("player") instance=ExtResource("3_k0juu")]
 player = NodePath("../../PlayerCharacter")
 
-[node name="PlayerCharacter" parent="." unique_id=232863277 instance=ExtResource("5_qfnet")]
-position = Vector2(482, 268)
-
-[node name="WaterCollectable" parent="." unique_id=300314204 instance=ExtResource("8_4mrxx")]
-position = Vector2(349, 182)
-
-[node name="AduboBarCollectable" parent="." unique_id=239203763 instance=ExtResource("9_7r4gi")]
-position = Vector2(529, 170)
-
 [node name="damage_dummy" parent="." unique_id=1326439928 instance=ExtResource("5_71j4m")]
-position = Vector2(370, 424)
+position = Vector2(143, 329.99997)
+scale = Vector2(4, 19.479998)
+
+[node name="damage_dummy2" parent="." unique_id=1480567095 instance=ExtResource("5_71j4m")]
+position = Vector2(2713, -537)
+scale = Vector2(4, 19.479998)
+
+[node name="RaizMutante" parent="." unique_id=500671409 instance=ExtResource("8_7r4gi")]
+position = Vector2(1482, 353)
+target_path = NodePath("../PlayerCharacter")
+
+[node name="Tomate2" parent="." unique_id=1199600199 instance=ExtResource("9_w7kh3")]
+position = Vector2(1225, 322)
+target_path = NodePath("../PlayerCharacter")
+
+[node name="PlayerCharacter" parent="." unique_id=232863277 instance=ExtResource("5_qfnet")]
+position = Vector2(484, 268)
+
+[node name="AduboBarCollectable" parent="." unique_id=300314204 instance=ExtResource("9_7r4gi")]
+position = Vector2(562, 126)
+
+[node name="AduboBarCollectable2" parent="." unique_id=517098548 instance=ExtResource("9_7r4gi")]
+position = Vector2(565, 510)
+
+[node name="WaterCollectable" parent="." unique_id=486143170 instance=ExtResource("8_4mrxx")]
+position = Vector2(275, 130)
+
+[node name="WaterCollectable2" parent="." unique_id=543628850 instance=ExtResource("8_4mrxx")]
+position = Vector2(271, 513)
