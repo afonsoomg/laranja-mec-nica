@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cuia2q73xmxbb"]
+
+[ext_resource type="PackedScene" uid="uid://cse0ivpwit2qb" path="res://entities/collectables/collectable_base.tscn" id="1_bcwto"]
+[ext_resource type="Script" uid="uid://gdp56di3w5kh" path="res://scripts/collectables/WaterCollectable.gd" id="2_3htwm"]
+[ext_resource type="Texture2D" uid="uid://cch3uc25wo6yj" path="res://assets/images/collectables/Agua.png" id="2_k563a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3htwm"]
+atlas = ExtResource("2_k563a")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh7rl"]
+atlas = ExtResource("2_k563a")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_creas"]
+atlas = ExtResource("2_k563a")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keunm"]
+atlas = ExtResource("2_k563a")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmfhc"]
+atlas = ExtResource("2_k563a")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v45mf"]
+atlas = ExtResource("2_k563a")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7sq2w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3htwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh7rl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_creas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keunm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmfhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v45mf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="WaterCollectable" unique_id=300314204 instance=ExtResource("1_bcwto")]
+scale = Vector2(2, 2)
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("2_3htwm")
+heal_amount = 20
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]
+sprite_frames = SubResource("SpriteFrames_7sq2w")
+autoplay = "default"
+frame_progress = 0.33368397
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1538310968]
+position = Vector2(0.25, -2.5)

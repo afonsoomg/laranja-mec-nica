@@ -28,7 +28,7 @@ func _connect_signals() -> void:
 	if hurtbox_component and not hurtbox_component.hit_received.is_connected(_on_hit_received):
 		hurtbox_component.hit_received.connect(_on_hit_received)
 
-func _on_hit_received(_damage: int, _direction: Vector2, _force: float) -> void:
+func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_critical: bool) -> void:
 	if is_dead:
 		return
 

@@ -7,8 +7,6 @@ class_name DamageDigitComponent
 @export var spawn_on_parent: bool = true
 
 func _ready() -> void:
-	#print("DamageDigitComponent _ready chamado")
-	
 	if damage_digit_prefab == null:
 		push_error("DamageDigitComponent precisa de um damage_digit_prefab.")
 		return
@@ -23,13 +21,11 @@ func _ready() -> void:
 	hurtbox_component.hit_received.connect(_on_hit_received)
 
 
-func _on_hit_received(damage: int, _hit_direction: Vector2, _knockback_force: float) -> void:
-	#print("DamageDigitComponent recebeu hit:", damage)
-	_spawn_damage_digit(damage)
+func _on_hit_received(damage: int, _hit_direction: Vector2, _knockback_force: float, is_critical: bool) -> void:
+	_spawn_damage_digit(damage, is_critical)
 
 
-func _spawn_damage_digit(amount: int) -> void:
-	#print("Tentando spawnar damage digit:", amount)
+func _spawn_damage_digit(amount: int, is_critical: bool = false) -> void:
 	if damage_digit_prefab == null:
 		return
 
@@ -38,6 +34,7 @@ func _spawn_damage_digit(amount: int) -> void:
 		return
 
 	damage_digit.value = amount
+	damage_digit.is_critical = is_critical
 
 	if spawn_marker != null:
 		damage_digit.global_position = spawn_marker.global_position
@@ -46,8 +43,6 @@ func _spawn_damage_digit(amount: int) -> void:
 
 	var parent_node := get_parent() if spawn_on_parent else get_tree().current_scene
 	parent_node.add_child(damage_digit)
-	
-	#print("Damage digit spawnado em:", damage_digit.global_position)
 
 
 func _get_owner_global_position() -> Vector2:

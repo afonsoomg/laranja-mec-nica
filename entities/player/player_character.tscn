@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://clp8jguedjxhj" path="res://scripts/components/InputComponent.gd" id="10_5f50k"]
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="11_at3bx"]
 [ext_resource type="Script" uid="uid://b8l3dxdd13qia" path="res://scripts/components/CameraComponent.gd" id="12_hblhq"]
+[ext_resource type="Script" uid="uid://kwl352vydpxa" path="res://scripts/components/BuffComponent.gd" id="14_u37yl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
@@ -1823,7 +1824,10 @@ position = Vector2(0, 0)
 shape = SubResource("CapsuleShape2D_ltqxl")
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
-max_health = 200
+walk_speed = 100.0
+run_speed = 250.0
+attack_damage = 12
+crit_chance = 0.1
 
 [node name="HurtboxComponent" parent="." index="3" unique_id=1218474791]
 collision_mask = 16
@@ -1870,8 +1874,14 @@ debug_color = Color(0.9764706, 0.5058824, 0.69803923, 0.41960785)
 scale = Vector2(4, 4)
 script = ExtResource("12_hblhq")
 target = NodePath("..")
-look_ahead_distance = 100.0
+look_ahead_distance = 120.0
 look_ahead_smoothing = 1.0
 shake_on_hit_target = 2.0
-run_zoom = Vector2(0.92, 0.92)
+shake_on_receive_hit = 1.0
+run_zoom = Vector2(0.8, 0.8)
+zoom_smoothing = 10.0
 metadata/_custom_type_script = "uid://b8l3dxdd13qia"
+
+[node name="BuffComponent" type="Node" parent="." index="13" unique_id=1477985089]
+script = ExtResource("14_u37yl")
+metadata/_custom_type_script = "uid://kwl352vydpxa"

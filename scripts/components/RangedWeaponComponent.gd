@@ -23,6 +23,9 @@ var is_on_cooldown: bool = false
 func _ready() -> void:
 	if projectile_scene == null:
 		push_error("RangedWeaponComponent precisa de um projectile_scene.")
+		
+	damage = stats_component.attack_damage
+	cooldown = stats_component.attack_cooldown
 
 
 func try_shoot(shoot_direction: Vector2 = Vector2.ZERO) -> void:

@@ -1,7 +1,7 @@
 extends Area2D
 class_name HurtboxComponent
 
-signal hit_received(damage: int, direction: Vector2, force: float)
+signal hit_received(damage: int, direction: Vector2, force: float, is_critical: bool)
 signal killed
 
 @onready var health_component: HealthComponent = $"../HealthComponent"
@@ -18,14 +18,14 @@ func _ready() -> void:
 		health_component.died.connect(_on_owner_died)
 
 
-func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_force: float = 0.0) -> void:
+func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_force: float = 0.0, is_critical: bool = false) -> void:
 	if not can_receive_hits:
 		return
 
 	if health_component == null or health_component.is_dead:
 		return
 
-	hit_received.emit(damage, hit_direction, knockback_force)
+	hit_received.emit(damage, hit_direction, knockback_force, is_critical)
 
 	if knockback_component != null and knockback_force > 0.0:
 		knockback_component.apply_knockback(hit_direction, knockback_force)

@@ -96,6 +96,7 @@ game_run={
 2d_physics/layer_3="EnemyBody"
 2d_physics/layer_4="HurtBox"
 2d_physics/layer_5="WeaponHitbox"
+2d_physics/layer_6="Collectables"
 2d_physics/layer_16="Projectiles"
 
 [physics]

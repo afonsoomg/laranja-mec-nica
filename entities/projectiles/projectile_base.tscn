@@ -14,9 +14,8 @@ script = ExtResource("1_a6h5p")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1900281838]
 shape = SubResource("RectangleShape2D_a6h5p")
 
-[node name="ProjectileComponent" type="Node" parent="." unique_id=74662904 node_paths=PackedStringArray("projectile_area", "sprite", "collision_shape")]
+[node name="ProjectileComponent" type="Node" parent="." unique_id=74662904 node_paths=PackedStringArray("projectile_area", "collision_shape")]
 script = ExtResource("1_heyrr")
 projectile_area = NodePath("..")
-sprite = NodePath("")
 collision_shape = NodePath("../CollisionShape2D")
 metadata/_custom_type_script = "uid://cis54ok1qeg2l"

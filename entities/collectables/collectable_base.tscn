@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cse0ivpwit2qb"]
+
+[ext_resource type="Script" uid="uid://b1bjjo0movqfn" path="res://scripts/collectables/CollectableBase.gd" id="1_hprl2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hprl2"]
+size = Vector2(17.5, 27)
+
+[node name="CollectableBase" type="Area2D" unique_id=300314204]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_hprl2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=180836247]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1538310968]
+shape = SubResource("RectangleShape2D_hprl2")

@@ -18,6 +18,10 @@ signal stat_changed(stat_name: StringName, new_value: Variant)
 @export var hitbox_duration: float = 0.12
 @export var knockback_force: float = 140.0
 
+@export_group("Critical")
+@export_range(0.0, 1.0, 0.01) var crit_chance: float = 0.0
+@export var crit_multiplier: float = 1.5
+
 
 func set_walk_speed(value: float) -> void:
 	if is_equal_approx(walk_speed, value):

@@ -4,6 +4,7 @@ class_name WeaponComponent
 signal attack_started
 signal attack_finished
 signal target_hit(target: Node, damage: int)
+signal critical_hit(target: Node, damage: int)
 
 @export_group("Component References")
 @export var stats_component: StatsComponent
@@ -126,6 +127,22 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	_try_hit_target(area)
 
 
+func _roll_damage() -> Dictionary:
+	var base_damage := stats_component.attack_damage
+	var crit_chance := clampf(stats_component.crit_chance, 0.0, 1.0)
+	var crit_multiplier: float = max(stats_component.crit_multiplier, 1.0)
+
+	var is_critical := randf() < crit_chance
+	var final_damage := base_damage
+
+	if is_critical:
+		final_damage = int(round(base_damage * crit_multiplier))
+
+	return {
+		"damage": final_damage,
+		"is_critical": is_critical
+	}
+
 func _try_hit_target(target: Node) -> void:
 	if target == null:
 		return
@@ -146,12 +163,19 @@ func _try_hit_target(target: Node) -> void:
 
 	_hit_targets.append(hurtbox)
 
-	var damage := stats_component.attack_damage
+	var hit_result := _roll_damage()
+	var damage: int = hit_result.damage
+	var is_critical: bool = hit_result.is_critical
+
 	var hit_direction := move_component.facing_direction
 	var knockback_force := stats_component.knockback_force
 
-	hurtbox.receive_hit(damage, hit_direction, knockback_force)
+	hurtbox.receive_hit(damage, hit_direction, knockback_force, is_critical)
 	target_hit.emit(hurtbox, damage)
+
+	if is_critical:
+		critical_hit.emit(hurtbox, damage)
+		print("CRITICAL HIT! Damage: ", damage)
 
 
 func _extract_hurtbox(target: Node) -> HurtboxComponent:

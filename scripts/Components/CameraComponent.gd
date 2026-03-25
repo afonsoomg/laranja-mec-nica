@@ -140,7 +140,7 @@ func _on_target_hit(_target_hit: Node, _damage: int) -> void:
 	add_shake(shake_on_hit_target)
 
 
-func _on_hit_received(_damage: int, _direction: Vector2, _force: float) -> void:
+func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_critical: bool) -> void:
 	add_shake(shake_on_receive_hit)
 
 

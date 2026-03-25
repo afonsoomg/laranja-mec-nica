@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dbv3o1nbs10ug"]
+
+[ext_resource type="PackedScene" uid="uid://cse0ivpwit2qb" path="res://entities/collectables/collectable_base.tscn" id="1_1kxsa"]
+[ext_resource type="Texture2D" uid="uid://gwed6sowi5nd" path="res://assets/images/collectables/Barra de adubo.png" id="2_ao7dr"]
+[ext_resource type="Script" uid="uid://jejb7tq8f34m" path="res://scripts/collectables/AduboBarCollectable.gd" id="2_e877c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e877c"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mgka"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yp8rg"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e04o1"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_po1x7"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfwwr"]
+atlas = ExtResource("2_ao7dr")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4u7yw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e877c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mgka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yp8rg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e04o1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_po1x7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfwwr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="AduboBarCollectable" unique_id=300314204 instance=ExtResource("1_1kxsa")]
+scale = Vector2(2, 2)
+script = ExtResource("2_e877c")
+crit_bonus = 0.9
+buff_duration = 20.0
+destroy_on_collect = null
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]
+sprite_frames = SubResource("SpriteFrames_4u7yw")
+autoplay = "default"
+frame = 4
+frame_progress = 0.11525125

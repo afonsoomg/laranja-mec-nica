@@ -553,7 +553,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dhaj2")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_down",
 "speed": 10.0
 }, {
@@ -591,7 +591,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tm630")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_left",
 "speed": 10.0
 }, {
@@ -626,7 +626,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4jj78")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_right",
 "speed": 10.0
 }, {
@@ -664,7 +664,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1k25w")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_up",
 "speed": 10.0
 }, {
@@ -824,7 +824,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s8tg3")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_down",
 "speed": 10.0
 }, {
@@ -844,7 +844,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bfbta")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_left",
 "speed": 10.0
 }, {
@@ -864,7 +864,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_30amd")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_right",
 "speed": 10.0
 }, {
@@ -884,7 +884,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qn8q8")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_up",
 "speed": 10.0
 }, {
@@ -1061,9 +1061,8 @@ shape = SubResource("CircleShape2D_qnpvi")
 debug_color = Color(0.9964505, 0, 0.19525993, 0.41960785)
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
-max_health = 20
 attack_damage = 15
-knockback_force = 60.0
+knockback_force = 120.0
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
 shape = SubResource("CircleShape2D_nwm60")
@@ -1077,13 +1076,15 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 sprite_frames = SubResource("SpriteFrames_r8m5l")
-animation = &"idle_down"
+animation = &"attack_down"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="EnemyAIComponent" parent="." index="9" unique_id=1403723744]
+chase_range = 400.0
 attack_range = 40.0
+lose_target_range = 540.0
 
 [node name="ProgressBar" parent="." index="12" unique_id=494705679]
 offset_left = -33.0

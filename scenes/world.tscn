@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b7vwn73414imm" path="res://entities/enemies/enemy_raizmutante.tscn" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://bn5p53q3mroyi" path="res://entities/enemies/enemy_tomate.tscn" id="7_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dpvbrqt0ybytq" path="res://scenes/GUI/enemies/demage_digit.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://cuia2q73xmxbb" path="res://entities/collectables/water_collectable.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://dbv3o1nbs10ug" path="res://entities/collectables/adubobar_collectable.tscn" id="9_7r4gi"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_e5uuo"]
 
@@ -46,4 +48,11 @@ target_path = NodePath("../PlayerCharacter")
 
 [node name="EnemyStatic3" parent="." unique_id=1986083427 instance=ExtResource("7_4mrxx")]
 position = Vector2(307, 91)
+hit_pause_duration = 3.0
 target_path = NodePath("../PlayerCharacter")
+
+[node name="WaterCollectable" parent="." unique_id=300314204 instance=ExtResource("8_4mrxx")]
+position = Vector2(843, 119)
+
+[node name="CollectableBase" parent="." unique_id=1824345643 instance=ExtResource("9_7r4gi")]
+position = Vector2(848, 281)

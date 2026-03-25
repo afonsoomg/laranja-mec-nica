@@ -21,3 +21,12 @@ func _physics_process(delta: float) -> void:
 		animation_component.update_animation()
 
 	super._physics_process(delta)
+	
+func collect_collectable(collectable: CollectableBase) -> void:
+	if collectable == null:
+		return
+
+	var collected_successfully := collectable.apply_to_collector(self)
+
+	if collected_successfully:
+		collectable.on_collected(self)

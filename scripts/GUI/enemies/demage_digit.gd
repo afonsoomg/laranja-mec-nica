@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var value: int = 0
+@export var is_critical: bool = false
 
 @onready var label: Label = $Node2D/Label
 
@@ -12,9 +13,11 @@ func _ready() -> void:
 	top_level = true
 	label.text = str(value)
 	label.visible = true
-	#label.modulate = Color(1, 0, 0, 1)
-
-	visible = true
-	#modulate = Color(1, 1, 1, 1)
-	scale = Vector2(2, 2)
-	#z_index = 100
+	
+	if is_critical:
+		label.text = "CRIT " + str(value) + "!"
+		label.modulate = Color(0.863, 0.775, 0.0, 1.0)
+		scale = Vector2(2.6, 2.6)
+	else:
+		label.text = str(value)
+		scale = Vector2(2, 2)
