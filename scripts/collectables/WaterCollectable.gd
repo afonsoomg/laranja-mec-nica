@@ -3,9 +3,7 @@ class_name WaterCollectable
 
 @export var heal_amount: int = 20
 
-func apply_to_collector(collector: Node) -> bool:
-	print("Water Collected")
-	
+func apply_to_collector(collector: Node) -> bool:	
 	if collector == null:
 		return false
 
@@ -23,4 +21,14 @@ func apply_to_collector(collector: Node) -> bool:
 		return false
 
 	health_component.heal(heal_amount)
+	
+	var audio_component := collector.get_node_or_null("AudioComponent") as AudioComponent
+	if audio_component:
+		audio_component.play_collect()
+		audio_component.play_heal()
+
+	var vfx_component := collector.get_node_or_null("VfxComponent") as VfxComponent
+	if vfx_component:
+		vfx_component.play_heal_burst()
+		
 	return true

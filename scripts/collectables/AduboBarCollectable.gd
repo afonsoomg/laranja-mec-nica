@@ -4,6 +4,10 @@ class_name AduboBarCollectable
 @export_range(0.0, 1.0, 0.01) var crit_bonus: float = 0.25
 @export var buff_duration: float = 8.0
 
+func _ready() -> void:
+	super._ready()
+	print("AduboBarCollectable ready")
+
 func apply_to_collector(collector: Node) -> bool:
 	if collector == null:
 		return false

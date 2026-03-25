@@ -6,6 +6,8 @@ class_name CharacterBase
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var audio_component: AudioComponent = get_node_or_null("AudioComponent") as AudioComponent
+@onready var vfx_component: VfxComponent = get_node_or_null("VfxComponent") as VfxComponent
 
 var is_dead: bool = false
 
@@ -44,6 +46,12 @@ func _on_died() -> void:
 	
 	if knockback_component:
 		knockback_component.clear_knockback()
+		
+	if audio_component:
+		audio_component.play_death()
+
+	if vfx_component:
+		vfx_component.play_death_burst()
 
 	if animation_component:
 		animation_component.play_dying()

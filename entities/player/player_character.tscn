@@ -14,6 +14,14 @@
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="11_at3bx"]
 [ext_resource type="Script" uid="uid://b8l3dxdd13qia" path="res://scripts/components/CameraComponent.gd" id="12_hblhq"]
 [ext_resource type="Script" uid="uid://kwl352vydpxa" path="res://scripts/components/BuffComponent.gd" id="14_u37yl"]
+[ext_resource type="AudioStream" uid="uid://cu3xc0qhf1i56" path="res://assets/audio/player_attack.wav" id="15_2ll1q"]
+[ext_resource type="Script" uid="uid://dyordov7s6aup" path="res://scripts/components/AudioComponent.gd" id="15_ulwpx"]
+[ext_resource type="AudioStream" uid="uid://chysue0mru37n" path="res://assets/audio/player_hurt.wav" id="16_5f50k"]
+[ext_resource type="Script" uid="uid://bcn0vlwmj44jy" path="res://scripts/components/VfxComponent.gd" id="16_ysq06"]
+[ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/69_Enemy_death_01.wav" id="17_at3bx"]
+[ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/02_Heal_02.wav" id="18_hblhq"]
+[ext_resource type="AudioStream" uid="uid://6po2dov2rnpc" path="res://assets/audio/16_Atk_buff_04.wav" id="19_yr7e7"]
+[ext_resource type="AudioStream" uid="uid://b4imtw11lyfcg" path="res://assets/audio/21_Debuff_01.wav" id="20_wssc2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
@@ -1885,3 +1893,26 @@ metadata/_custom_type_script = "uid://b8l3dxdd13qia"
 [node name="BuffComponent" type="Node" parent="." index="13" unique_id=1477985089]
 script = ExtResource("14_u37yl")
 metadata/_custom_type_script = "uid://kwl352vydpxa"
+
+[node name="AudioComponent" parent="." index="15" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
+script = ExtResource("15_ulwpx")
+sfx_player = NodePath("SfxPlayer")
+attack_sfx = ExtResource("15_2ll1q")
+hurt_sfx = ExtResource("16_5f50k")
+death_sfx = ExtResource("17_at3bx")
+heal_sfx = ExtResource("18_hblhq")
+crit_buff_start_sfx = ExtResource("19_yr7e7")
+crit_buff_end_sfx = ExtResource("20_wssc2")
+
+[node name="VfxComponent" parent="." index="16" unique_id=1741814442 node_paths=PackedStringArray("heal_burst", "crit_buff_burst", "crit_aura")]
+script = ExtResource("16_ysq06")
+heal_burst = NodePath("../VFX/HealBurst")
+crit_buff_burst = NodePath("../VFX/CritBuffBurst")
+crit_aura = NodePath("../VFX/CritAura")
+
+[node name="HealBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="0" unique_id=267088283]
+position = Vector2(0, 8)
+lifetime = 0.7
+
+[node name="CritBuffBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="1" unique_id=1347889945]
+amount = 35

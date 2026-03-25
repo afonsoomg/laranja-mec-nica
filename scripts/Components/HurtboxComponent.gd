@@ -6,6 +6,9 @@ signal killed
 
 @onready var health_component: HealthComponent = $"../HealthComponent"
 @onready var knockback_component: KnockbackComponent = get_node_or_null("../KnockbackComponent") as KnockbackComponent
+@onready var audio_component: AudioComponent = get_node_or_null("../AudioComponent") as AudioComponent
+@onready var vfx_component: VfxComponent = get_node_or_null("../VfxComponent") as VfxComponent
+
 
 @export var can_receive_hits: bool = true
 
@@ -30,6 +33,12 @@ func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_f
 	if knockback_component != null and knockback_force > 0.0:
 		knockback_component.apply_knockback(hit_direction, knockback_force)
 
+	if audio_component:
+		audio_component.play_hurt()
+	
+	if vfx_component:
+		print("Falta VFX de hurt")
+	
 	health_component.take_damage(damage)
 
 func _on_owner_died() -> void:

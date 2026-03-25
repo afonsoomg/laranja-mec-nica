@@ -3,6 +3,13 @@ extends CharacterBase
 @onready var input_component: InputComponent = $InputComponent
 @onready var weapon_component: WeaponComponent = $WeaponComponent
 
+func _ready() -> void:
+	super._ready()
+	if weapon_component != null and audio_component != null:
+		if not weapon_component.attack_started.is_connected(_on_attack_started):
+			weapon_component.attack_started.connect(_on_attack_started)
+
+
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
@@ -22,6 +29,7 @@ func _physics_process(delta: float) -> void:
 
 	super._physics_process(delta)
 	
+	
 func collect_collectable(collectable: CollectableBase) -> void:
 	if collectable == null:
 		return
@@ -30,3 +38,8 @@ func collect_collectable(collectable: CollectableBase) -> void:
 
 	if collected_successfully:
 		collectable.on_collected(self)
+		
+		
+func _on_attack_started() -> void:
+	if audio_component:
+		audio_component.play_attack()

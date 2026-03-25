@@ -10,11 +10,11 @@
 [ext_resource type="Script" uid="uid://doq3xcghd36dc" path="res://scripts/components/RangedWeaponComponent.gd" id="8_a2lsk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ci6l"]
-radius = 12.0
+radius = 14.0
 height = 57.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q4faw"]
-radius = 14.0
+radius = 15.5
 height = 76.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mlct"]
@@ -1229,6 +1229,7 @@ attack_cooldown = 5.0
 knockback_force = 60.0
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
+position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_q4faw")
 debug_color = Color(0.9992154, 0, 0.13348177, 0.41960785)
 
@@ -1261,9 +1262,9 @@ shape = SubResource("CapsuleShape2D_a3opq")
 
 [node name="ProgressBar" parent="." index="12" unique_id=494705679]
 offset_left = -13.0
-offset_top = -54.0
+offset_top = -42.0
 offset_right = 14.0
-offset_bottom = -50.0
+offset_bottom = -38.0
 
 [node name="RangedWeaponComponent" type="Node" parent="." index="13" unique_id=541326372 node_paths=PackedStringArray("projectile_spawn_marker", "move_component", "animation_component", "stats_component")]
 script = ExtResource("8_a2lsk")
@@ -1278,3 +1279,6 @@ metadata/_custom_type_script = "uid://doq3xcghd36dc"
 
 [node name="ProjectileSpawnMaker" type="Node2D" parent="." index="14" unique_id=2043519706]
 position = Vector2(37, 0)
+
+[node name="HitFlashComponent" parent="." index="15" unique_id=565526771]
+flash_color = Color(0.4745098, 0.24313726, 1, 1)

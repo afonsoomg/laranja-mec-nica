@@ -35,7 +35,7 @@ script = ExtResource("4_mujiu")
 walk_speed = 0.0
 run_speed = 0.0
 acceleration = 0.0
-max_health = 30
+max_health = 999999
 knockback_force = 10.0
 metadata/_custom_type_script = "uid://ceu58uush3mjr"
 

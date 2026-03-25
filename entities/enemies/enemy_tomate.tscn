@@ -1091,3 +1091,6 @@ offset_left = -33.0
 offset_top = -46.0
 offset_right = 30.0
 offset_bottom = -39.0
+
+[node name="HitFlashComponent" parent="." index="13" unique_id=565526771]
+flash_color = Color(18.892157, 18.892157, 0.9696924, 1)
