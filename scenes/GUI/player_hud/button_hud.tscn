@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bo2ek8op504dv"]
 
-[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/menu_principal/Pixeldrop.ttf" id="1_688v3"]
+[ext_resource type="FontFile" uid="uid://xj1mq8gtlenu" path="res://scenes/GUI/gameUI/Pixeldrop.ttf" id="1_688v3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uxd7"]
 bg_color = Color(0.9254902, 0.43529412, 0.1882353, 1)

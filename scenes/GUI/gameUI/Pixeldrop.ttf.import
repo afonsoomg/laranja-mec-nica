@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://xj1mq8gtlenu"
-path="res://.godot/imported/Pixeldrop.ttf-fbce3bbe66924dcf27360cea6f199f6a.fontdata"
+path="res://.godot/imported/Pixeldrop.ttf-2a507796eb54874b6171de4214edd288.fontdata"
 
 [deps]
 
-source_file="res://scenes/GUI/menu_principal/Pixeldrop.ttf"
-dest_files=["res://.godot/imported/Pixeldrop.ttf-fbce3bbe66924dcf27360cea6f199f6a.fontdata"]
+source_file="res://scenes/GUI/gameUI/Pixeldrop.ttf"
+dest_files=["res://.godot/imported/Pixeldrop.ttf-2a507796eb54874b6171de4214edd288.fontdata"]
 
 [params]
 

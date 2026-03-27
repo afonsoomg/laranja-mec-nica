@@ -43,3 +43,4 @@ func collect_collectable(collectable: CollectableBase) -> void:
 func _on_attack_started() -> void:
 	if audio_component:
 		audio_component.play_attack()
+		

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvd77yisqs2dv"
-path="res://.godot/imported/fundo-texturizado-abstrato_1258-30447.webp-45f9bb65cdf7928114da5b5e2497c9e2.ctex"
+path="res://.godot/imported/fundo-texturizado-abstrato_1258-30447.webp-45163bcb653997bd1de669edd13e5763.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/main_menu/fundo-texturizado-abstrato_1258-30447.webp"
-dest_files=["res://.godot/imported/fundo-texturizado-abstrato_1258-30447.webp-45f9bb65cdf7928114da5b5e2497c9e2.ctex"]
+source_file="res://assets/images/gameUI/fundo-texturizado-abstrato_1258-30447.webp"
+dest_files=["res://.godot/imported/fundo-texturizado-abstrato_1258-30447.webp-45163bcb653997bd1de669edd13e5763.ctex"]
 
 [params]
 
