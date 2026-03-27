@@ -4,20 +4,27 @@ class_name HurtboxComponent
 signal hit_received(damage: int, direction: Vector2, force: float, is_critical: bool)
 signal killed
 
-@onready var health_component: HealthComponent = $"../HealthComponent"
-@onready var knockback_component: KnockbackComponent = get_node_or_null("../KnockbackComponent") as KnockbackComponent
-@onready var audio_component: AudioComponent = get_node_or_null("../AudioComponent") as AudioComponent
-@onready var vfx_component: VfxComponent = get_node_or_null("../VfxComponent") as VfxComponent
-
+var health_component: HealthComponent
+var knockback_component: KnockbackComponent
+var audio_component: AudioComponent
+var vfx_component: VfxComponent
 
 @export var can_receive_hits: bool = true
 
 
 func _ready() -> void:
+	health_component = ComponentValidator.require_node(self, NodePath("../HealthComponent"), "HealthComponent", "HealthComponent") as HealthComponent
 	if health_component == null:
-		push_error("HurtboxComponent precisa de um HealthComponent.")
+		set_physics_process(false)
+		set_deferred("monitoring", false)
+		set_deferred("monitorable", false)
+		return
 
-	if health_component != null:
+	knockback_component = get_node_or_null("../KnockbackComponent") as KnockbackComponent
+	audio_component = get_node_or_null("../AudioComponent") as AudioComponent
+	vfx_component = get_node_or_null("../VfxComponent") as VfxComponent
+	
+	if not health_component.died.is_connected(_on_owner_died):
 		health_component.died.connect(_on_owner_died)
 
 

@@ -4,31 +4,42 @@ extends CharacterBase
 @export var dodge_stamina_cost: float = 30.0
 @export var run_stamina_cost_per_second: float = 18.0
 
-@onready var input_component: InputComponent = $InputComponent
-@onready var weapon_component: WeaponComponent = $WeaponComponent
-@onready var stamina_component: StaminaComponent = $StaminaComponent
-@onready var combat_state: CombatStateComponent = $CombatStateComponent
-@onready var dodge_component: DodgeComponent = $DodgeComponent
+var input_component: InputComponent
+var weapon_component: WeaponComponent
+var stamina_component: StaminaComponent
+var combat_state: CombatStateComponent
+var dodge_component: DodgeComponent
 
 var locked_attack_direction: Vector2 = Vector2.DOWN
 
+
 func _ready() -> void:
 	super._ready()
+	
+	if not ComponentValidator.require_nodes(self, [
+		{"path": NodePath("InputComponent"), "expected_type": "InputComponent", "name": "InputComponent", "assign_to": "input_component"},
+		{"path": NodePath("WeaponComponent"), "expected_type": "WeaponComponent", "name": "WeaponComponent", "assign_to": "weapon_component"},
+		{"path": NodePath("StaminaComponent"), "expected_type": "StaminaComponent", "name": "StaminaComponent", "assign_to": "stamina_component"},
+		{"path": NodePath("CombatStateComponent"), "expected_type": "CombatStateComponent", "name": "CombatStateComponent", "assign_to": "combat_state"},
+		{"path": NodePath("DodgeComponent"), "expected_type": "DodgeComponent", "name": "DodgeComponent", "assign_to": "dodge_component"},
+	]):
+		set_physics_process(false)
+		return
+		
 	add_to_group("player")
 
-	if weapon_component != null and audio_component != null:
-		if not weapon_component.attack_started.is_connected(_on_attack_started):
-			weapon_component.attack_started.connect(_on_attack_started)
+	if not weapon_component.attack_started.is_connected(_on_attack_started):
+		weapon_component.attack_started.connect(_on_attack_started)
 
-	if animated_sprite and not animated_sprite.animation_finished.is_connected(_on_animation_finished):
-		animated_sprite.animation_finished.connect(_on_animation_finished)
-
-	if combat_state != null:
+	if not combat_state.dodge_started.is_connected(_on_dodge_started):
 		combat_state.dodge_started.connect(_on_dodge_started)
+		
+	if not combat_state.dodge_finished.is_connected(_on_dodge_finished):
 		combat_state.dodge_finished.connect(_on_dodge_finished)
 
-	if dodge_component != null:
+	if not dodge_component.dodge_finished.is_connected(_on_component_dodge_finished):
 		dodge_component.dodge_finished.connect(_on_component_dodge_finished)
+
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -66,8 +77,6 @@ func _physics_process(delta: float) -> void:
 
 	super._physics_process(delta)
 
-	if animation_component.is_hurt and combat_state.is_attacking:
-		_cancel_attack_state()
 
 func _handle_combat_input() -> void:
 	if input_component.is_attack_just_pressed():
@@ -76,16 +85,8 @@ func _handle_combat_input() -> void:
 	if input_component.is_dodge_just_pressed():
 		_try_start_dodge()
 
+
 func _try_start_attack() -> void:
-	if weapon_component == null or animation_component == null or stamina_component == null:
-		return
-
-	if weapon_component.pending_attack or weapon_component.is_attacking:
-		return
-
-	if animation_component.is_attacking or animation_component.is_hurt or animation_component.is_dying:
-		return
-
 	if not combat_state.can_start_attack():
 		return
 
@@ -96,15 +97,11 @@ func _try_start_attack() -> void:
 	move_component.facing_direction = attack_dir
 	locked_attack_direction = attack_dir
 
-	if not combat_state.start_attack():
-		return
+	if not combat_state.request_attack(attack_dir):
+		stamina_component.restore(attack_stamina_cost)
 
-	weapon_component.request_attack(attack_dir)
 
 func _try_start_dodge() -> void:
-	if dodge_component == null or stamina_component == null:
-		return
-
 	if combat_state.is_dodging:
 		return
 
@@ -131,7 +128,7 @@ func _try_start_dodge() -> void:
 		return
 
 	move_component.facing_direction = dodge_dir
-	
+
 
 func _get_mouse_attack_direction() -> Vector2:
 	var to_mouse := get_global_mouse_position() - global_position
@@ -140,6 +137,7 @@ func _get_mouse_attack_direction() -> Vector2:
 		return move_component.facing_direction
 
 	return _quantize_to_4_directions(to_mouse)
+
 
 func _get_mouse_dodge_direction() -> Vector2:
 	var to_mouse := get_global_mouse_position() - global_position
@@ -151,6 +149,7 @@ func _get_mouse_dodge_direction() -> Vector2:
 
 	return _quantize_to_4_directions(to_mouse)
 
+
 func _quantize_to_4_directions(dir: Vector2) -> Vector2:
 	if dir == Vector2.ZERO:
 		return Vector2.ZERO
@@ -160,16 +159,6 @@ func _quantize_to_4_directions(dir: Vector2) -> Vector2:
 	else:
 		return Vector2.DOWN if dir.y > 0.0 else Vector2.UP
 
-func _cancel_attack_state() -> void:
-	if weapon_component != null:
-		weapon_component.cancel_attack()
-
-	if combat_state != null:
-		combat_state.cancel_attack()
-
-	if animation_component != null:
-		animation_component.is_attacking = false
-		animation_component.locked_action_animation = ""
 
 func collect_collectable(collectable: CollectableBase) -> void:
 	if collectable == null:
@@ -180,27 +169,21 @@ func collect_collectable(collectable: CollectableBase) -> void:
 	if collected_successfully:
 		collectable.on_collected(self)
 
-func _on_attack_started() -> void:
+
+func _on_attack_started(_direction: Vector2) -> void:
 	if audio_component:
 		audio_component.play_attack()
 
-func _on_animation_finished() -> void:
-	if animated_sprite.animation.begins_with("attack_"):
-		combat_state.finish_attack()
 
 func _on_dodge_started() -> void:
-	if weapon_component != null:
-		weapon_component.cancel_attack()
+	if combat_state != null and combat_state.is_attacking:
+		combat_state.interrupt_attack("dodge_started")
 
-	if combat_state != null:
-		combat_state.cancel_attack()
-
-	if animation_component != null:
-		animation_component.is_attacking = false
-		animation_component.locked_action_animation = ""
 
 func _on_dodge_finished() -> void:
 	pass
 
+
 func _on_component_dodge_finished() -> void:
-	combat_state.finish_dodge()
+	if combat_state != null:
+		combat_state.finish_dodge()

@@ -2,39 +2,42 @@ extends Node
 class_name AnimationComponent
 
 signal animation_finished(animation_name: String)
+signal attack_hit_frame_reached(animation_name: String)
 
 @export var move_component: MoveComponent
 @export var animated_sprite: AnimatedSprite2D
 
+@export var attack_active_frame: int = 1
 
 var current_facing: String = "down"
 var action_facing: String = "down"
 var locked_action_animation: String = ""
+var locked_action_kind: String = ""
 var dying_animation_finished: bool = false
 
-var is_attacking: bool = false
 var is_hurt: bool = false
 var is_dying: bool = false
 
 
 func _ready() -> void:
 	if animated_sprite == null:
-		push_error("AnimationComponent precisa de um AnimatedSprite2D atribuído.")
+		push_error("AnimationComponent precisa de um AnimatedSprite2D.")
 		return
 		
 	if move_component == null:
-		push_error("AnimationComponent precisa de um MoveComponent atribuído.")
+		push_error("AnimationComponent precisa de um MoveComponent.")
 		return
 		
 	if animated_sprite != null:
 		animated_sprite.animation_finished.connect(_on_animation_finished)
+		animated_sprite.frame_changed.connect(_on_frame_changed)
 
 
 func update_animation() -> void:
 	if animated_sprite == null or move_component == null:
 		return
 
-	if not is_attacking and not is_hurt and not is_dying:
+	if not _is_action_locked() and not is_hurt and not is_dying:
 		_update_facing()
 
 	if is_dying:
@@ -46,29 +49,15 @@ func update_animation() -> void:
 		_play_if_needed(locked_action_animation)
 		return
 
-	if is_attacking:
+	if _is_action_locked():
 		_play_if_needed(locked_action_animation)
 		return
 
 	_play_if_needed(_get_locomotion_animation_name())
 
 
-func can_attack() -> bool:
-	return not is_dying and not is_hurt and not is_attacking
-
-
-func play_attack() -> void:
-	if not can_attack():
-		return
-
-	_update_facing()
-	action_facing = current_facing
-	locked_action_animation = _build_attack_animation_name()
-
-	is_attacking = true
-
 func play_attack_directional(dir: Vector2) -> void:
-	if not can_attack():
+	if is_dying or is_hurt:
 		return
 
 	var suffix := "down"
@@ -84,7 +73,8 @@ func play_attack_directional(dir: Vector2) -> void:
 
 	action_facing = suffix
 	locked_action_animation = "attack_" + suffix
-	is_attacking = true
+	locked_action_kind = "attack"
+
 
 func play_hurt() -> void:
 	if is_dying:
@@ -93,9 +83,31 @@ func play_hurt() -> void:
 	_update_facing()
 	action_facing = current_facing
 	locked_action_animation = "hurt_" + action_facing
-
+	locked_action_kind = "hurt"
+	
 	is_hurt = true
-	is_attacking = false
+
+
+func can_attack() -> bool:
+	return not is_dying and not is_hurt and not _is_action_locked()
+
+
+func player_attack() -> void:
+	if not can_attack():
+		return
+	
+	_update_facing()
+	action_facing = current_facing
+	locked_action_animation = _build_attack_animation_name()
+	locked_action_kind = "attack"
+
+
+func cancel_attack_animation() -> void:
+	if locked_action_kind == "attack":
+		return
+	
+	locked_action_animation = ""
+	locked_action_kind = ""
 
 
 func play_dying() -> void:
@@ -105,19 +117,22 @@ func play_dying() -> void:
 	_update_facing()
 	action_facing = current_facing
 	locked_action_animation = "dying_" + action_facing
+	locked_action_kind = "dying"
 
 	is_dying = true
 	is_hurt = false
-	is_attacking = false
 	dying_animation_finished = false
 
 	_play_if_needed(locked_action_animation)
 
 
-
 func _update_facing() -> void:
 	var direction := move_component.facing_direction
 	current_facing = _vector_to_direction(direction)
+
+
+func _is_action_locked() -> bool:
+	return locked_action_animation != "" and locked_action_kind != ""
 
 
 func _get_locomotion_animation_name() -> String:
@@ -163,20 +178,36 @@ func _play_if_needed(animation_name: String) -> void:
 		animated_sprite.play(animation_name)
 
 
+func _on_frame_changed() -> void:
+	var current_animation := animated_sprite.animation
+	if not _is_attack_animation(current_animation):
+		return
+		
+	if animated_sprite.frame == attack_active_frame:
+		attack_hit_frame_reached.emit(current_animation)
+
+
 func _on_animation_finished() -> void:
 	var finished_animation := animated_sprite.animation
 
-	if finished_animation.begins_with("attack_") \
-	or finished_animation.begins_with("walk_attack_") \
-	or finished_animation.begins_with("run_attack_"):
-		is_attacking = false
-		locked_action_animation = ""
-
+	if _is_attack_animation(finished_animation):
+		if locked_action_kind == "attack":
+			locked_action_animation = ""
+			locked_action_kind = ""
+			
 	elif finished_animation.begins_with("hurt_"):
 		is_hurt = false
-		locked_action_animation = ""
-
+		if locked_action_kind == "hurt":
+			locked_action_animation = ""
+			locked_action_kind = ""
+			
 	elif finished_animation.begins_with("dying_"):
 		dying_animation_finished = true
 
 	animation_finished.emit(finished_animation)
+
+
+func _is_attack_animation(animation_name: String) -> bool:
+	return animation_name.begins_with("attack_") \
+		or animation_name.begins_with("walk_attack_") \
+		or animation_name.begins_with("run_attack_")

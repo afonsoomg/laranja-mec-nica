@@ -31,6 +31,16 @@ func take_damage(amount: int) -> void:
 		return
 
 	current_health = max(current_health - amount, 0)
+	DebugHelper.trace(
+		"Health",
+		get_parent(),
+		"damage_applied",
+		{
+			"damage": amount,
+			"current_health": current_health,
+			"max_health": max_health
+		}
+	)
 	damaged.emit(amount)
 	health_changed.emit(current_health, stats_component.max_health)
 
@@ -55,6 +65,15 @@ func _die() -> void:
 		return
 
 	is_dead = true
+	DebugHelper.trace(
+		"Health",
+		get_parent(),
+		"death",
+		{
+			"current_health": current_health,
+			"max_health": max_health
+		}
+	)
 	died.emit()
 	
 

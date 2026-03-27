@@ -2,9 +2,9 @@ class_name CameraComponent
 extends Camera2D
 
 @export var target: Node2D
-@onready var move_component: MoveComponent = $"../MoveComponent"
-@onready var weapon_component: WeaponComponent = get_node_or_null("../WeaponComponent") as WeaponComponent
-@onready var hurtbox_component: HurtboxComponent = get_node_or_null("../HurtboxComponent") as HurtboxComponent
+var move_component: MoveComponent
+var weapon_component: WeaponComponent
+var hurtbox_component: HurtboxComponent
 
 @export_group("Follow")
 @export var follow_enabled: bool = true
@@ -39,14 +39,19 @@ var target_zoom_value: Vector2 = Vector2.ONE
 func _ready() -> void:
 	if target == null:
 		push_error("CameraComponent precisa de um target.")
+		set_process(false)
+		return
+		
+	move_component = ComponentValidator.require_node(self, NodePath("../MoveComponent"), "MoveComponent", "MoveComponent") as MoveComponent
+	if move_component == null:
+		set_process(false)
 		return
 
-	if move_component == null:
-		push_error("CameraComponent precisa de um MoveComponent.")
-		return
+	weapon_component = get_node_or_null("../WeaponComponent") as WeaponComponent
+	hurtbox_component = get_node_or_null("../HurtboxComponent") as HurtboxComponent
 
 	base_offset = offset
-	target_zoom_value = run_zoom if move_component != null and move_component.is_running else normal_zoom
+	target_zoom_value = run_zoom if move_component.is_running else normal_zoom
 	zoom = target_zoom_value
 
 	make_current()
@@ -131,7 +136,7 @@ func _get_shake_offset() -> Vector2:
 	) * shake_strength
 
 
-func _on_attack_started() -> void:
+func _on_attack_started(_direction: Vector2) -> void:
 	add_shake(shake_on_attack)
 
 

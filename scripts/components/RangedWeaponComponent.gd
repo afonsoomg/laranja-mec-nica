@@ -26,6 +26,7 @@ var attack_in_progress: bool = false
 var shot_already_released: bool = false
 var pending_direction: Vector2 = Vector2.ZERO
 
+
 func _ready() -> void:
 	if projectile_scene == null:
 		push_error("RangedWeaponComponent precisa de um projectile_scene.")
@@ -41,6 +42,7 @@ func _ready() -> void:
 		if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
 			animated_sprite.animation_finished.connect(_on_animation_finished)
 
+
 func try_shoot(shoot_direction: Vector2 = Vector2.ZERO) -> void:
 	if not _can_start_attack():
 		shot_blocked.emit()
@@ -50,18 +52,30 @@ func try_shoot(shoot_direction: Vector2 = Vector2.ZERO) -> void:
 	if dir == Vector2.ZERO:
 		shot_blocked.emit()
 		return
+		
+	DebugHelper.trace(
+		"Combat",
+		get_parent(),
+		"attack_request",
+		{
+			"weapon": name,
+			"type": "ranged",
+			"direction": dir
+		}
+	)
 
 	if use_attack_animation and animation_component != null and animation_component.can_attack():
 		attack_in_progress = true
 		shot_already_released = false
 		pending_direction = dir
 
-		animation_component.play_attack()
+		animation_component.player_attack()
 		_start_cooldown()
 		return
 
 	_fire_projectile(dir)
 	_start_cooldown()
+
 
 func _can_start_attack() -> bool:
 	if not can_shoot:
@@ -74,8 +88,10 @@ func _can_start_attack() -> bool:
 		return false
 	return true
 
+
 func is_busy_attacking() -> bool:
 	return attack_in_progress
+
 
 func update_spawn_marker_towards_target(target_position: Vector2) -> void:
 	var owner_node := get_parent() as Node2D
@@ -87,6 +103,7 @@ func update_spawn_marker_towards_target(target_position: Vector2) -> void:
 		return
 
 	projectile_spawn_marker.global_position = owner_node.global_position + dir * projectile_spawn_distance
+
 
 func _on_frame_changed() -> void:
 	if not attack_in_progress:
@@ -104,6 +121,7 @@ func _on_frame_changed() -> void:
 		shot_already_released = true
 		_fire_projectile(pending_direction)
 
+
 func _on_animation_finished() -> void:
 	if animated_sprite == null:
 		return
@@ -114,7 +132,19 @@ func _on_animation_finished() -> void:
 		shot_already_released = false
 		pending_direction = Vector2.ZERO
 
+
 func _fire_projectile(dir: Vector2) -> void:
+	DebugHelper.trace(
+		"Combat",
+		get_parent(),
+		"attack_start",
+		{
+			"weapon": name,
+			"type": "ranged",
+			"direction": dir
+		}
+	)
+	
 	var projectile_instance := projectile_scene.instantiate()
 	if projectile_instance == null:
 		return
@@ -128,14 +158,29 @@ func _fire_projectile(dir: Vector2) -> void:
 	projectile_area.global_position = spawn_position
 	get_tree().current_scene.add_child.call_deferred(projectile_area)
 
-	var projectile_component := projectile_area.get_node_or_null("ProjectileComponent") as ProjectileComponent
-	if projectile_component != null:
-		var kb := knockback_force
-		if stats_component != null:
-			kb = stats_component.knockback_force
-		projectile_component.initialize(dir, get_parent(), damage, kb)
+	DebugHelper.trace(
+		"World",
+		projectile_area,
+		"spawn",
+		{
+			"source": "projectile",
+			"owner": str(get_parent().name) if get_parent() != null else "Unknown",
+			"position": spawn_position
+		}
+	)
+	
+	var projectile_component := ComponentValidator.require_node(projectile_area, NodePath("ProjectileComponent"), "ProjectileComponent", "ProjectileComponent") as ProjectileComponent
+	if projectile_component == null:
+		shot_blocked.emit()
+		return
+
+	var kb := knockback_force
+	if stats_component != null:
+		kb = stats_component.knockback_force
+	projectile_component.initialize(dir, get_parent(), damage, kb)
 
 	shot_fired.emit(projectile_area)
+
 
 func _resolve_shoot_direction(shoot_direction: Vector2) -> Vector2:
 	if shoot_direction != Vector2.ZERO:
@@ -146,6 +191,7 @@ func _resolve_shoot_direction(shoot_direction: Vector2) -> Vector2:
 
 	return Vector2.ZERO
 
+
 func _get_spawn_position(dir: Vector2) -> Vector2:
 	var owner_node := get_parent() as Node2D
 	if owner_node == null:
@@ -155,6 +201,7 @@ func _get_spawn_position(dir: Vector2) -> Vector2:
 		return projectile_spawn_marker.global_position
 
 	return owner_node.global_position + dir.normalized() * projectile_spawn_distance
+
 
 func _start_cooldown() -> void:
 	is_on_cooldown = true

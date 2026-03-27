@@ -1861,29 +1861,30 @@ debug_color = Color(4.1151793e-06, 0.6478718, 0.20750788, 0.41960785)
 [node name="AnimationComponent" parent="." index="6" unique_id=205670419 node_paths=PackedStringArray("move_component", "animated_sprite")]
 move_component = NodePath("../MoveComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
+attack_active_frame = 3
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 material = SubResource("ShaderMaterial_n1h10")
 sprite_frames = SubResource("SpriteFrames_wssc2")
 animation = &"attack_down"
 
+[node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
+hurtbox_component = NodePath("../HurtboxComponent")
+
 [node name="InputComponent" type="Node" parent="." index="9" unique_id=1485520127]
 script = ExtResource("10_5f50k")
 metadata/_custom_type_script = "uid://clp8jguedjxhj"
 
-[node name="WeaponComponent" type="Node" parent="." index="10" unique_id=667525675 node_paths=PackedStringArray("stats_component", "move_component", "animation_component", "attack_hitbox", "attack_collision_shape", "animated_sprite")]
+[node name="WeaponComponent" type="Node" parent="." index="10" unique_id=667525675 node_paths=PackedStringArray("stats_component", "move_component", "attack_hitbox", "attack_collision_shape")]
 script = ExtResource("11_at3bx")
 stats_component = NodePath("../StatsComponent")
 move_component = NodePath("../MoveComponent")
-animation_component = NodePath("../AnimationComponent")
 attack_hitbox = NodePath("../AttackHitbox")
 attack_collision_shape = NodePath("../AttackHitbox/WeaponCollisionShape")
 horizontal_hitbox_size = Vector2(16, 28)
 vertical_hitbox_size = Vector2(28, 15)
 horizontal_hitbox_offset = Vector2(18, 0)
 vertical_hitbox_offset = Vector2(0, 15)
-animated_sprite = NodePath("../AnimatedSprite2D")
-attack_active_frame = 3
 metadata/_custom_type_script = "uid://bhv2g1swjwce4"
 
 [node name="AttackHitbox" type="Area2D" parent="." index="11" unique_id=509490742]
@@ -1936,8 +1937,11 @@ randomness = 0.1
 [node name="CritBuffBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="1" unique_id=1347889945]
 amount = 35
 
-[node name="CombatStateComponent" type="Node" parent="." index="17" unique_id=1242039655]
+[node name="CombatStateComponent" type="Node" parent="." index="17" unique_id=1242039655 node_paths=PackedStringArray("weapon_component", "animation_component", "stats_component")]
 script = ExtResource("24_wssc2")
+weapon_component = NodePath("../WeaponComponent")
+animation_component = NodePath("../AnimationComponent")
+stats_component = NodePath("../StatsComponent")
 metadata/_custom_type_script = "uid://cmv0akvyet1k5"
 
 [node name="StaminaComponent" type="Node" parent="." index="18" unique_id=1655200128]

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ed3h8qyek0d1" path="res://entities/projectiles/projectile_ball.tscn" id="5_q4faw"]
 [ext_resource type="Texture2D" uid="uid://0cggb6qsv72x" path="res://assets/images/enemies/Raiz Mutante/Idle/RaizMutante_Idle.png" id="6_y8gxg"]
 [ext_resource type="Script" uid="uid://doq3xcghd36dc" path="res://scripts/components/RangedWeaponComponent.gd" id="8_a2lsk"]
+[ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="10_yh8mw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ci6l"]
 radius = 14.0
@@ -18,7 +19,7 @@ height = 57.0
 radius = 15.5
 height = 76.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vus6u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sxgk"]
 resource_local_to_scene = true
 shader = ExtResource("3_vus6u")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
@@ -1250,7 +1251,7 @@ decay = 2000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_vus6u")
+material = SubResource("ShaderMaterial_3sxgk")
 position = Vector2(0.5, 1)
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
@@ -1292,3 +1293,9 @@ offset_left = -13.0
 offset_top = -42.0
 offset_right = 14.0
 offset_bottom = -38.0
+
+[node name="CombatStateComponent" type="Node" parent="." index="19" unique_id=1925676724 node_paths=PackedStringArray("animation_component", "stats_component")]
+script = ExtResource("10_yh8mw")
+animation_component = NodePath("../AnimationComponent")
+stats_component = NodePath("../StatsComponent")
+metadata/_custom_type_script = "uid://cmv0akvyet1k5"

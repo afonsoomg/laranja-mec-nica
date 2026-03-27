@@ -80,7 +80,22 @@ func _hit_target(hurtbox: HurtboxComponent) -> void:
 	var hit_direction := Vector2.ZERO
 	if use_knockback:
 		hit_direction = (hurtbox.global_position - _get_owner_global_position()).normalized()
-
+	
+	var owner_node := get_parent()
+	var target_entity := hurtbox.get_parent()
+	DebugHelper.trace(
+		"Combat",
+		owner_node,
+		"hit_registered",
+		{
+			"source": "touch_damage",
+			"target": str(target_entity.name) if target_entity != null else "Unknown",
+			"damage": damage,
+			"direction": hit_direction,
+			"knockback_force": knockback_force if use_knockback else 0.0
+		}
+	)
+	
 	hurtbox.receive_hit(
 		damage,
 		hit_direction,

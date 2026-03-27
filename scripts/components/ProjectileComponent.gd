@@ -100,6 +100,22 @@ func _on_area_entered(area: Area2D) -> void:
 	_hit_targets.append(hurtbox)
 
 	var hit_direction := direction
+	var attacker_name := str(owner_node.name) if owner_node != null else "Unknown"
+	var target_entity := hurtbox.get_parent()
+	DebugHelper.trace(
+		"Combat",
+		owner_node,
+		"hit_registered",
+		{
+			"source": "projectile",
+			"projectile": str(get_parent().name) if get_parent() != null else "Projectile",
+			"target": str(target_entity.name) if target_entity != null else "Unknown",
+			"damage": damage,
+			"direction": hit_direction,
+			"knockback_force": knockback_force,
+			"attacker": attacker_name
+		}
+	)
 	hurtbox.receive_hit(damage, hit_direction, knockback_force)
 	projectile_hit.emit(hurtbox)
 

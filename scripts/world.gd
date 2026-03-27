@@ -33,10 +33,20 @@ func load_level(level_path: String) -> void:
 	_register_tilemaps_for_audio(level)
 	_setup_spawns(level)
 
+
 func _setup_spawns(level: Node) -> void:
 	var player_spawn := level.get_node_or_null("SpawnPoints/PlayerSpawn")
 	if player_spawn:
 		player.global_position = player_spawn.global_position
+		DebugHelper.trace(
+			"World",
+			player,
+			"spawn",
+			{
+				"source": "player_spawn_point",
+				"position": player_spawn.global_position
+			}
+		)
 
 	for child in enemies_holder.get_children():
 		child.queue_free()
@@ -53,11 +63,32 @@ func _setup_spawns(level: Node) -> void:
 			var enemy = enemy_scene.instantiate()
 			enemies_holder.add_child(enemy)
 			enemy.global_position = marker.global_position
+			DebugHelper.trace(
+				"World",
+				enemy,
+				"spawn",
+				{
+					"source": "enemy_spawn_point",
+					"marker": marker.name,
+					"position": marker.global_position
+				}
+			)
 
 		if marker.name.begins_with("CollectableSpawn"):
 			var collectable = collectable_scene.instantiate()
 			collectables_holder.add_child(collectable)
 			collectable.global_position = marker.global_position
+			DebugHelper.trace(
+				"World",
+				collectable,
+				"spawn",
+				{
+					"source": "collectable_spawn_point",
+					"marker": marker.name,
+					"position": marker.global_position
+				}
+			)
+
 
 func _register_tilemaps_for_audio(root: Node) -> void:
 	for child in root.get_children():
@@ -66,8 +97,10 @@ func _register_tilemaps_for_audio(root: Node) -> void:
 
 		_register_tilemaps_for_audio(child)
 
+
 func _on_player_died() -> void:
 	player_died.emit()
+
 
 func get_player() -> CharacterBase:
 	return $PlayerCharacter

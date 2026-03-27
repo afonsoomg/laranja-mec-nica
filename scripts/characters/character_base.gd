@@ -1,21 +1,37 @@
 extends CharacterBody2D
 class_name CharacterBase
 
-@onready var animation_component: AnimationComponent = $AnimationComponent
-@onready var knockback_component: KnockbackComponent = $KnockbackComponent
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var move_component: MoveComponent = $MoveComponent
-@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
-@onready var audio_component: AudioComponent = get_node_or_null("AudioComponent") as AudioComponent
-@onready var vfx_component: VfxComponent = get_node_or_null("VfxComponent") as VfxComponent
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+var animation_component: AnimationComponent
+var knockback_component: KnockbackComponent
+var health_component: HealthComponent
+var move_component: MoveComponent
+var hurtbox_component: HurtboxComponent
+var audio_component: AudioComponent
+var vfx_component: VfxComponent
+var animated_sprite: AnimatedSprite2D
+var combat_state_component: CombatStateComponent
 
 var _last_footstep_frame := -1
-
 var is_dead: bool = false
 
+
 func _ready() -> void:
+	if not ComponentValidator.require_nodes(self, [
+		{"path": NodePath("AnimationComponent"), "expected_type": "AnimationComponent", "name": "AnimationComponent", "assign_to": "animation_component"},
+		{"path": NodePath("KnockbackComponent"), "expected_type": "KnockbackComponent", "name": "KnockbackComponent", "assign_to": "knockback_component"},
+		{"path": NodePath("HealthComponent"), "expected_type": "HealthComponent", "name": "HealthComponent", "assign_to": "health_component"},
+		{"path": NodePath("MoveComponent"), "expected_type": "MoveComponent", "name": "MoveComponent", "assign_to": "move_component"},
+		{"path": NodePath("HurtboxComponent"), "expected_type": "HurtboxComponent", "name": "HurtboxComponent", "assign_to": "hurtbox_component"},
+		{"path": NodePath("AnimatedSprite2D"), "expected_type": "AnimatedSprite2D", "name": "AnimatedSprite2D", "assign_to": "animated_sprite"},
+		{"path": NodePath("CombatStateComponent"), "expected_type": "CombatStateComponent", "name": "CombateStateComponent", "assign_to": "combat_state_component"}
+	]):
+		set_physics_process(false)
+		return
+
+	audio_component = get_node_or_null("AudioComponent") as AudioComponent
+	vfx_component = get_node_or_null("VfxComponent") as VfxComponent
 	_connect_signals()
+
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -26,6 +42,7 @@ func _physics_process(delta: float) -> void:
 		
 	_apply_final_movement()
 
+
 func _connect_signals() -> void:
 	if health_component and not health_component.died.is_connected(_on_died):
 		health_component.died.connect(_on_died)
@@ -33,8 +50,9 @@ func _connect_signals() -> void:
 	if hurtbox_component and not hurtbox_component.hit_received.is_connected(_on_hit_received):
 		hurtbox_component.hit_received.connect(_on_hit_received)
 		
-	if animated_sprite and not 	animated_sprite.frame_changed.is_connected(_on_frame_changed):
+	if animated_sprite and not animated_sprite.frame_changed.is_connected(_on_frame_changed):
 		animated_sprite.frame_changed.connect(_on_frame_changed)
+
 
 func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_critical: bool) -> void:
 	if is_dead:
@@ -46,10 +64,14 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	if animation_component:
 		animation_component.play_hurt()
 		
+	if combat_state_component != null and combat_state_component.is_attacking:
+		combat_state_component.interrupt_attack("hurt")
+
 
 func _set_shader_blink_intensity(newValue : float):
 	animated_sprite.material.set_shader_parameter("blink_intensity", newValue)
-	
+
+
 func _on_died() -> void:
 	is_dead = true
 	
@@ -65,6 +87,10 @@ func _on_died() -> void:
 
 	if animation_component:
 		animation_component.play_dying()
+		
+	if combat_state_component != null:
+		combat_state_component.interrupt_attack("death")
+
 
 func _apply_final_movement() -> void:
 	var final_velocity := Vector2.ZERO
@@ -78,8 +104,10 @@ func _apply_final_movement() -> void:
 	velocity = final_velocity
 	move_and_slide()
 
+
 func _play_footstep():
 	AudioManagerCustom.play_footstep(global_position)
+
 
 func _on_frame_changed() -> void:
 	if not move_component.is_moving():
