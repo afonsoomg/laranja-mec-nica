@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://2u1uiw8gg78q" path="res://scripts/characters/enemies/enemy_shooter.gd" id="2_q4faw"]
 [ext_resource type="Texture2D" uid="uid://dvja308tuc53c" path="res://assets/images/enemies/Raiz Mutante/Ataque/RaizMutante_Ataque_Frente.png" id="3_8ci6l"]
 [ext_resource type="Texture2D" uid="uid://c4e3pexb30k1x" path="res://assets/images/enemies/Raiz Mutante/Ataque/RaizMutante_Ataque.png" id="3_q4faw"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_vus6u"]
 [ext_resource type="Texture2D" uid="uid://p5ixeldpbd7e" path="res://assets/images/enemies/Raiz Mutante/Morrendo/RaizMutante_Morrendo.png" id="5_a3opq"]
 [ext_resource type="PackedScene" uid="uid://ed3h8qyek0d1" path="res://entities/projectiles/projectile_ball.tscn" id="5_q4faw"]
 [ext_resource type="Texture2D" uid="uid://0cggb6qsv72x" path="res://assets/images/enemies/Raiz Mutante/Idle/RaizMutante_Idle.png" id="6_y8gxg"]
@@ -16,6 +17,12 @@ height = 57.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q4faw"]
 radius = 15.5
 height = 76.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vus6u"]
+resource_local_to_scene = true
+shader = ExtResource("3_vus6u")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mlct"]
 atlas = ExtResource("3_8ci6l")
@@ -1244,6 +1251,7 @@ decay = 2000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
+material = SubResource("ShaderMaterial_vus6u")
 position = Vector2(0.5, 1)
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"idle_right"
@@ -1279,6 +1287,3 @@ metadata/_custom_type_script = "uid://doq3xcghd36dc"
 
 [node name="ProjectileSpawnMaker" type="Node2D" parent="." index="14" unique_id=2043519706]
 position = Vector2(37, 0)
-
-[node name="HitFlashComponent" parent="." index="15" unique_id=565526771]
-flash_color = Color(0.4745098, 0.24313726, 1, 1)

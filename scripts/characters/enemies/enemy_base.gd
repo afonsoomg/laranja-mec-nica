@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 
 	super._physics_process(delta)
 
+
 func _on_died() -> void:
 	super._on_died()
 	is_active = false
@@ -39,6 +40,7 @@ func _on_died() -> void:
 
 	await get_tree().create_timer(5).timeout
 	queue_free()
+
 
 func _on_health_changed(current_health: int, max_health: int) -> void:
 	if enemy_health_bar == null:

@@ -59,7 +59,7 @@ animations = [{
 scale = Vector2(2, 2)
 script = ExtResource("2_e877c")
 crit_bonus = 0.9
-buff_duration = 5.0
+buff_duration = 15.0
 collect_sfx = ExtResource("3_0mgka")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]

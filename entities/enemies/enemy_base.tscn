@@ -3,7 +3,16 @@
 [ext_resource type="PackedScene" uid="uid://d0ntfc42udjd8" path="res://entities/character_base.tscn" id="1_6kwvc"]
 [ext_resource type="Script" uid="uid://cty6ys2j0hbjx" path="res://scripts/characters/enemies/enemy_base.gd" id="2_3iigx"]
 [ext_resource type="Script" uid="uid://dogslyel4yd8h" path="res://scripts/components/EnemyAIComponent.gd" id="3_prjjb"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_w28g0"]
 [ext_resource type="Script" uid="uid://da0ho1ec6wewx" path="res://scripts/components/TouchDamageComponent.gd" id="4_yc03e"]
+[ext_resource type="Script" uid="uid://bcn0vlwmj44jy" path="res://scripts/components/VfxComponent.gd" id="6_ks5hg"]
+[ext_resource type="Script" uid="uid://dyordov7s6aup" path="res://scripts/components/AudioComponent.gd" id="6_ona3f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ona3f"]
+resource_local_to_scene = true
+shader = ExtResource("3_w28g0")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yc03e"]
 radius = 33.06055
@@ -14,6 +23,9 @@ target_path = NodePath("")
 
 [node name="AnimationComponent" parent="." index="6" unique_id=205670419 node_paths=PackedStringArray("move_component")]
 move_component = NodePath("../MoveComponent")
+
+[node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
+material = SubResource("ShaderMaterial_ona3f")
 
 [node name="EnemyAIComponent" type="Node" parent="." index="9" unique_id=1403723744]
 script = ExtResource("3_prjjb")
@@ -45,3 +57,11 @@ grow_horizontal = 2
 grow_vertical = 2
 value = 50.0
 show_percentage = false
+
+[node name="AudioComponent" parent="." index="13" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
+script = ExtResource("6_ona3f")
+sfx_player = NodePath("SfxPlayer")
+
+[node name="VfxComponent" parent="." index="14" unique_id=1741814442 node_paths=PackedStringArray("hit_burst")]
+script = ExtResource("6_ks5hg")
+hit_burst = NodePath("../VFX/HitEffect")

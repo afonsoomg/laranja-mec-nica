@@ -1,20 +1,19 @@
 [gd_scene format=3 uid="uid://d0ntfc42udjd8"]
 
 [ext_resource type="Script" uid="uid://kbfx5pgoejj5" path="res://scripts/characters/character_base.gd" id="1_2lcof"]
-[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/Components/StatsComponent.gd" id="1_bikko"]
-[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/Components/HealthComponent.gd" id="2_2lcof"]
-[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/Components/HurtboxComponent.gd" id="3_is1ha"]
-[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/Components/AnimationComponent.gd" id="5_rti8c"]
-[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/Components/KnockbackComponent.gd" id="6_8nvtw"]
-[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/Components/MoveComponent.gd" id="7_2lcof"]
-[ext_resource type="Script" uid="uid://bghurjth8k5ty" path="res://scripts/Components/DamageDigitComponent.gd" id="8_sml1u"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/components/StatsComponent.gd" id="1_bikko"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/components/HealthComponent.gd" id="2_2lcof"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/components/HurtboxComponent.gd" id="3_is1ha"]
+[ext_resource type="Script" uid="uid://cl55wn8sd5gxk" path="res://scripts/components/AnimationComponent.gd" id="5_rti8c"]
+[ext_resource type="Script" uid="uid://c6y6n5pfau54y" path="res://scripts/components/KnockbackComponent.gd" id="6_8nvtw"]
+[ext_resource type="Script" uid="uid://dw3oaar23io3x" path="res://scripts/components/MoveComponent.gd" id="7_2lcof"]
+[ext_resource type="Script" uid="uid://bghurjth8k5ty" path="res://scripts/components/DamageDigitComponent.gd" id="8_sml1u"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="8_v216q"]
 [ext_resource type="PackedScene" uid="uid://dpvbrqt0ybytq" path="res://scenes/GUI/enemies/demage_digit.tscn" id="9_rti8c"]
-[ext_resource type="Script" uid="uid://xgo4md2cbpvb" path="res://scripts/Components/HitFlashComponent.gd" id="10_rti8c"]
 [ext_resource type="Texture2D" uid="uid://dtycj26iijv23" path="res://assets/textures/4.png" id="13_qtch0"]
 [ext_resource type="Material" uid="uid://cd5rx3jcmqeex" path="res://assets/material/HealProcessMaterial.tres" id="14_6je6h"]
 [ext_resource type="Texture2D" uid="uid://bol08y84l6lgq" path="res://assets/textures/12.png" id="15_gjy3r"]
 [ext_resource type="Material" uid="uid://dsbre2dxxwc2k" path="res://assets/material/CritBuffProcessMaterial.tres" id="16_yd341"]
-[ext_resource type="Texture2D" uid="uid://mhqqvjqjjhhf" path="res://assets/textures/8.png" id="17_pu0il"]
 [ext_resource type="Material" uid="uid://bm3fmg28h38mn" path="res://assets/material/CritAuraProcessMaterial.tres" id="18_n0tdw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lcof"]
@@ -23,7 +22,15 @@ size = Vector2(26, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nhwlu"]
 size = Vector2(30, 30)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34haw"]
+resource_local_to_scene = true
+shader = ExtResource("8_v216q")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_sml1u"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_sp47k"]
 
 [node name="CharacterBase" type="CharacterBody2D" unique_id=232863277]
 script = ExtResource("1_2lcof")
@@ -61,18 +68,13 @@ script = ExtResource("5_rti8c")
 metadata/_custom_type_script = "uid://cl55wn8sd5gxk"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1852374921]
+material = SubResource("ShaderMaterial_34haw")
 sprite_frames = SubResource("SpriteFrames_sml1u")
 
 [node name="DamageDigitComponent" type="Node" parent="." unique_id=301667582]
 script = ExtResource("8_sml1u")
 damage_digit_prefab = ExtResource("9_rti8c")
 metadata/_custom_type_script = "uid://bghurjth8k5ty"
-
-[node name="HitFlashComponent" type="Node" parent="." unique_id=565526771 node_paths=PackedStringArray("hurtbox_component", "animated_sprite")]
-script = ExtResource("10_rti8c")
-hurtbox_component = NodePath("../HurtboxComponent")
-animated_sprite = NodePath("../AnimatedSprite2D")
-metadata/_custom_type_script = "uid://xgo4md2cbpvb"
 
 [node name="AudioComponent" type="Node2D" parent="." unique_id=602596628]
 
@@ -103,11 +105,12 @@ explosiveness = 1.0
 local_coords = true
 process_material = ExtResource("16_yd341")
 
-[node name="CritAura" type="GPUParticles2D" parent="VFX" unique_id=1416373822]
+[node name="HitEffect" type="GPUParticles2D" parent="VFX" unique_id=2074363495]
 emitting = false
-amount = 12
-texture = ExtResource("17_pu0il")
-lifetime = 1.2
-randomness = 0.21
+amount = 20
+texture = SubResource("CanvasTexture_sp47k")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
 local_coords = true
 process_material = ExtResource("18_n0tdw")

@@ -40,8 +40,15 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	if is_dead:
 		return
 
+	var tween = get_tree().create_tween()
+	tween.tween_method(_set_shader_blink_intensity, 1.0, 0.0, 0.5)
+	
 	if animation_component:
 		animation_component.play_hurt()
+
+func _set_shader_blink_intensity(newValue : float):
+	animated_sprite.material.set_shader_parameter("blink_intensity", newValue)
+	
 
 func _on_died() -> void:
 	is_dead = true
@@ -55,9 +62,6 @@ func _on_died() -> void:
 		
 	if audio_component:
 		audio_component.play_death()
-
-	if vfx_component:
-		vfx_component.play_death_burst()
 
 	if animation_component:
 		animation_component.play_dying()
@@ -86,8 +90,8 @@ func _on_frame_changed() -> void:
 	var anim: String = animated_sprite.animation
 	var frame: int = animated_sprite.frame
 
-	var is_walk := anim.begins_with("walk_") or anim.begins_with("walk_attack")
-	var is_run := anim.begins_with("run_") or anim.begins_with("run_attack")
+	var is_walk := anim.begins_with("walk")
+	var is_run := anim.begins_with("run")
 
 	if is_walk:
 		if frame == 1 or frame == 4:

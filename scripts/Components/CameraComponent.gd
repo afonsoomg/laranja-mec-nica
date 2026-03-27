@@ -3,7 +3,6 @@ extends Camera2D
 
 @export var target: Node2D
 @onready var move_component: MoveComponent = $"../MoveComponent"
-
 @onready var weapon_component: WeaponComponent = get_node_or_null("../WeaponComponent") as WeaponComponent
 @onready var hurtbox_component: HurtboxComponent = get_node_or_null("../HurtboxComponent") as HurtboxComponent
 

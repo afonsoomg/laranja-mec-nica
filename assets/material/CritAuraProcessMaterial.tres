@@ -1,29 +1,21 @@
 [gd_resource type="ParticleProcessMaterial" format=3 uid="uid://bm3fmg28h38mn"]
 
-[sub_resource type="Curve" id="Curve_4tumj"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2292683, 1), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Gradient" id="Gradient_4tumj"]
+colors = PackedColorArray(0.9490196, 0, 0, 1, 1, 1, 1, 0)
 
-[sub_resource type="CurveTexture" id="CurveTexture_3ptlk"]
-curve = SubResource("Curve_4tumj")
-
-[sub_resource type="Curve" id="Curve_k2d2o"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.29268295, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_md1uj"]
-curve = SubResource("Curve_k2d2o")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ptlk"]
+gradient = SubResource("Gradient_4tumj")
 
 [resource]
-direction = Vector3(0, 0, 0)
-spread = 10.0
-initial_velocity_min = 10.0
-initial_velocity_max = 25.0
-radial_velocity_min = 4.9999776
-radial_velocity_max = 49.999977
-gravity = Vector3(0, 0, 0)
-scale_min = 0.03
-scale_max = 0.08
-scale_curve = SubResource("CurveTexture_md1uj")
-color = Color(1, 0, 0, 0.6666667)
-emission_curve = SubResource("CurveTexture_3ptlk")
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 25.0
+direction = Vector3(0.5, -0.5, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 700, 0)
+damping_min = 100.00001
+damping_max = 800.00006
+scale_max = 3.0
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_3ptlk")

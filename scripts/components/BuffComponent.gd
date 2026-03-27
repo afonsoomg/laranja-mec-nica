@@ -4,6 +4,8 @@ class_name BuffComponent
 @onready var stats_component: StatsComponent = $"../StatsComponent"
 @onready var audio_component: AudioComponent = get_node_or_null("../AudioComponent") as AudioComponent
 @onready var vfx_component: VfxComponent = get_node_or_null("../VfxComponent") as VfxComponent
+@onready var animated_sprite_2d: AnimatedSprite2D = $"../AnimatedSprite2D"
+
 
 var _crit_buff_active: bool = false
 var _crit_buff_bonus: float = 0.0
@@ -34,12 +36,7 @@ func apply_crit_buff(bonus: float, duration: float) -> bool:
 	if audio_component:
 		audio_component.play_collect()
 		audio_component.play_crit_buff_start()
-
-	if vfx_component:
-		vfx_component.play_crit_buff_burst()
-		vfx_component.set_crit_aura_active(true)
-
-
+	
 	_remove_crit_buff_later(current_token, duration)
 	return true
 
@@ -64,9 +61,6 @@ func _remove_crit_buff_later(token: int, duration: float) -> void:
 
 	if audio_component:
 		audio_component.play_crit_buff_end()
-
-	if vfx_component:
-		vfx_component.set_crit_aura_active(false)
 		
 	_crit_buff_active = false
 	_crit_buff_bonus = 0.0

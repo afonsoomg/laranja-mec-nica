@@ -34,7 +34,7 @@ position = Vector2(2713, -537)
 scale = Vector2(4, 19.479998)
 
 [node name="RaizMutante" parent="." unique_id=500671409 instance=ExtResource("8_7r4gi")]
-position = Vector2(1482, 353)
+position = Vector2(1718, 201)
 target_path = NodePath("../PlayerCharacter")
 
 [node name="Tomate2" parent="." unique_id=1199600199 instance=ExtResource("9_w7kh3")]
@@ -48,10 +48,10 @@ position = Vector2(484, 268)
 position = Vector2(562, 126)
 
 [node name="AduboBarCollectable2" parent="." unique_id=517098548 instance=ExtResource("9_7r4gi")]
-position = Vector2(565, 510)
+position = Vector2(1068, 222)
 
 [node name="WaterCollectable" parent="." unique_id=486143170 instance=ExtResource("8_4mrxx")]
-position = Vector2(275, 130)
+position = Vector2(1903, 227)
 
 [node name="WaterCollectable2" parent="." unique_id=543628850 instance=ExtResource("8_4mrxx")]
-position = Vector2(271, 513)
+position = Vector2(1341, 231)

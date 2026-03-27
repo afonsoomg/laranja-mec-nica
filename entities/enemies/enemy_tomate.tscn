@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bn5p53q3mroyi"]
 
 [ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemies/enemy_base.tscn" id="1_uq37f"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_s8tg3"]
 [ext_resource type="Texture2D" uid="uid://bduf44hnqw20d" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Frente.png" id="4_6idgs"]
 [ext_resource type="Texture2D" uid="uid://du3wyc7vajwir" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Esquerda.png" id="5_l7uiu"]
 [ext_resource type="Texture2D" uid="uid://djy8wci3posgi" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Direta.png" id="6_hhbqj"]
@@ -24,6 +25,12 @@ radius = 28.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwm60"]
 radius = 29.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s8tg3"]
+resource_local_to_scene = true
+shader = ExtResource("3_s8tg3")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uicld"]
 atlas = ExtResource("4_6idgs")
@@ -1075,6 +1082,7 @@ decay = 1000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
+material = SubResource("ShaderMaterial_s8tg3")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
 
@@ -1091,6 +1099,3 @@ offset_left = -33.0
 offset_top = -46.0
 offset_right = 30.0
 offset_bottom = -39.0
-
-[node name="HitFlashComponent" parent="." index="13" unique_id=565526771]
-flash_color = Color(18.892157, 18.892157, 0.9696924, 1)

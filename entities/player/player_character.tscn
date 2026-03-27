@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c0fvdt5rf726w" path="res://assets/images/player/Swordsman_lvl3_attack_with_shadow.png" id="2_ltqxl"]
 [ext_resource type="Script" uid="uid://dxldwgd6bo0t7" path="res://scripts/characters/player/player_character.gd" id="2_u37yl"]
 [ext_resource type="Texture2D" uid="uid://0y0vta4060g" path="res://assets/images/player/Swordsman_lvl3_Death_with_shadow.png" id="3_u37yl"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_yr7e7"]
 [ext_resource type="Texture2D" uid="uid://bwew2o775vihs" path="res://assets/images/player/Swordsman_lvl3_Hurt_with_shadow.png" id="4_xtu6h"]
 [ext_resource type="Texture2D" uid="uid://crp0n3uuvix3" path="res://assets/images/player/Swordsman_lvl3_Idle_with_shadow.png" id="5_nircb"]
 [ext_resource type="Texture2D" uid="uid://bahr8l4io7v5m" path="res://assets/images/player/Swordsman_lvl3_Run_Attack_with_shadow.png" id="6_ulwpx"]
@@ -22,7 +23,6 @@
 [ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/sfx/02_Heal_02.wav" id="18_hblhq"]
 [ext_resource type="AudioStream" uid="uid://6po2dov2rnpc" path="res://assets/audio/sfx/16_Atk_buff_04.wav" id="19_yr7e7"]
 [ext_resource type="AudioStream" uid="uid://b4imtw11lyfcg" path="res://assets/audio/sfx/21_Debuff_01.wav" id="20_wssc2"]
-[ext_resource type="Texture2D" uid="uid://bol08y84l6lgq" path="res://assets/textures/12.png" id="23_hblhq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
@@ -31,6 +31,12 @@ height = 23.5
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u37yl"]
 radius = 7.0
 height = 26.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hblhq"]
+resource_local_to_scene = true
+shader = ExtResource("3_yr7e7")
+shader_parameter/blink_color = Color(1, 0, 0, 1)
+shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
 atlas = ExtResource("2_ltqxl")
@@ -1850,9 +1856,11 @@ move_component = NodePath("../MoveComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
+material = SubResource("ShaderMaterial_hblhq")
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"run_down"
-frame = 6
+animation = &"attack_up"
+frame = 7
+frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." index="9" unique_id=1485520127]
 script = ExtResource("10_5f50k")
@@ -1896,7 +1904,7 @@ metadata/_custom_type_script = "uid://b8l3dxdd13qia"
 script = ExtResource("14_u37yl")
 metadata/_custom_type_script = "uid://kwl352vydpxa"
 
-[node name="AudioComponent" parent="." index="15" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
+[node name="AudioComponent" parent="." index="14" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
 script = ExtResource("15_ulwpx")
 sfx_player = NodePath("SfxPlayer")
 attack_sfx = ExtResource("15_2ll1q")
@@ -1906,11 +1914,11 @@ heal_sfx = ExtResource("18_hblhq")
 crit_buff_start_sfx = ExtResource("19_yr7e7")
 crit_buff_end_sfx = ExtResource("20_wssc2")
 
-[node name="VfxComponent" parent="." index="16" unique_id=1741814442 node_paths=PackedStringArray("heal_burst", "crit_buff_burst", "crit_aura")]
+[node name="VfxComponent" parent="." index="15" unique_id=1741814442 node_paths=PackedStringArray("heal_burst", "crit_buff_burst", "hit_burst")]
 script = ExtResource("16_ysq06")
 heal_burst = NodePath("../VFX/HealBurst")
 crit_buff_burst = NodePath("../VFX/CritBuffBurst")
-crit_aura = NodePath("../VFX/CritAura")
+hit_burst = NodePath("../VFX/HitEffect")
 
 [node name="HealBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="0" unique_id=267088283]
 position = Vector2(0, 8)
@@ -1920,6 +1928,3 @@ randomness = 0.1
 
 [node name="CritBuffBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="1" unique_id=1347889945]
 amount = 35
-
-[node name="CritAura" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="2" unique_id=1416373822]
-texture = ExtResource("23_hblhq")

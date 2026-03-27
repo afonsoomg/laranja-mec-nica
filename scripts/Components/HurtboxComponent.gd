@@ -37,7 +37,7 @@ func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_f
 		audio_component.play_hurt()
 	
 	if vfx_component:
-		print("Falta VFX de hurt")
+		vfx_component.play_hit_burst()
 	
 	health_component.take_damage(damage)
 
