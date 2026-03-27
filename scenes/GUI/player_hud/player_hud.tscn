@@ -10,6 +10,11 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_du66t"]
+bg_color = Color(1, 1, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
 [node name="PlayerHud" type="Control" unique_id=1409997022]
 layout_mode = 3
 anchors_preset = 15
@@ -31,12 +36,28 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HealthProgressBar" type="ProgressBar" parent="MarginContainer" unique_id=518553769]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer" unique_id=872840895]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="HealthProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer2" unique_id=518553769]
 custom_minimum_size = Vector2(35, 250)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_styles/fill = SubResource("StyleBoxFlat_0ubfc")
+value = 20.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+
+[node name="StaminaProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer2" unique_id=986738353]
+custom_minimum_size = Vector2(15, 250)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_du66t")
 value = 20.0
 rounded = true
 fill_mode = 3

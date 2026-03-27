@@ -2,16 +2,16 @@ extends Control
 class_name PlayerHUD
 
 @export var player: CharacterBase
-@onready var health_bar: ProgressBar = $MarginContainer/HealthProgressBar
+@onready var health_bar: ProgressBar = $MarginContainer/HBoxContainer2/HealthProgressBar
+@onready var stamina_bar: ProgressBar = $MarginContainer/HBoxContainer2/StaminaProgressBar
 @onready var pause_menu: Control = $MarginContainer/PauseMenu
 @onready var confirm_exit: ConfirmationDialog = $MarginContainer/PauseMenu/ConfirmExitDialog
 
 @onready var timer_label: Label = $MarginContainer/TimerLabel
 var time_elapsed: float = 0.0
 
-
 var health_component: HealthComponent
-
+var stamina_component: StaminaComponent
 
 func _ready() -> void:
 	print("HUD carregando: ", self, " path=", get_path())
@@ -22,21 +22,32 @@ func _ready() -> void:
 		return
 
 	health_component = player.get_node_or_null("HealthComponent") as HealthComponent
-
 	if health_component == null:
 		push_error("PlayerHUD não encontrou HealthComponent no Player.")
 		return
-
+	
 	if not health_component.health_changed.is_connected(_on_health_changed):
 		health_component.health_changed.connect(_on_health_changed)
 
 	_on_health_changed(health_component.current_health, health_component.max_health)
 
+	stamina_component = player.get_node_or_null("StaminaComponent") as StaminaComponent
+	if stamina_component == null:
+		push_error("playerHUD não encontrou StaminaComponent no Player.")
+		return
+	
+	if not stamina_component.stamina_changed.is_connected(_on_stamina_changed):
+		stamina_component.stamina_changed.connect(_on_stamina_changed)
+		
+	_on_stamina_changed(stamina_component.current_stamina, stamina_component.max_stamina)
 
 func _on_health_changed(current_health: int, max_health: int) -> void:
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 
+func _on_stamina_changed(current_stamina: int, max_stamina: int) -> void:
+	stamina_bar.max_value = max_stamina
+	stamina_bar.value = current_stamina
 
 func _on_pause_pressed() -> void:
 	var paused = !get_tree().paused

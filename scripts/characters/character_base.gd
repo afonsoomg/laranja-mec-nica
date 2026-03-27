@@ -45,11 +45,11 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	
 	if animation_component:
 		animation_component.play_hurt()
+		
 
 func _set_shader_blink_intensity(newValue : float):
 	animated_sprite.material.set_shader_parameter("blink_intensity", newValue)
 	
-
 func _on_died() -> void:
 	is_dead = true
 	
@@ -77,7 +77,6 @@ func _apply_final_movement() -> void:
 
 	velocity = final_velocity
 	move_and_slide()
-
 
 func _play_footstep():
 	AudioManagerCustom.play_footstep(global_position)

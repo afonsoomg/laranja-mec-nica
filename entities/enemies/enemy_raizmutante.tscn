@@ -527,10 +527,10 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pgwk5")
 }, {
-"duration": 1.0,
+"duration": 10.0,
 "texture": SubResource("AtlasTexture_jg6pm")
 }, {
-"duration": 1.0,
+"duration": 5.0,
 "texture": SubResource("AtlasTexture_3vt7b")
 }, {
 "duration": 1.0,
@@ -560,7 +560,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sw53o")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_down",
 "speed": 15.0
 }, {
@@ -580,7 +580,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_co7n1")
 }, {
-"duration": 1.0,
+"duration": 5.0,
 "texture": SubResource("AtlasTexture_7vrnm")
 }, {
 "duration": 1.0,
@@ -634,7 +634,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3x6hb")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_left",
 "speed": 15.0
 }, {
@@ -654,7 +654,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vus6u")
 }, {
-"duration": 1.0,
+"duration": 5.0,
 "texture": SubResource("AtlasTexture_yh8mw")
 }, {
 "duration": 1.0,
@@ -693,7 +693,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o0ea0")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_right",
 "speed": 10.0
 }, {
@@ -713,7 +713,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vus6u")
 }, {
-"duration": 1.0,
+"duration": 5.0,
 "texture": SubResource("AtlasTexture_yh8mw")
 }, {
 "duration": 1.0,
@@ -752,7 +752,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o0ea0")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_up",
 "speed": 15.0
 }, {
@@ -987,7 +987,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_28auh")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_down",
 "speed": 7.0
 }, {
@@ -1010,7 +1010,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_28auh")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_left",
 "speed": 7.0
 }, {
@@ -1033,7 +1033,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_28auh")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_right",
 "speed": 7.0
 }, {
@@ -1056,7 +1056,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_28auh")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt_up",
 "speed": 7.0
 }, {
@@ -1217,10 +1217,9 @@ animations = [{
 radius = 15.0
 height = 57.0
 
-[node name="RaizMutante" unique_id=232863277 node_paths=PackedStringArray("ranged_weapon_component") instance=ExtResource("1_vus6u")]
+[node name="RaizMutante" unique_id=232863277 instance=ExtResource("1_vus6u")]
 scale = Vector2(2, 2)
 script = ExtResource("2_q4faw")
-ranged_weapon_component = NodePath("RangedWeaponComponent")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 9.5)
@@ -1254,36 +1253,42 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 material = SubResource("ShaderMaterial_vus6u")
 position = Vector2(0.5, 1)
 sprite_frames = SubResource("SpriteFrames_r8m5l")
-animation = &"idle_right"
+animation = &"attack_down"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
 
-[node name="EnemyAIComponent" parent="." index="9" unique_id=1403723744]
+[node name="EnemyAIComponent" parent="." index="12" unique_id=1403723744]
 chase_range = 1000.0
 attack_range = 1000.0
 lose_target_range = 1000.0
 
-[node name="CollisionShape2D" parent="TouchDamageArea" parent_id_path=PackedInt32Array(414827260) index="0" unique_id=222369610]
-position = Vector2(0.5, 7.5)
-shape = SubResource("CapsuleShape2D_a3opq")
-
-[node name="ProgressBar" parent="." index="12" unique_id=494705679]
-offset_left = -13.0
-offset_top = -42.0
-offset_right = 14.0
-offset_bottom = -38.0
-
-[node name="RangedWeaponComponent" type="Node" parent="." index="13" unique_id=541326372 node_paths=PackedStringArray("projectile_spawn_marker", "move_component", "animation_component", "stats_component")]
+[node name="RangedWeaponComponent" type="Node" parent="." index="13" unique_id=541326372 node_paths=PackedStringArray("projectile_spawn_marker", "move_component", "animation_component", "animated_sprite", "stats_component")]
 script = ExtResource("8_a2lsk")
 projectile_scene = ExtResource("5_q4faw")
 projectile_spawn_marker = NodePath("../ProjectileSpawnMaker")
 move_component = NodePath("../MoveComponent")
 animation_component = NodePath("../AnimationComponent")
+animated_sprite = NodePath("../AnimatedSprite2D")
 stats_component = NodePath("../StatsComponent")
 damage = 17
 knockback_force = 60.0
+fire_frame = 7
 metadata/_custom_type_script = "uid://doq3xcghd36dc"
 
-[node name="ProjectileSpawnMaker" type="Node2D" parent="." index="14" unique_id=2043519706]
+[node name="ProjectileSpawnMaker" type="Marker2D" parent="." index="14" unique_id=857780166]
 position = Vector2(37, 0)
+gizmo_extents = 15.5
+
+[node name="DetectionArea" parent="." index="15" unique_id=1880334663]
+monitorable = true
+
+[node name="CollisionShape2D" parent="TouchDamageArea" parent_id_path=PackedInt32Array(414827260) index="0" unique_id=222369610]
+position = Vector2(0.5, 7.5)
+shape = SubResource("CapsuleShape2D_a3opq")
+
+[node name="ProgressBar" parent="." index="18" unique_id=494705679]
+offset_left = -13.0
+offset_top = -42.0
+offset_right = 14.0
+offset_bottom = -38.0

@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	projectile_area.global_position += direction * speed * delta
 
 
-func initialize(start_direction: Vector2, projectile_owner: Node = null, projectile_damage: int = -1, projectile_knockback_force: float = -1.0) -> void:
+func initialize(start_direction: Vector2, projectile_owner: Node = null, projectile_damage: int = -1, projectile_knockback_force: float = -1.0) -> void:	
 	direction = start_direction.normalized()
 	owner_node = projectile_owner
 

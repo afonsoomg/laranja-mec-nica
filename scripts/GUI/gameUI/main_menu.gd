@@ -4,6 +4,7 @@ extends Control
 @export var ui_click_sound: AudioStream
 @export var ui_hover_sound: AudioStream
 
+signal start_game
 
 func _ready() -> void:
 	AudioManagerCustom.play_music(menu_music)
@@ -13,12 +14,15 @@ func _ready() -> void:
 func _on_jogar_pressed() -> void:
 	AudioManagerCustom.play_ui(ui_click_sound)
 	AudioManagerCustom.stop_music()
-	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	start_game.emit()
 
 
 func _on_sair_pressed() -> void:
 	AudioManagerCustom.play_ui(ui_click_sound)
 	get_tree().quit()
 
+
 func _on_mouse_hover() -> void:
 	AudioManagerCustom.play_ui(ui_hover_sound)
+
+	

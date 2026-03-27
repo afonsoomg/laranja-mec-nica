@@ -67,6 +67,24 @@ func play_attack() -> void:
 
 	is_attacking = true
 
+func play_attack_directional(dir: Vector2) -> void:
+	if not can_attack():
+		return
+
+	var suffix := "down"
+
+	if dir == Vector2.UP:
+		suffix = "up"
+	elif dir == Vector2.DOWN:
+		suffix = "down"
+	elif dir == Vector2.LEFT:
+		suffix = "left"
+	elif dir == Vector2.RIGHT:
+		suffix = "right"
+
+	action_facing = suffix
+	locked_action_animation = "attack_" + suffix
+	is_attacking = true
 
 func play_hurt() -> void:
 	if is_dying:

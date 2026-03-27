@@ -16,16 +16,17 @@ var facing_direction: Vector2 = Vector2.DOWN
 var is_running: bool = false
 var _was_moving: bool = false
 
+var forced_velocity: Vector2 = Vector2.ZERO
+var use_forced_velocity: bool = false
 
 func _ready() -> void:
 	if body == null:
 		push_error("MoveComponent precisa ser filho de um CharacterBody2D.")
 		return
-		
-	if stats_component == null:
-		push_error("MoveComponent precisa de um StatsComponent.")	
-		return
 
+	if stats_component == null:
+		push_error("MoveComponent precisa de um StatsComponent.")
+		return
 
 func set_move_input(input_vector: Vector2) -> void:
 	if not can_move:
@@ -39,18 +40,28 @@ func set_move_input(input_vector: Vector2) -> void:
 		facing_direction = normalized_input
 		direction_changed.emit(facing_direction)
 
-
 func set_running(value: bool) -> void:
 	if is_running == value:
 		return
 
 	is_running = value
-	#print("MoveComponent is_running:", is_running)
 	run_state_changed.emit(is_running)
 
+func set_forced_velocity(value: Vector2) -> void:
+	forced_velocity = value
+	use_forced_velocity = true
+
+func clear_forced_velocity() -> void:
+	forced_velocity = Vector2.ZERO
+	use_forced_velocity = false
 
 func update_velocity(delta: float) -> void:
 	if body == null or stats_component == null:
+		return
+
+	if use_forced_velocity:
+		body.velocity = forced_velocity
+		_check_move_state()
 		return
 
 	if not can_move:
@@ -74,15 +85,14 @@ func update_velocity(delta: float) -> void:
 
 	_check_move_state()
 
-
 func stop() -> void:
 	move_input = Vector2.ZERO
+	clear_forced_velocity()
 
 	if body != null:
 		body.velocity = Vector2.ZERO
 
 	_check_move_state()
-
 
 func get_current_speed() -> float:
 	if stats_component == null:
@@ -90,20 +100,16 @@ func get_current_speed() -> float:
 
 	return stats_component.run_speed if is_running else stats_component.walk_speed
 
-
 func is_moving() -> bool:
 	return body != null and body.velocity.length() > 1.0
-
 
 func get_velocity() -> Vector2:
 	if body == null:
 		return Vector2.ZERO
 	return body.velocity
 
-
 func get_move_input() -> Vector2:
 	return move_input
-
 
 func _check_move_state() -> void:
 	var moving_now := is_moving()

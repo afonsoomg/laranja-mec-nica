@@ -107,6 +107,10 @@ texture = ExtResource("1_mmyi6")
 layout_mode = 2
 text = "Mais uma Vez"
 
+[node name="backToMenu_btn" parent="VBoxContainer" unique_id=1316939671 instance=ExtResource("2_es16h")]
+layout_mode = 2
+text = "Menu"
+
 [node name="Quit_btn" parent="VBoxContainer" unique_id=682313969 instance=ExtResource("2_es16h")]
 layout_mode = 2
 text = "Sair do Jogo"
@@ -115,4 +119,5 @@ text = "Sair do Jogo"
 libraries/ = SubResource("AnimationLibrary_07o6g")
 
 [connection signal="pressed" from="VBoxContainer/Restart_btn" to="." method="_on_restart_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/backToMenu_btn" to="." method="_on_back_to_menu_btn_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit_btn" to="." method="_on_quit_btn_pressed"]

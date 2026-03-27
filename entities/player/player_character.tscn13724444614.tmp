@@ -1944,7 +1944,10 @@ metadata/_custom_type_script = "uid://cmv0akvyet1k5"
 script = ExtResource("24_yr7e7")
 metadata/_custom_type_script = "uid://df0mnut1t73ei"
 
-[node name="DodgeComponent" type="Node" parent="." index="19" unique_id=1426893483 node_paths=PackedStringArray("move_component")]
+[node name="DodgeComponent" type="Node" parent="." index="19" unique_id=1426893483 node_paths=PackedStringArray("move_component", "animation_component")]
 script = ExtResource("26_n1h10")
 move_component = NodePath("../MoveComponent")
+animation_component = NodePath("../AnimationComponent")
+duration = null
+speed = null
 metadata/_custom_type_script = "uid://b7lo7c1cui6er"

@@ -49,6 +49,7 @@ func heal(amount: int) -> void:
 	healed.emit(amount)
 	health_changed.emit(current_health, max_health)
 
+
 func _die() -> void:
 	if is_dead:
 		return

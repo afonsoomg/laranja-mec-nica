@@ -14,12 +14,15 @@ shader = ExtResource("3_w28g0")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
 shader_parameter/blink_intensity = 0.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ona3f"]
+radius = 195.50256
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_yc03e"]
 radius = 33.06055
 
-[node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_6kwvc")]
+[node name="EnemyBase" unique_id=232863277 node_paths=PackedStringArray("detection_area") instance=ExtResource("1_6kwvc")]
 script = ExtResource("2_3iigx")
-target_path = NodePath("")
+detection_area = NodePath("DetectionArea")
 
 [node name="AnimationComponent" parent="." index="6" unique_id=205670419 node_paths=PackedStringArray("move_component")]
 move_component = NodePath("../MoveComponent")
@@ -27,22 +30,37 @@ move_component = NodePath("../MoveComponent")
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 material = SubResource("ShaderMaterial_ona3f")
 
-[node name="EnemyAIComponent" type="Node" parent="." index="9" unique_id=1403723744]
+[node name="AudioComponent" parent="." index="9" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
+script = ExtResource("6_ona3f")
+sfx_player = NodePath("SfxPlayer")
+
+[node name="VfxComponent" parent="." index="10" unique_id=1741814442 node_paths=PackedStringArray("hit_burst")]
+script = ExtResource("6_ks5hg")
+hit_burst = NodePath("../VFX/HitEffect")
+
+[node name="EnemyAIComponent" type="Node" parent="." index="12" unique_id=1403723744]
 script = ExtResource("3_prjjb")
 metadata/_custom_type_script = "uid://dogslyel4yd8h"
 
-[node name="TouchDamageComponent" type="Node" parent="." index="10" unique_id=1256741742]
+[node name="DetectionArea" type="Area2D" parent="." index="13" unique_id=1880334663]
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0" unique_id=644740111]
+shape = SubResource("CircleShape2D_ona3f")
+
+[node name="TouchDamageComponent" type="Node" parent="." index="14" unique_id=1256741742]
 script = ExtResource("4_yc03e")
 metadata/_custom_type_script = "uid://da0ho1ec6wewx"
 
-[node name="TouchDamageArea" type="Area2D" parent="." index="11" unique_id=414827260]
+[node name="TouchDamageArea" type="Area2D" parent="." index="15" unique_id=414827260]
 collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TouchDamageArea" index="0" unique_id=222369610]
 shape = SubResource("CircleShape2D_yc03e")
 
-[node name="ProgressBar" type="ProgressBar" parent="." index="12" unique_id=494705679]
+[node name="ProgressBar" type="ProgressBar" parent="." index="16" unique_id=494705679]
 modulate = Color(1, 0, 0, 1)
 anchors_preset = 8
 anchor_left = 0.5
@@ -57,11 +75,3 @@ grow_horizontal = 2
 grow_vertical = 2
 value = 50.0
 show_percentage = false
-
-[node name="AudioComponent" parent="." index="13" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
-script = ExtResource("6_ona3f")
-sfx_player = NodePath("SfxPlayer")
-
-[node name="VfxComponent" parent="." index="14" unique_id=1741814442 node_paths=PackedStringArray("hit_burst")]
-script = ExtResource("6_ks5hg")
-hit_burst = NodePath("../VFX/HitEffect")

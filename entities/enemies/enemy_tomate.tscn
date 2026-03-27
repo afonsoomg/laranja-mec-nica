@@ -1089,12 +1089,12 @@ animation = &"attack_down"
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
 
-[node name="EnemyAIComponent" parent="." index="9" unique_id=1403723744]
+[node name="EnemyAIComponent" parent="." index="12" unique_id=1403723744]
 chase_range = 400.0
 attack_range = 40.0
 lose_target_range = 540.0
 
-[node name="ProgressBar" parent="." index="12" unique_id=494705679]
+[node name="ProgressBar" parent="." index="16" unique_id=494705679]
 offset_left = -33.0
 offset_top = -46.0
 offset_right = 30.0

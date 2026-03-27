@@ -21,9 +21,17 @@ signal critical_hit(target: Node, damage: int)
 @export var horizontal_hitbox_offset: Vector2 = Vector2(16, 0)
 @export var vertical_hitbox_offset: Vector2 = Vector2(0, 16)
 
+@export var animated_sprite: AnimatedSprite2D
+@export var attack_active_frame: int = 1
+
 var can_attack: bool = true
 var is_attacking: bool = false
 var _hit_targets: Array[HurtboxComponent] = []
+
+var pending_attack: bool = false
+var attack_direction: Vector2 = Vector2.DOWN
+var hitbox_activated_this_attack: bool = false
+var attack_cancelled: bool = false
 
 
 func _ready() -> void:
@@ -50,7 +58,48 @@ func _ready() -> void:
 	attack_hitbox.monitoring = false
 	attack_hitbox.body_entered.connect(_on_hitbox_body_entered)
 	attack_hitbox.area_entered.connect(_on_hitbox_area_entered)
+	
+	if animated_sprite and not animated_sprite.frame_changed.is_connected(_on_frame_changed):
+		animated_sprite.frame_changed.connect(_on_frame_changed)
 
+	if animated_sprite and not animated_sprite.animation_finished.is_connected(_on_animation_finished):
+		animated_sprite.animation_finished.connect(_on_animation_finished)
+
+func request_attack(dir: Vector2) -> void:
+	if pending_attack:
+		return
+
+	pending_attack = true
+	attack_cancelled = false
+	hitbox_activated_this_attack = false
+	attack_direction = dir
+
+	if animation_component:
+		animation_component.play_attack_directional(dir)
+
+func cancel_attack() -> void:
+	if not pending_attack and not is_attacking:
+		return
+
+	attack_cancelled = true
+	pending_attack = false
+	is_attacking = false
+	hitbox_activated_this_attack = false
+	_disable_hitbox()
+	attack_finished.emit()
+	can_attack = true
+
+func _on_frame_changed() -> void:
+	if not pending_attack or attack_cancelled:
+		return
+
+	if not animated_sprite.animation.begins_with("attack_"):
+		return
+
+	if animated_sprite.frame == attack_active_frame and not hitbox_activated_this_attack:
+		hitbox_activated_this_attack = true
+		try_attack()
+	
 
 func try_attack() -> void:
 	if not _can_start_attack():
@@ -60,8 +109,8 @@ func try_attack() -> void:
 	is_attacking = true
 	_hit_targets.clear()
 
+	move_component.facing_direction = attack_direction
 	_update_hitbox_direction()
-	animation_component.play_attack()
 	attack_started.emit()
 
 	_start_attack_sequence()
@@ -72,9 +121,6 @@ func _can_start_attack() -> bool:
 		return false
 
 	if is_attacking:
-		return false
-
-	if animation_component != null and not animation_component.can_attack():
 		return false
 
 	return true
@@ -215,6 +261,11 @@ func _update_hitbox_direction() -> void:
 		else:
 			attack_hitbox.position = Vector2(vertical_hitbox_offset.x, -vertical_hitbox_offset.y)
 
+func _on_animation_finished() -> void:
+	if animated_sprite.animation.begins_with("attack_"):
+		pending_attack = false
+		hitbox_activated_this_attack = false
+		_disable_hitbox()
 
 func _belongs_to_owner(target: Node) -> bool:
 	var owner_node := get_parent()

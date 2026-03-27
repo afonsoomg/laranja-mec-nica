@@ -8,6 +8,7 @@ class_name InputComponent
 @export var move_down_action: StringName = &"game_down"
 @export var run_action: StringName = &"game_run"
 @export var attack_action: StringName = &"game_attack"
+@export var dodge_action: StringName = &"game_dodge"
 
 
 func get_input_vector() -> Vector2:
@@ -23,3 +24,6 @@ func is_run_pressed() -> bool:
 
 func is_attack_just_pressed() -> bool:
 	return Input.is_action_just_pressed(attack_action)
+	
+func is_dodge_just_pressed() -> bool:
+	return Input.is_action_just_pressed(dodge_action)

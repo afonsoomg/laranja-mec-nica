@@ -49,6 +49,7 @@ func update_ai(owner_position: Vector2) -> void:
 
 	if distance_to_target > lose_target_range:
 		current_state = AIState.IDLE
+		target = null
 		return
 
 	if distance_to_target <= attack_range:
