@@ -1,6 +1,9 @@
 extends Node
 class_name BuffComponent
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "BuffComponent"
+
 @onready var stats_component: StatsComponent = $"../StatsComponent"
 @onready var audio_component: AudioComponent = get_node_or_null("../AudioComponent") as AudioComponent
 @onready var vfx_component: VfxComponent = get_node_or_null("../VfxComponent") as VfxComponent
@@ -14,6 +17,8 @@ var _crit_buff_token: int = 0
 
 func apply_crit_buff(bonus: float, duration: float) -> bool:	
 	if stats_component == null:
+		Observer.log_error(LOG_CATEGORY, "Cannot apply crit buff without StatsComponent.")
+		assert(false, "[BuffComponent] Critical setup failure: missing StatsComponent.")
 		return false
 
 	if bonus <= 0.0 or duration <= 0.0:
@@ -31,8 +36,8 @@ func apply_crit_buff(bonus: float, duration: float) -> bool:
 	var current_token := _crit_buff_token
 
 	stats_component.crit_chance += bonus
-	print("Crit buff applied. Current crit chance: ", stats_component.crit_chance)
-
+	Observer.log_info(LOG_CATEGORY, "Crit buff applied. Current crit chance=%.3f" % stats_component.crit_chance)
+	
 	if audio_component:
 		audio_component.play_collect()
 		audio_component.play_crit_buff_start()
@@ -57,8 +62,8 @@ func _remove_crit_buff_later(token: int, duration: float) -> void:
 	stats_component.crit_chance -= _crit_buff_bonus
 	stats_component.crit_chance = max(stats_component.crit_chance, 0.0)
 
-	print("Crit buff ended. Current crit chance: ", stats_component.crit_chance)
-
+	Observer.log_info(LOG_CATEGORY, "Crit buff ended. Current crit chance=%.3f" % stats_component.crit_chance)
+	
 	if audio_component:
 		audio_component.play_crit_buff_end()
 		

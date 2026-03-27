@@ -1,5 +1,8 @@
 extends Node2D
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "World"
+
 @export var world_music: AudioStream
 @export var world_ambient: AudioStream
 @export var enemy_scene: PackedScene
@@ -16,8 +19,14 @@ signal player_died
 func _ready() -> void:
 	AudioManagerCustom.play_music(world_music)
 	AudioManagerCustom.play_ambient(world_ambient)
-	load_level("res://scenes/Levels/Lab/Lab_Scene.tscn")	
-	health_component.died.connect(_on_player_died)
+	load_level("res://scenes/Levels/Lab/Lab_Scene.tscn")
+		
+	if health_component == null:
+		Observer.log_error(LOG_CATEGORY, "Player HealthComponent not found.")
+		assert(false, "[World] Critical setup failure: missing player health component.")
+		return
+
+	Observer.connect_once_safe(health_component.died, _on_player_died, "World._ready player_died")
 		
 
 func load_level(level_path: String) -> void:

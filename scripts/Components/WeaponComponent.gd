@@ -1,6 +1,9 @@
 extends Node
 class_name WeaponComponent
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "WeaponComponent"
+
 signal attack_started(direction: Vector2)
 signal attack_finished(direction: Vector2)
 signal target_hit(target: Node, damage: int)
@@ -43,8 +46,8 @@ func _ready() -> void:
 		return
 
 	attack_hitbox.monitoring = false
-	attack_hitbox.body_entered.connect(_on_hitbox_body_entered)
-	attack_hitbox.area_entered.connect(_on_hitbox_area_entered)
+	Observer.connect_once_safe(attack_hitbox.body_entered, _on_hitbox_body_entered, "WeaponComponent._ready body_entered")
+	Observer.connect_once_safe(attack_hitbox.area_entered, _on_hitbox_area_entered, "WeaponComponent._ready area_entered")
 	
 
 func begin_attack(dir: Vector2) -> void:
@@ -206,7 +209,7 @@ func _try_hit_target(target: Node) -> void:
 
 	if is_critical:
 		critical_hit.emit(hurtbox, damage)
-		print("CRITICAL HIT! Damage: ", damage)
+		Observer.log_info(LOG_CATEGORY, "Critical hit dealt. Damage=%d" % damage)
 
 
 func _extract_hurtbox(target: Node) -> HurtboxComponent:

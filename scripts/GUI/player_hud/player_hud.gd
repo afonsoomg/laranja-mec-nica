@@ -1,6 +1,9 @@
 extends Control
 class_name PlayerHUD
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "PlayerHUD"
+
 signal exit_requested
 signal back_to_menu_requested
 
@@ -42,27 +45,33 @@ func _on_stamina_changed(current_stamina: float, max_stamina: float) -> void:
 
 func setup(new_player: CharacterBase) -> void:
 	player = new_player
+	Observer.log_debug(LOG_CATEGORY, "Setup called with player=%s" % player)
 	
 	if player == null:
-		push_error("PlayerHUD precisa de uma referência ao Player.")
+		Observer.log_error(LOG_CATEGORY, "Player reference is required in setup().")
+		assert(false, "[PlayerHUD] Critical setup failure: player is null.")
 		return
 
 	health_component = ComponentValidator.require_node(player, NodePath("HealthComponent"), "HealthComponent", "HealthComponent") as HealthComponent
+	Observer.log_debug(LOG_CATEGORY, "Resolved HealthComponent=%s" % health_component)
 	if health_component == null:
+		Observer.log_error(LOG_CATEGORY, "HealthComponent not found on player.")
+		assert(false, "[PlayerHUD] Critical setup failure: missing HealthComponent.")
 		return
 
-	if not health_component.health_changed.is_connected(_on_health_changed):
-		health_component.health_changed.connect(_on_health_changed)
+	Observer.connect_once_safe(health_component.health_changed, _on_health_changed, "PlayerHUD.setup health_changed")
 
 	_on_health_changed(health_component.current_health, health_component.max_health)
 
 	stamina_component = ComponentValidator.require_node(player, NodePath("StaminaComponent"), "StaminaComponent", "StaminaComponent") as StaminaComponent
+	Observer.log_debug(LOG_CATEGORY, "Resolved StaminaComponent=%s" % stamina_component)
 	if stamina_component == null:
+		Observer.log_error(LOG_CATEGORY, "StaminaComponent not found on player.")
+		assert(false, "[PlayerHUD] Critical setup failure: missing StaminaComponent.")
 		return
 
-	if not stamina_component.stamina_changed.is_connected(_on_stamina_changed):
-		stamina_component.stamina_changed.connect(_on_stamina_changed)
-
+	Observer.connect_once_safe(stamina_component.stamina_changed, _on_stamina_changed, "PlayerHUD.setup stamina_changed")
+	
 	_on_stamina_changed(stamina_component.current_stamina, stamina_component.max_stamina)
 
 
@@ -83,6 +92,7 @@ func _on_continuar_pressed() -> void:
 
 
 func _on_confirm_exit_dialog_confirmed() -> void:
+	Observer.log_info(LOG_CATEGORY, "Emitting exit_requested signal.")
 	confirm_exit.hide()
 	pause_menu.visible = false
 	get_tree().paused = false
@@ -94,6 +104,7 @@ func _on_voltar_menu_pause_pressed() -> void:
 
 
 func _on_voltar_menu_hud_pressed() -> void:
+	Observer.log_info(LOG_CATEGORY, "Emitting back_to_menu_requested signal.")
 	confirm_exit.hide()
 	pause_menu.visible = false
 	get_tree().paused = false

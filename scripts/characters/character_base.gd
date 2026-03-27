@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name CharacterBase
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "CharacterBase"
+
 var animation_component: AnimationComponent
 var knockback_component: KnockbackComponent
 var health_component: HealthComponent
@@ -44,14 +47,24 @@ func _physics_process(delta: float) -> void:
 
 
 func _connect_signals() -> void:
-	if health_component and not health_component.died.is_connected(_on_died):
-		health_component.died.connect(_on_died)
-		
-	if hurtbox_component and not hurtbox_component.hit_received.is_connected(_on_hit_received):
-		hurtbox_component.hit_received.connect(_on_hit_received)
-		
-	if animated_sprite and not animated_sprite.frame_changed.is_connected(_on_frame_changed):
-		animated_sprite.frame_changed.connect(_on_frame_changed)
+	if health_component == null:
+		Observer.log_error(LOG_CATEGORY, "Missing HealthComponent on %s." % name)
+		assert(false, "[CharacterBase] Critical setup failure: missing HealthComponent.")
+		return
+
+	if hurtbox_component == null:
+		Observer.log_error(LOG_CATEGORY, "Missing HurtboxComponent on %s." % name)
+		assert(false, "[CharacterBase] Critical setup failure: missing HurtboxComponent.")
+		return
+
+	if animated_sprite == null:
+		Observer.log_error(LOG_CATEGORY, "Missing AnimatedSprite2D on %s." % name)
+		assert(false, "[CharacterBase] Critical setup failure: missing AnimatedSprite2D.")
+		return
+
+	Observer.connect_once_safe(health_component.died, _on_died, "CharacterBase._connect_signals died")
+	Observer.connect_once_safe(hurtbox_component.hit_received, _on_hit_received, "CharacterBase._connect_signals hit_received")
+	Observer.connect_once_safe(animated_sprite.frame_changed, _on_frame_changed, "CharacterBase._connect_signals frame_changed")
 
 
 func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_critical: bool) -> void:

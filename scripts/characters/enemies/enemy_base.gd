@@ -22,20 +22,26 @@ func _ready() -> void:
 
 	ranged_weapon_component = get_node_or_null("RangedWeaponComponent") as RangedWeaponComponent
 	add_to_group("enemy")
-
-	if not detection_area.body_entered.is_connected(_on_detection_area_body_entered):
-		detection_area.body_entered.connect(_on_detection_area_body_entered)
-
-	if not detection_area.body_exited.is_connected(_on_detection_area_body_exited):
-		detection_area.body_exited.connect(_on_detection_area_body_exited)
-
+	
+	if detection_area == null:
+		push_error("DetectionArea não encontrada no inimigo.")
+		Observability.log_error(LOG_CATEGORY, "DetectionArea missing on enemy.")
+		assert(false, "[EnemyBase] Critical setup failure: DetectionArea missing.")
+	else:
+		Observability.connect_once_safe(detection_area.body_entered, _on_detection_area_body_entered, "EnemyBase._ready body_entered")
+		Observability.connect_once_safe(detection_area.body_exited, _on_detection_area_body_exited, "EnemyBase._ready body_exited")
+	
 	ai_component.set_target(null)
 	enemy_health_bar.max_value = health_component.max_health
 	enemy_health_bar.value = health_component.current_health
 
-	if not health_component.health_changed.is_connected(_on_health_changed):
-		health_component.health_changed.connect(_on_health_changed)
+	if health_component == null:
+		Observability.log_error(LOG_CATEGORY, "HealthComponent missing; enemy health UI cannot initialize.")
+		assert(false, "[EnemyBase] Critical setup failure: missing HealthComponent.")
+		return
 
+	Observability.connect_once_safe(health_component.health_changed, _on_health_changed, "EnemyBase._ready health_changed")
+	
 	call_deferred("_check_initial_target")
 
 
@@ -49,7 +55,7 @@ func _check_initial_target() -> void:
 			target = body
 			if ai_component:
 				ai_component.set_target(target)
-			print("Target inicial detectado:", body.name)
+			Observability.log_debug(LOG_CATEGORY, "Initial target detected: %s" % body.name)
 			return
 
 
