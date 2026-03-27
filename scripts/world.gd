@@ -6,7 +6,7 @@ extends Node2D
 @export var collectable_scene: PackedScene
 
 @onready var level_holder: Node = $LevelHolder
-@onready var player = $PlayerCharacter
+@onready var player : CharacterBase = $PlayerCharacter
 @onready var health_component = $PlayerCharacter/HealthComponent
 @onready var enemies_holder: Node = $Enemies
 @onready var collectables_holder: Node = $Collectables
@@ -68,3 +68,6 @@ func _register_tilemaps_for_audio(root: Node) -> void:
 
 func _on_player_died() -> void:
 	player_died.emit()
+
+func get_player() -> CharacterBase:
+	return $PlayerCharacter

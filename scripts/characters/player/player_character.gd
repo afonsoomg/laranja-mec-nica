@@ -33,12 +33,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
-
+	
+	dodge_component.tick(delta)
 	_handle_combat_input()
 
 	if combat_state.is_dodging:
-		dodge_component.update_dodge(delta)
 		animation_component.update_animation()
+		super._physics_process(delta)
+		return
 
 	elif combat_state.is_attacking:
 		move_component.set_move_input(Vector2.ZERO)
@@ -63,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		animation_component.update_animation()
 
 	super._physics_process(delta)
-	
+
 	if animation_component.is_hurt and combat_state.is_attacking:
 		_cancel_attack_state()
 
@@ -106,35 +108,46 @@ func _try_start_dodge() -> void:
 	if combat_state.is_dodging:
 		return
 
-	var dodge_dir := _get_dodge_direction()
+	if not dodge_component.can_start_dodge():
+		return
+
+	var dodge_dir := _get_mouse_dodge_direction()
 	if dodge_dir == Vector2.ZERO:
 		return
 
-	if not stamina_component.spend(dodge_stamina_cost):
+	if not stamina_component.can_spend(dodge_stamina_cost):
 		return
 
 	if not combat_state.start_dodge():
 		return
 
+	if not dodge_component.start_dodge(dodge_dir):
+		combat_state.finish_dodge()
+		return
+
+	if not stamina_component.spend(dodge_stamina_cost):
+		dodge_component.finish_dodge()
+		combat_state.finish_dodge()
+		return
+
 	move_component.facing_direction = dodge_dir
-	dodge_component.start_dodge(dodge_dir)
-
-func _get_dodge_direction() -> Vector2:
-	var input_dir := input_component.get_input_vector()
-
-	if input_dir != Vector2.ZERO:
-		return _quantize_to_4_directions(input_dir)
-
-	if move_component.facing_direction != Vector2.ZERO:
-		return _quantize_to_4_directions(move_component.facing_direction)
-
-	return Vector2.DOWN
+	
 
 func _get_mouse_attack_direction() -> Vector2:
 	var to_mouse := get_global_mouse_position() - global_position
 
 	if to_mouse == Vector2.ZERO:
 		return move_component.facing_direction
+
+	return _quantize_to_4_directions(to_mouse)
+
+func _get_mouse_dodge_direction() -> Vector2:
+	var to_mouse := get_global_mouse_position() - global_position
+
+	if to_mouse == Vector2.ZERO:
+		if move_component.facing_direction != Vector2.ZERO:
+			return _quantize_to_4_directions(move_component.facing_direction)
+		return Vector2.DOWN
 
 	return _quantize_to_4_directions(to_mouse)
 

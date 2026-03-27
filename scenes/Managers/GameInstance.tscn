@@ -1,8 +1,18 @@
 [gd_scene format=3 uid="uid://bsa2r8vwkql44"]
 
 [ext_resource type="Script" uid="uid://doeo0nwa2tkfg" path="res://scripts/game_instance.gd" id="1_kjoll"]
+[ext_resource type="PackedScene" uid="uid://cgqmjsrhsdiuk" path="res://scenes/GUI/gameUI/main_menu.tscn" id="2_ygtck"]
+[ext_resource type="PackedScene" uid="uid://c5k85di8ir738" path="res://scenes/world.tscn" id="3_68c7u"]
+[ext_resource type="PackedScene" uid="uid://bigaaa7fww176" path="res://scenes/GUI/gameUI/GameOver.tscn" id="4_qn760"]
+[ext_resource type="PackedScene" uid="uid://c3m5bijh62cvp" path="res://scenes/GUI/player_hud/player_hud.tscn" id="5_nk6nh"]
 
 [node name="GameInstance" type="Node2D" unique_id=1049590627]
 script = ExtResource("1_kjoll")
+main_menu_scene = ExtResource("2_ygtck")
+world_scene = ExtResource("3_68c7u")
+game_over_scene = ExtResource("4_qn760")
+player_hud_scene = ExtResource("5_nk6nh")
 
 [node name="CurrentScene" type="Node" parent="." unique_id=992268198]
+
+[node name="UIRoot" type="CanvasLayer" parent="." unique_id=201265839]

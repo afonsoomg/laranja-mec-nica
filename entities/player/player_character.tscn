@@ -35,7 +35,7 @@ height = 23.5
 radius = 7.0
 height = 26.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hblhq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n1h10"]
 resource_local_to_scene = true
 shader = ExtResource("3_yr7e7")
 shader_parameter/blink_color = Color(1, 0, 0, 1)
@@ -1836,9 +1836,9 @@ scale = Vector2(4, 4)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_u37yl")
-attack_stamina_cost = 20.0
-dodge_stamina_cost = 30.0
-run_stamina_cost_per_second = 18.0
+attack_stamina_cost = 10.0
+dodge_stamina_cost = 15.0
+run_stamina_cost_per_second = 10.0
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1863,7 +1863,7 @@ move_component = NodePath("../MoveComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_hblhq")
+material = SubResource("ShaderMaterial_n1h10")
 sprite_frames = SubResource("SpriteFrames_wssc2")
 animation = &"attack_down"
 
@@ -1947,4 +1947,5 @@ metadata/_custom_type_script = "uid://df0mnut1t73ei"
 [node name="DodgeComponent" type="Node" parent="." index="19" unique_id=1426893483 node_paths=PackedStringArray("move_component")]
 script = ExtResource("26_n1h10")
 move_component = NodePath("../MoveComponent")
+start_speed = 1500.0
 metadata/_custom_type_script = "uid://b7lo7c1cui6er"

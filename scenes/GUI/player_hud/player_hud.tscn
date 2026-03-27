@@ -80,7 +80,7 @@ layout_mode = 2
 text = "⏸"
 
 [node name="PauseMenu" type="Control" parent="MarginContainer" unique_id=747765606]
-process_mode = 1
+process_mode = 2
 visible = false
 layout_mode = 2
 
@@ -134,7 +134,7 @@ layout_mode = 2
 text = "Fazer o pix"
 
 [node name="ConfirmExitDialog" type="ConfirmationDialog" parent="MarginContainer/PauseMenu" unique_id=514082597]
-process_mode = 3
+process_mode = 2
 title = "Tem Certeza?"
 ok_button_text = "Sair"
 dialog_text = "Seu progresso não será salvo. Tem Certeza que quer sair?"
