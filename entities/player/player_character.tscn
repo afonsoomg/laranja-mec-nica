@@ -1866,7 +1866,7 @@ attack_active_frame = 3
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 material = SubResource("ShaderMaterial_n1h10")
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"attack_down"
+animation = &"hurt_down"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")

@@ -8,6 +8,7 @@ signal attack_hit_frame_reached(animation_name: String)
 @export var animated_sprite: AnimatedSprite2D
 
 @export var attack_active_frame: int = 1
+@export var hurt_timeout_padding_seconds: float = 0.15
 
 var current_facing: String = "down"
 var action_facing: String = "down"
@@ -17,6 +18,7 @@ var dying_animation_finished: bool = false
 
 var is_hurt: bool = false
 var is_dying: bool = false
+var _hurt_recovery_token: int = 0
 
 
 func _ready() -> void:
@@ -46,7 +48,18 @@ func update_animation() -> void:
 		return
 
 	if is_hurt:
-		_play_if_needed(locked_action_animation)
+		if locked_action_kind != "hurt" or locked_action_animation == "":
+			push_warning("Estado de hurt inconsistente detectado; limpando lock de hurt.")
+			is_hurt = false
+			locked_action_animation = ""
+			locked_action_kind = ""
+			return
+
+		if not _play_if_needed(locked_action_animation):
+			push_warning("Animação de hurt inválida/ausente; limpando estado de hurt.")
+			is_hurt = false
+			locked_action_animation = ""
+			locked_action_kind = ""
 		return
 
 	if _is_action_locked():
@@ -77,17 +90,38 @@ func play_attack_directional(dir: Vector2) -> void:
 
 
 func play_hurt() -> void:
-	if is_dying:
+	interrupt_for_hurt()
+
+
+func interrupt_for_hurt() -> void:	
+	if is_dying or is_hurt:
 		return
+
+	_hurt_recovery_token += 1
+	var hurt_token := _hurt_recovery_token
+	
+	if locked_action_kind == "attack":
+		locked_action_animation = ""
+		locked_action_kind = ""
 
 	_update_facing()
 	action_facing = current_facing
 	locked_action_animation = "hurt_" + action_facing
 	locked_action_kind = "hurt"
 	
+	
 	is_hurt = true
-
-
+	_trace_transition("hurt_started", {"token": hurt_token})
+	if not _play_if_needed(locked_action_animation):
+		push_warning("Falha ao tocar animação de hurt; limpando estado de hurt para evitar lock.")
+		is_hurt = false
+		locked_action_animation = ""
+		locked_action_kind = ""
+		_trace_transition("hurt_start_failed", {"token": hurt_token})
+		return
+	_schedule_hurt_timeout_fallback(hurt_token)
+	
+	
 func can_attack() -> bool:
 	return not is_dying and not is_hurt and not _is_action_locked()
 
@@ -103,11 +137,12 @@ func player_attack() -> void:
 
 
 func cancel_attack_animation() -> void:
-	if locked_action_kind == "attack":
+	if locked_action_kind != "attack":
 		return
 	
 	locked_action_animation = ""
 	locked_action_kind = ""
+	_trace_transition("attack_animation_cancelled")
 
 
 func play_dying() -> void:
@@ -163,20 +198,21 @@ func _vector_to_direction(dir: Vector2) -> String:
 		return "down" if dir.y > 0.0 else "up"
 
 
-func _play_if_needed(animation_name: String) -> void:
+func _play_if_needed(animation_name: String) -> bool:
 	if animation_name == "":
-		return
+		return false
 
 	if animated_sprite.sprite_frames == null:
-		return
+		return false
 
 	if not animated_sprite.sprite_frames.has_animation(animation_name):
 		push_warning("Animação não encontrada: " + animation_name)
-		return
+		return false
 
 	if animated_sprite.animation != animation_name or not animated_sprite.is_playing():
 		animated_sprite.play(animation_name)
 
+	return true
 
 func _on_frame_changed() -> void:
 	var current_animation := animated_sprite.animation
@@ -194,16 +230,19 @@ func _on_animation_finished() -> void:
 		if locked_action_kind == "attack":
 			locked_action_animation = ""
 			locked_action_kind = ""
+			_trace_transition("attack_animation_finished", {"animation": finished_animation})
 			
 	elif finished_animation.begins_with("hurt_"):
 		is_hurt = false
+		_hurt_recovery_token += 1
 		if locked_action_kind == "hurt":
 			locked_action_animation = ""
 			locked_action_kind = ""
-			
+		_trace_transition("hurt_animation_finished", {"animation": finished_animation})
 	elif finished_animation.begins_with("dying_"):
 		dying_animation_finished = true
-
+		_trace_transition("dying_animation_finished", {"animation": finished_animation})
+	
 	animation_finished.emit(finished_animation)
 
 
@@ -211,3 +250,74 @@ func _is_attack_animation(animation_name: String) -> bool:
 	return animation_name.begins_with("attack_") \
 		or animation_name.begins_with("walk_attack_") \
 		or animation_name.begins_with("run_attack_")
+
+func _schedule_hurt_timeout_fallback(token: int) -> void:
+	var expected_duration := _get_animation_expected_duration(locked_action_animation)
+	if expected_duration <= 0.0:
+		return
+
+	var timeout: float = expected_duration + max(hurt_timeout_padding_seconds, 0.0)
+	_hurt_timeout_recovery(token, timeout)
+
+
+func _hurt_timeout_recovery(token: int, timeout: float) -> void:
+	await get_tree().create_timer(timeout).timeout
+
+	if token != _hurt_recovery_token:
+		return
+
+	if not is_hurt:
+		return
+
+	if locked_action_kind != "hurt":
+		return
+
+	push_warning("Timeout de hurt acionado; limpando estado para evitar lock.")
+	is_hurt = false
+	locked_action_animation = ""
+	locked_action_kind = ""
+	_trace_transition("hurt_timeout_recovery", {"timeout_seconds": timeout, "token": token})
+
+
+func _get_animation_expected_duration(animation_name: String) -> float:
+	if animated_sprite == null or animated_sprite.sprite_frames == null:
+		return 0.0
+
+	if not animated_sprite.sprite_frames.has_animation(animation_name):
+		return 0.0
+
+	var frame_count := animated_sprite.sprite_frames.get_frame_count(animation_name)
+	if frame_count <= 0:
+		return 0.0
+
+	var speed := animated_sprite.sprite_frames.get_animation_speed(animation_name)
+	if speed <= 0.0:
+		return 0.0
+
+	var total_units := 0.0
+	for i in range(frame_count):
+		total_units += animated_sprite.sprite_frames.get_frame_duration(animation_name, i)
+
+	return total_units / speed
+
+
+func _trace_transition(event_name: String, payload: Dictionary = {}) -> void:
+	var trace_payload := {
+		"is_hurt": is_hurt,
+		"is_dying": is_dying,
+		"locked_action_kind": locked_action_kind,
+		"locked_action_animation": locked_action_animation,
+		"combat_phase": _get_combat_phase_name()
+	}
+	for key in payload.keys():
+		trace_payload[key] = payload[key]
+
+	DebugHelper.trace("Animation", get_parent(), event_name, trace_payload)
+
+
+func _get_combat_phase_name() -> String:
+	var combat_state := get_node_or_null("../CombatStateComponent") as CombatStateComponent
+	if combat_state == null:
+		return "unknown"
+
+	return combat_state.get_phase_name()

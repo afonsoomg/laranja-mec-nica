@@ -4,6 +4,7 @@ class_name DebugEventBus
 const CLI_ENABLE_FLAG := "--trace-events"
 const CLI_DISABLE_FLAG := "--no-trace-events"
 
+
 var enabled: bool = false
 
 

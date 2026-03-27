@@ -74,11 +74,23 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	var tween = get_tree().create_tween()
 	tween.tween_method(_set_shader_blink_intensity, 1.0, 0.0, 0.5)
 	
-	if animation_component:
-		animation_component.play_hurt()
-		
+	DebugHelper.trace(
+		"Combat",
+		self,
+		"hurt_received",
+		{
+			"is_dead": is_dead,
+			"combat_phase": combat_state_component.get_phase_name() if combat_state_component != null else "unknown",
+			"is_hurt": animation_component.is_hurt if animation_component != null else false
+		}
+	)
+	
 	if combat_state_component != null and combat_state_component.is_attacking:
 		combat_state_component.interrupt_attack("hurt")
+	
+	if animation_component:
+		animation_component.interrupt_for_hurt()
+
 
 
 func _set_shader_blink_intensity(newValue : float):

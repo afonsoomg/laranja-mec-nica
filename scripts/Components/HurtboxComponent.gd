@@ -1,13 +1,14 @@
 extends Area2D
 class_name HurtboxComponent
 
+const Observer = preload("res://scripts/utils/observability.gd")
+const LOG_CATEGORY := "HurtboxComponent"
+
 signal hit_received(damage: int, direction: Vector2, force: float, is_critical: bool)
 signal killed
 
 var health_component: HealthComponent
 var knockback_component: KnockbackComponent
-var audio_component: AudioComponent
-var vfx_component: VfxComponent
 
 @export var can_receive_hits: bool = true
 
@@ -15,17 +16,15 @@ var vfx_component: VfxComponent
 func _ready() -> void:
 	health_component = ComponentValidator.require_node(self, NodePath("../HealthComponent"), "HealthComponent", "HealthComponent") as HealthComponent
 	if health_component == null:
+		Observer.log_error(LOG_CATEGORY, "HealthComponent is null on HurtBoxComponent")
 		set_physics_process(false)
 		set_deferred("monitoring", false)
 		set_deferred("monitorable", false)
 		return
 
 	knockback_component = get_node_or_null("../KnockbackComponent") as KnockbackComponent
-	audio_component = get_node_or_null("../AudioComponent") as AudioComponent
-	vfx_component = get_node_or_null("../VfxComponent") as VfxComponent
-	
-	if not health_component.died.is_connected(_on_owner_died):
-		health_component.died.connect(_on_owner_died)
+
+	Observer.connect_once_safe(health_component.died, _on_owner_died, "HealthComponent._ready died")
 
 
 func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_force: float = 0.0, is_critical: bool = false) -> void:
@@ -39,12 +38,6 @@ func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_f
 
 	if knockback_component != null and knockback_force > 0.0:
 		knockback_component.apply_knockback(hit_direction, knockback_force)
-
-	if audio_component:
-		audio_component.play_hurt()
-	
-	if vfx_component:
-		vfx_component.play_hit_burst()
 	
 	health_component.take_damage(damage)
 

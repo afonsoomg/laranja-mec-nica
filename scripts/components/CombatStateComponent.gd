@@ -60,11 +60,27 @@ func _ready() -> void:
 
 
 func can_start_attack() -> bool:
-	return current_phase == CombatPhase.IDLE
+	if current_phase != CombatPhase.IDLE:
+		return false
+
+	if animation_component != null and not animation_component.can_attack():
+		return false
+
+	return true
 
 
 func request_attack(dir: Vector2) -> bool:
 	if not can_start_attack():
+		DebugHelper.trace(
+			"Combat",
+			get_parent(),
+			"attack_request_blocked",
+			{
+				"reason": "cannot_start_attack",
+				"phase": get_phase_name(),
+				"animation_can_attack": animation_component.can_attack() if animation_component != null else false
+			}
+		)
 		return false
 
 	if weapon_component == null or animation_component == null or stats_component == null:
@@ -90,6 +106,17 @@ func request_attack(dir: Vector2) -> bool:
 func interrupt_attack(reason: String = "interrupted") -> void:
 	if not is_attacking:
 		return
+		
+	DebugHelper.trace(
+		"Combat",
+		get_parent(),
+		"attack_interrupted",
+		{
+			"reason": reason,
+			"phase": get_phase_name(),
+			"direction": current_attack_direction
+		}
+	)
 		
 	_attack_interrupted = true
 	_attack_token += 1
