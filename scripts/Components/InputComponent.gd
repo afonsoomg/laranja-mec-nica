@@ -22,8 +22,17 @@ func is_run_pressed() -> bool:
 	return Input.is_action_pressed(run_action)
 
 
-func is_attack_just_pressed() -> bool:
-	return Input.is_action_just_pressed(attack_action)
-	
 func is_dodge_just_pressed() -> bool:
 	return Input.is_action_just_pressed(dodge_action)
+
+
+func is_attack_pressed() -> bool:
+	return Input.is_action_pressed(attack_action)
+
+
+func is_attack_just_pressed() -> bool:
+	return Input.is_action_just_pressed(attack_action)
+
+
+func is_attack_just_released() -> bool:
+	return Input.is_action_just_released(attack_action)

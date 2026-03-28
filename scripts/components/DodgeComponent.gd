@@ -38,8 +38,6 @@ func tick(delta: float) -> void:
 	var current_speed: float = lerp(start_speed, end_speed, eased_t)
 
 	if move_component != null:
-		move_component.set_move_input(Vector2.ZERO)
-		move_component.set_running(false)
 		move_component.set_forced_velocity(dodge_direction * current_speed)
 		move_component.update_velocity(delta)
 
@@ -74,8 +72,6 @@ func start_dodge(dir: Vector2) -> bool:
 	_timer = duration
 	_i_frames_active = invulnerability_duration > 0.0
 
-	move_component.set_running(false)
-	move_component.set_move_input(Vector2.ZERO)
 	move_component.facing_direction = dodge_direction
 
 	dodge_started.emit()
@@ -94,7 +90,6 @@ func finish_dodge() -> void:
 
 	if move_component != null:
 		move_component.clear_forced_velocity()
-		move_component.set_move_input(Vector2.ZERO)
 
 	if _i_frames_active:
 		_i_frames_active = false

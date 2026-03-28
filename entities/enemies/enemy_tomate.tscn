@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://87qd6td2o2o3" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Esquerda.png" id="16_s8tg3"]
 [ext_resource type="Texture2D" uid="uid://cifu8jpagmv4t" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Direita.png" id="17_grpj2"]
 [ext_resource type="Texture2D" uid="uid://dxkawbp1dx0wh" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Tras.png" id="18_40qvc"]
+[ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="20_grpj2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qnpvi"]
 radius = 28.0
@@ -26,7 +27,7 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwm60"]
 radius = 29.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s8tg3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_40qvc"]
 resource_local_to_scene = true
 shader = ExtResource("3_s8tg3")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
@@ -1082,7 +1083,7 @@ decay = 1000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_s8tg3")
+material = SubResource("ShaderMaterial_40qvc")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
 
@@ -1099,3 +1100,9 @@ offset_left = -33.0
 offset_top = -46.0
 offset_right = 30.0
 offset_bottom = -39.0
+
+[node name="CombatStateComponent" type="Node" parent="." index="17" unique_id=1366898871 node_paths=PackedStringArray("animation_component", "stats_component")]
+script = ExtResource("20_grpj2")
+animation_component = NodePath("../AnimationComponent")
+stats_component = NodePath("../StatsComponent")
+metadata/_custom_type_script = "uid://cmv0akvyet1k5"

@@ -1837,8 +1837,19 @@ collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_u37yl")
 attack_stamina_cost = 10.0
-dodge_stamina_cost = 15.0
-run_stamina_cost_per_second = 10.0
+heavy_attack_stamina_cost = 30.0
+dodge_stamina_cost = 10.0
+run_stamina_cost_per_second = 5.0
+heavy_hold_threshold = 0.2
+heavy_max_charge_time = 1.0
+heavy_min_damage_multiplier = 1.35
+heavy_max_damage_multiplier = 2.2
+heavy_min_knockback_multiplier = 1.1
+heavy_max_knockback_multiplier = 1.8
+heavy_hitbox_duration = 0.18
+heavy_recovery_duration = 0.35
+heavy_lunge_speed = 600.0
+heavy_lunge_duration = 0.08
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1847,7 +1858,6 @@ shape = SubResource("CapsuleShape2D_ltqxl")
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
 walk_speed = 100.0
 run_speed = 250.0
-max_health = 30
 attack_damage = 12
 crit_chance = 0.1
 
@@ -1904,8 +1914,9 @@ look_ahead_distance = 120.0
 look_ahead_smoothing = 1.0
 shake_on_hit_target = 2.0
 shake_on_receive_hit = 1.0
-run_zoom = Vector2(0.8, 0.8)
-zoom_smoothing = 10.0
+normal_zoom = Vector2(0.9, 0.9)
+run_zoom = Vector2(0.6, 0.6)
+zoom_smoothing = 5.0
 metadata/_custom_type_script = "uid://b8l3dxdd13qia"
 
 [node name="BuffComponent" type="Node" parent="." index="13" unique_id=1477985089]
@@ -1922,11 +1933,12 @@ heal_sfx = ExtResource("18_hblhq")
 crit_buff_start_sfx = ExtResource("19_yr7e7")
 crit_buff_end_sfx = ExtResource("20_wssc2")
 
-[node name="VfxComponent" parent="." index="15" unique_id=1741814442 node_paths=PackedStringArray("heal_burst", "crit_buff_burst", "hit_burst")]
+[node name="VfxComponent" parent="." index="15" unique_id=1741814442 node_paths=PackedStringArray("heal_burst", "crit_buff_burst", "hit_burst", "hurtbox_component")]
 script = ExtResource("16_ysq06")
 heal_burst = NodePath("../VFX/HealBurst")
 crit_buff_burst = NodePath("../VFX/CritBuffBurst")
 hit_burst = NodePath("../VFX/HitEffect")
+hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="HealBurst" parent="VFX" parent_id_path=PackedInt32Array(813601224) index="0" unique_id=267088283]
 position = Vector2(0, 8)
@@ -1951,5 +1963,5 @@ metadata/_custom_type_script = "uid://df0mnut1t73ei"
 [node name="DodgeComponent" type="Node" parent="." index="19" unique_id=1426893483 node_paths=PackedStringArray("move_component")]
 script = ExtResource("26_n1h10")
 move_component = NodePath("../MoveComponent")
-start_speed = 1500.0
+start_speed = 2000.0
 metadata/_custom_type_script = "uid://b7lo7c1cui6er"

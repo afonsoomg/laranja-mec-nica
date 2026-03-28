@@ -18,6 +18,7 @@ var _was_moving: bool = false
 
 var forced_velocity: Vector2 = Vector2.ZERO
 var use_forced_velocity: bool = false
+var _forced_velocity_token: int = 0
 
 func _ready() -> void:
 	if body == null:
@@ -54,6 +55,30 @@ func set_forced_velocity(value: Vector2) -> void:
 func clear_forced_velocity() -> void:
 	forced_velocity = Vector2.ZERO
 	use_forced_velocity = false
+
+
+func apply_forced_velocity_for_duration(value: Vector2, duration: float) -> void:
+	_forced_velocity_token += 1
+	var token := _forced_velocity_token
+	set_forced_velocity(value)
+
+	if duration <= 0.0:
+		return
+
+	_clear_forced_velocity_after(token, duration)
+
+
+func cancel_forced_velocity() -> void:
+	_forced_velocity_token += 1
+	clear_forced_velocity()
+
+
+func _clear_forced_velocity_after(token: int, duration: float) -> void:
+	await get_tree().create_timer(duration).timeout
+	if token != _forced_velocity_token:
+		return
+	clear_forced_velocity()
+
 
 func update_velocity(delta: float) -> void:
 	if body == null or stats_component == null:

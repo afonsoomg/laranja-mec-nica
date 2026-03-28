@@ -20,9 +20,8 @@ radius = 195.50256
 [sub_resource type="CircleShape2D" id="CircleShape2D_yc03e"]
 radius = 33.06055
 
-[node name="EnemyBase" unique_id=232863277 node_paths=PackedStringArray("detection_area") instance=ExtResource("1_6kwvc")]
+[node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_6kwvc")]
 script = ExtResource("2_3iigx")
-detection_area = NodePath("DetectionArea")
 
 [node name="AnimationComponent" parent="." index="6" unique_id=205670419 node_paths=PackedStringArray("move_component")]
 move_component = NodePath("../MoveComponent")

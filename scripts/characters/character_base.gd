@@ -85,8 +85,8 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 		}
 	)
 	
-	if combat_state_component != null and combat_state_component.is_attacking:
-		combat_state_component.interrupt_attack("hurt")
+	if combat_state_component != null and (combat_state_component.is_attacking or combat_state_component.is_charging):
+		combat_state_component.cancel_attack_or_charge("hurt")
 	
 	if animation_component:
 		animation_component.interrupt_for_hurt()
@@ -114,7 +114,7 @@ func _on_died() -> void:
 		animation_component.play_dying()
 		
 	if combat_state_component != null:
-		combat_state_component.interrupt_attack("death")
+		combat_state_component.cancel_attack_or_charge("death")
 
 
 func _apply_final_movement() -> void:

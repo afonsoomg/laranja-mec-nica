@@ -5,6 +5,7 @@ extends Camera2D
 var move_component: MoveComponent
 var weapon_component: WeaponComponent
 var hurtbox_component: HurtboxComponent
+var dodge_component: DodgeComponent
 
 @export_group("Follow")
 @export var follow_enabled: bool = true
@@ -34,6 +35,7 @@ var look_ahead_offset: Vector2 = Vector2.ZERO
 var shake_strength: float = 0.0
 var base_offset: Vector2 = Vector2.ZERO
 var target_zoom_value: Vector2 = Vector2.ONE
+var _preserve_run_zoom_during_dodge: bool = false
 
 
 func _ready() -> void:
@@ -49,7 +51,8 @@ func _ready() -> void:
 
 	weapon_component = get_node_or_null("../WeaponComponent") as WeaponComponent
 	hurtbox_component = get_node_or_null("../HurtboxComponent") as HurtboxComponent
-
+	dodge_component = get_node_or_null("../DodgeComponent") as DodgeComponent
+	
 	base_offset = offset
 	target_zoom_value = run_zoom if move_component.is_running else normal_zoom
 	zoom = target_zoom_value
@@ -89,6 +92,11 @@ func _connect_signals() -> void:
 		if not move_component.run_state_changed.is_connected(_on_run_state_changed):
 			move_component.run_state_changed.connect(_on_run_state_changed)
 
+	if dodge_component != null:
+		if not dodge_component.dodge_started.is_connected(_on_dodge_started):
+			dodge_component.dodge_started.connect(_on_dodge_started)
+		if not dodge_component.dodge_finished.is_connected(_on_dodge_finished):
+			dodge_component.dodge_finished.connect(_on_dodge_finished)
 
 func _update_look_ahead(delta: float) -> void:
 	if not look_ahead_enabled or move_component == null:
@@ -149,4 +157,19 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 
 
 func _on_run_state_changed(is_running: bool) -> void:
+	if _preserve_run_zoom_during_dodge:
+		target_zoom_value = run_zoom
+		return
+		
 	target_zoom_value = run_zoom if is_running else normal_zoom
+
+
+func _on_dodge_started() -> void:
+	_preserve_run_zoom_during_dodge = move_component != null and move_component.is_running
+	if _preserve_run_zoom_during_dodge:
+		target_zoom_value = run_zoom
+
+
+func _on_dodge_finished() -> void:
+	_preserve_run_zoom_during_dodge = false
+	target_zoom_value = run_zoom if move_component != null and move_component.is_running else normal_zoom

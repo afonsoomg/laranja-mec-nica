@@ -1,6 +1,10 @@
 extends CharacterBase
 class_name EnemyBase
 
+@onready var body_collision: CollisionShape2D = $CollisionShape2D
+@onready var touch_damage_area: Area2D = $TouchDamageArea
+@onready var touch_damage_collision: CollisionShape2D = $TouchDamageArea/CollisionShape2D
+
 var ranged_weapon_component: RangedWeaponComponent
 var detection_area: Area2D
 var ai_component: EnemyAIComponent
@@ -92,8 +96,19 @@ func _on_died() -> void:
 	if ai_component:
 		ai_component.set_target(null)
 		ai_component.set_dead(true)
+	
+	if body_collision:
+		body_collision.set_deferred("disabled", true)
 
-	await get_tree().create_timer(5).timeout
+	if touch_damage_area:
+		touch_damage_area.set_deferred("monitoring", false)
+		touch_damage_area.set_deferred("monitorable", false)
+
+	if touch_damage_collision:
+		touch_damage_collision.set_deferred("disabled", true)
+	
+	
+	await get_tree().create_timer(3).timeout
 	queue_free()
 
 

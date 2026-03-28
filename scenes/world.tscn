@@ -3,16 +3,16 @@
 [ext_resource type="Script" uid="uid://bnom4sshrk05a" path="res://scripts/world.gd" id="1_w7kh3"]
 [ext_resource type="AudioStream" uid="uid://cse7cb4jc61vk" path="res://assets/audio/music/game-music-loop.wav" id="2_q5onr"]
 [ext_resource type="AudioStream" uid="uid://bvriiml4ddadw" path="res://assets/audio/ambience/Retro Ambience Acute 01.wav" id="3_jhx03"]
+[ext_resource type="PackedScene" uid="uid://bn5p53q3mroyi" path="res://entities/enemies/enemy_tomate.tscn" id="4_qfnet"]
+[ext_resource type="PackedScene" uid="uid://cuia2q73xmxbb" path="res://entities/collectables/water_collectable.tscn" id="5_i7141"]
 [ext_resource type="PackedScene" uid="uid://di3hdfgsqaqes" path="res://entities/player/player_character.tscn" id="5_qfnet"]
-[ext_resource type="PackedScene" uid="uid://b7vwn73414imm" path="res://entities/enemies/enemy_raizmutante.tscn" id="8_7r4gi"]
-[ext_resource type="PackedScene" uid="uid://dbv3o1nbs10ug" path="res://entities/collectables/adubobar_collectable.tscn" id="9_7r4gi"]
 
 [node name="World" type="Node2D" unique_id=1833840015]
 script = ExtResource("1_w7kh3")
 world_music = ExtResource("2_q5onr")
 world_ambient = ExtResource("3_jhx03")
-enemy_scene = ExtResource("8_7r4gi")
-collectable_scene = ExtResource("9_7r4gi")
+enemy_scene = ExtResource("4_qfnet")
+collectable_scene = ExtResource("5_i7141")
 
 [node name="LevelHolder" type="Node" parent="." unique_id=830589296]
 
@@ -23,3 +23,4 @@ collectable_scene = ExtResource("9_7r4gi")
 [node name="PlayerCharacter" parent="." unique_id=232863277 instance=ExtResource("5_qfnet")]
 z_index = 2
 position = Vector2(484, 268)
+heavy_lunge_speed = 120.0

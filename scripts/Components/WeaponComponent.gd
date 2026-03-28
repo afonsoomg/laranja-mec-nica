@@ -26,6 +26,7 @@ signal critical_hit(target: Node, damage: int)
 var _attack_direction: Vector2 = Vector2.DOWN
 var _hit_targets: Array[HurtboxComponent] = []
 var _attack_active: bool = false
+var _runtime_attack_data: Dictionary = {}
 
 
 func _ready() -> void:
@@ -50,10 +51,11 @@ func _ready() -> void:
 	Observer.connect_once_safe(attack_hitbox.area_entered, _on_hitbox_area_entered, "WeaponComponent._ready area_entered")
 	
 
-func begin_attack(dir: Vector2) -> void:
+func begin_attack(dir: Vector2,  runtime_attack_data: Dictionary = {}) -> void:
 	_attack_direction = dir
 	_attack_active = false
 	_hit_targets.clear()
+	_runtime_attack_data = runtime_attack_data.duplicate(true)
 	_disable_hitbox()
 
 	if move_component != null:
@@ -68,7 +70,8 @@ func begin_attack(dir: Vector2) -> void:
 		{
 			"weapon": name,
 			"type": "melee",
-			"direction": dir
+			"direction": dir,
+			"runtime_attack_data": _runtime_attack_data
 		}
 	)
 	
@@ -79,7 +82,7 @@ func begin_attack(dir: Vector2) -> void:
 		{
 			"weapon": name,
 			"direction": move_component.facing_direction,
-			"hitbox_duration": stats_component.hitbox_duration
+			"hitbox_duration": get_active_hitbox_duration()
 		}
 	)
 	attack_started.emit(dir)
@@ -107,6 +110,23 @@ func cancel_attack() -> void:
 	_attack_active = false
 	_disable_hitbox()
 	_hit_targets.clear()
+	_runtime_attack_data.clear()
+
+
+func get_active_hitbox_duration() -> float:
+	if stats_component == null:
+		return 0.0
+	return max(float(_runtime_attack_data.get("hitbox_duration", stats_component.hitbox_duration)), 0.0)
+
+
+func get_active_recovery_duration() -> float:
+	if stats_component == null:
+		return 0.0
+
+	if _runtime_attack_data.has("recovery_duration"):
+		return max(float(_runtime_attack_data.recovery_duration), 0.0)
+
+	return max(stats_component.attack_cooldown - get_active_hitbox_duration(), 0.0)
 
 
 func _enable_hitbox() -> void:
@@ -146,7 +166,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 
 func _roll_damage() -> Dictionary:
-	var base_damage := stats_component.attack_damage
+	var damage_multiplier: float = max(float(_runtime_attack_data.get("damage_multiplier", 1.0)), 0.0)
+	var base_damage := int(round(stats_component.attack_damage * damage_multiplier))
 	var crit_chance := clampf(stats_component.crit_chance, 0.0, 1.0)
 	var crit_multiplier: float = max(stats_component.crit_multiplier, 1.0)
 
@@ -187,7 +208,8 @@ func _try_hit_target(target: Node) -> void:
 	var is_critical: bool = hit_result.is_critical
 
 	var hit_direction := move_component.facing_direction
-	var knockback_force := stats_component.knockback_force
+	var knockback_multiplier: float = max(float(_runtime_attack_data.get("knockback_multiplier", 1.0)), 0.0)
+	var knockback_force := stats_component.knockback_force * knockback_multiplier
 	var attacker := get_parent()
 	var target_entity := hurtbox.get_parent()
 	DebugHelper.trace(
@@ -200,7 +222,8 @@ func _try_hit_target(target: Node) -> void:
 			"damage": damage,
 			"is_critical": is_critical,
 			"direction": hit_direction,
-			"knockback_force": knockback_force
+			"knockback_force": knockback_force,
+			"runtime_attack_data": _runtime_attack_data
 		}
 	)
 	
@@ -237,6 +260,14 @@ func _update_hitbox_direction() -> void:
 		return
 
 	var dir := move_component.facing_direction
+	var custom_size: Variant = _runtime_attack_data.get("hitbox_size_override", null)
+	var custom_offset: Variant = _runtime_attack_data.get("hitbox_offset_override", null)
+	if custom_size is Vector2:
+		rect_shape.size = custom_size
+		if custom_offset is Vector2:
+			attack_hitbox.position = custom_offset
+		return
+		
 
 	if abs(dir.x) > abs(dir.y):
 		rect_shape.size = horizontal_hitbox_size

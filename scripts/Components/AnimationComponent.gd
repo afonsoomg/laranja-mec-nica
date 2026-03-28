@@ -73,34 +73,65 @@ func play_attack_directional(dir: Vector2) -> void:
 	if is_dying or is_hurt:
 		return
 
-	var suffix := "down"
-
-	if dir == Vector2.UP:
-		suffix = "up"
-	elif dir == Vector2.DOWN:
-		suffix = "down"
-	elif dir == Vector2.LEFT:
-		suffix = "left"
-	elif dir == Vector2.RIGHT:
-		suffix = "right"
-
+	var suffix := _direction_suffix(dir)
 	action_facing = suffix
-	locked_action_animation = "attack_" + suffix
+	locked_action_animation = _select_available_animation(["attack_" + suffix])
 	locked_action_kind = "attack"
 
 
+func play_charge_start_directional(dir: Vector2) -> void:
+	if is_dying or is_hurt:
+		return
+
+	var suffix := _direction_suffix(dir)
+	action_facing = suffix
+	
+	locked_action_animation = _select_available_animation([
+		"charge_start_" + suffix,
+		"attack_" + suffix
+	])
+	locked_action_kind = "charge"
+
+
+func play_charge_hold_directional(dir: Vector2) -> void:
+	if is_dying or is_hurt:
+		return
+
+	var suffix := _direction_suffix(dir)
+	action_facing = suffix
+	locked_action_animation = _select_available_animation([
+		"charge_hold_" + suffix,
+		"charge_start_" + suffix,
+		"idle_" + suffix
+	])
+	locked_action_kind = "charge"
+
+
+func play_heavy_release_directional(dir: Vector2) -> void:
+	if is_dying or is_hurt:
+		return
+
+	var suffix := _direction_suffix(dir)
+	action_facing = suffix
+	locked_action_animation = _select_available_animation([
+		"heavy_release_" + suffix,
+		"attack_" + suffix
+	])
+	locked_action_kind = "heavy_attack"
+	
+	
 func play_hurt() -> void:
 	interrupt_for_hurt()
 
 
-func interrupt_for_hurt() -> void:	
+func interrupt_for_hurt() -> void:
 	if is_dying or is_hurt:
 		return
 
 	_hurt_recovery_token += 1
 	var hurt_token := _hurt_recovery_token
 	
-	if locked_action_kind == "attack":
+	if _is_attack_lock_kind(locked_action_kind):
 		locked_action_animation = ""
 		locked_action_kind = ""
 
@@ -137,7 +168,7 @@ func player_attack() -> void:
 
 
 func cancel_attack_animation() -> void:
-	if locked_action_kind != "attack":
+	if not _is_attack_lock_kind(locked_action_kind):
 		return
 	
 	locked_action_animation = ""
@@ -218,6 +249,9 @@ func _on_frame_changed() -> void:
 	var current_animation := animated_sprite.animation
 	if not _is_attack_animation(current_animation):
 		return
+	
+	if not (locked_action_kind == "attack" or locked_action_kind == "heavy_attack"):
+		return
 		
 	if animated_sprite.frame == attack_active_frame:
 		attack_hit_frame_reached.emit(current_animation)
@@ -227,7 +261,7 @@ func _on_animation_finished() -> void:
 	var finished_animation := animated_sprite.animation
 
 	if _is_attack_animation(finished_animation):
-		if locked_action_kind == "attack":
+		if _is_attack_lock_kind(locked_action_kind):
 			locked_action_animation = ""
 			locked_action_kind = ""
 			_trace_transition("attack_animation_finished", {"animation": finished_animation})
@@ -249,7 +283,8 @@ func _on_animation_finished() -> void:
 func _is_attack_animation(animation_name: String) -> bool:
 	return animation_name.begins_with("attack_") \
 		or animation_name.begins_with("walk_attack_") \
-		or animation_name.begins_with("run_attack_")
+		or animation_name.begins_with("run_attack_") \
+		or animation_name.begins_with("heavy_release_")
 
 func _schedule_hurt_timeout_fallback(token: int) -> void:
 	var expected_duration := _get_animation_expected_duration(locked_action_animation)
@@ -321,3 +356,28 @@ func _get_combat_phase_name() -> String:
 		return "unknown"
 
 	return combat_state.get_phase_name()
+
+
+func _select_available_animation(candidates: Array[String]) -> String:
+	if animated_sprite == null or animated_sprite.sprite_frames == null:
+		return ""
+
+	for candidate in candidates:
+		if animated_sprite.sprite_frames.has_animation(candidate):
+			return candidate
+
+	return ""
+
+
+func _direction_suffix(dir: Vector2) -> String:
+	if dir == Vector2.UP:
+		return "up"
+	if dir == Vector2.LEFT:
+		return "left"
+	if dir == Vector2.RIGHT:
+		return "right"
+	return "down"
+
+
+func _is_attack_lock_kind(action_kind: String) -> bool:
+	return action_kind == "attack" or action_kind == "charge" or action_kind == "heavy_attack"
