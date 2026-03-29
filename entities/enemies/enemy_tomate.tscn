@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://cifu8jpagmv4t" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Direita.png" id="17_grpj2"]
 [ext_resource type="Texture2D" uid="uid://dxkawbp1dx0wh" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Tras.png" id="18_40qvc"]
 [ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="20_grpj2"]
+[ext_resource type="AudioStream" uid="uid://bgn5rmonbulte" path="res://assets/audio/sfx/08_Bite_04.wav" id="20_vqxxn"]
+[ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/sfx/69_Enemy_death_01.wav" id="21_2tl3r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qnpvi"]
 radius = 28.0
@@ -27,7 +29,7 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwm60"]
 radius = 29.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_40qvc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grpj2"]
 resource_local_to_scene = true
 shader = ExtResource("3_s8tg3")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
@@ -1059,9 +1061,9 @@ animations = [{
 
 [node name="Tomate" unique_id=232863277 instance=ExtResource("1_uq37f")]
 collision_layer = 7
-collision_mask = 6
+collision_mask = 7
 script = ExtResource("7_lamsl")
-hit_pause_duration = 5.0
+hit_pause_duration = 2.0
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1083,11 +1085,19 @@ decay = 1000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_40qvc")
+material = SubResource("ShaderMaterial_grpj2")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
+hurtbox_component = NodePath("../HurtboxComponent")
+
+[node name="AudioComponent" parent="." index="9" unique_id=602596628 node_paths=PackedStringArray("hurtbox_component")]
+hurt_sfx = ExtResource("20_vqxxn")
+death_sfx = ExtResource("21_2tl3r")
+hurtbox_component = NodePath("../HurtboxComponent")
+
+[node name="VfxComponent" parent="." index="10" unique_id=1741814442 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="EnemyAIComponent" parent="." index="12" unique_id=1403723744]

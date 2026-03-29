@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://ciwvka3fskh4s"]
+
+[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/world/breakable_base.tscn" id="1_lxhm6"]
+[ext_resource type="Texture2D" uid="uid://bv6g2qivcvntn" path="res://assets/images/breakables/breakable pots (gray).png" id="2_s7n7w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcbap"]
+atlas = ExtResource("2_s7n7w")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5e3y"]
+atlas = ExtResource("2_s7n7w")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn2nr"]
+atlas = ExtResource("2_s7n7w")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeoxn"]
+atlas = ExtResource("2_s7n7w")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yefpc"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcbap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5e3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nn2nr")
+}],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aeoxn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="MediumPotGray" unique_id=63644928 instance=ExtResource("1_lxhm6")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=376635142]
+sprite_frames = SubResource("SpriteFrames_yefpc")
+animation = &"idle"

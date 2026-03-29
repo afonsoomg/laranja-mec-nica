@@ -85,6 +85,7 @@ func begin_attack(dir: Vector2,  runtime_attack_data: Dictionary = {}) -> void:
 			"hitbox_duration": get_active_hitbox_duration()
 		}
 	)
+	
 	attack_started.emit(dir)
 
 

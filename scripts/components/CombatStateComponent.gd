@@ -197,6 +197,7 @@ func release_charged_attack(charge_ratio: float = -1.0, runtime_attack_data: Dic
 	attack_started.emit(current_attack_direction)
 
 	weapon_component.begin_attack(current_attack_direction, _active_attack_data)
+	_start_attack_hit_window("heavy_release_immediate")
 	animation_component.play_heavy_release_directional(current_attack_direction)
 	
 		
@@ -245,7 +246,8 @@ func cancel_attack_or_charge(reason: String = "cancelled") -> void:
 
 func interrupt_attack(reason: String = "interrupted") -> void:
 	cancel_attack_or_charge(reason)
-	
+
+
 func finish_attack() -> void:
 	if not is_attacking:
 		return
@@ -299,9 +301,18 @@ func _on_attack_hit_frame_reached(animation_name: String) -> void:
 
 	if _attack_interrupted:
 		return
+	
+	_start_attack_hit_window("hit_frame")
 
+	
+func _start_attack_hit_window(reason: String) -> void:
+	if current_phase != CombatPhase.ATTACK_STARTUP and current_phase != CombatPhase.ATTACK_HEAVY_RELEASE_STARTUP:
+		return
+
+	if _attack_interrupted:
+		return
 	var token := _attack_token
-	_transition_to(CombatPhase.ATTACK_HIT_WINDOW, "hit_frame")
+	_transition_to(CombatPhase.ATTACK_HIT_WINDOW, reason)
 	attack_hit_window_started.emit(current_attack_direction)
 	weapon_component.enable_attack_hitbox()
 	_resolve_attack_hit_window(token)

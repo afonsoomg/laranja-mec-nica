@@ -283,15 +283,15 @@ func _get_mouse_attack_direction() -> Vector2:
 
 
 func _get_dodge_direction() -> Vector2:
-	var dir := _get_facing_direction()
+	var input_dir := input_component.get_input_vector()
+	if input_dir != Vector2.ZERO:
+		return input_dir.normalized()
 
-	if dir == Vector2.ZERO:
-		if move_component.facing_direction != Vector2.ZERO:
-			return _quantize_to_4_directions(move_component.facing_direction)
-		return Vector2.DOWN
-
-	return _quantize_to_4_directions(dir)
-
+	var facing_dir := _get_facing_direction()
+	if facing_dir != Vector2.ZERO:
+		return facing_dir.normalized()
+		
+	return Vector2.DOWN
 
 func _quantize_to_4_directions(dir: Vector2) -> Vector2:
 	if dir == Vector2.ZERO:

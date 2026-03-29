@@ -1848,7 +1848,7 @@ heavy_min_knockback_multiplier = 1.1
 heavy_max_knockback_multiplier = 1.8
 heavy_hitbox_duration = 0.18
 heavy_recovery_duration = 0.35
-heavy_lunge_speed = 600.0
+heavy_lunge_speed = 500.0
 heavy_lunge_duration = 0.08
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
