@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ed3h8qyek0d1"]
 
-[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="1_5hp01"]
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectile_base.tscn" id="1_5hp01"]
 [ext_resource type="Texture2D" uid="uid://cdif7swql3kpe" path="res://assets/images/projectiles/bola da raiz.png" id="2_gl5et"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8mtlb"]

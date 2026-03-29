@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://dxldwgd6bo0t7" path="res://scripts/characters/player/player_character.gd" id="2_7eutv"]
 [ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_sggm6"]
 [ext_resource type="Texture2D" uid="uid://c0fvdt5rf726w" path="res://assets/images/player/Swordsman_lvl3_attack_with_shadow.png" id="4_2v0cj"]
-[ext_resource type="Texture2D" uid="uid://dlg0k01l8cx6t" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado D.png" id="5_jaovi"]
+[ext_resource type="Texture2D" uid="uid://bi7fflo0pkrxl" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado D c2.png" id="5_lr1kr"]
 [ext_resource type="Texture2D" uid="uid://0y0vta4060g" path="res://assets/images/player/Swordsman_lvl3_Death_with_shadow.png" id="5_txk35"]
-[ext_resource type="Texture2D" uid="uid://bs67bq2o3jj5v" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado E.png" id="6_3wfer"]
+[ext_resource type="Texture2D" uid="uid://b6bwuf0p5qkva" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado E c2.png" id="6_il56s"]
 [ext_resource type="Texture2D" uid="uid://cinribn6ny4kq" path="res://assets/images/player/laranjo/morrendo/Lm Laranja protag E morte.png" id="8_pgfgn"]
 [ext_resource type="Texture2D" uid="uid://3r455o0shwy1" path="res://assets/images/player/laranjo/morrendo/Lm Laranja protag D morte.png" id="9_xwybj"]
 [ext_resource type="Texture2D" uid="uid://ca3udyur4x4a" path="res://assets/images/player/laranjo/idle/LM Laranja protag idle costas (cara).png" id="11_xbf2y"]
@@ -41,7 +41,7 @@ height = 23.5
 radius = 7.0
 height = 26.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1088"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lr1kr"]
 resource_local_to_scene = true
 shader = ExtResource("3_sggm6")
 shader_parameter/blink_color = Color(1, 0, 0, 1)
@@ -80,68 +80,68 @@ atlas = ExtResource("4_2v0cj")
 region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wmsqq"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(0, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(0, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_svvqy"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(256, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(202, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhykr"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(512, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(404, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4vba2"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(768, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(606, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wf1u1"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(1024, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(808, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rrlfy"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(1280, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(1010, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e6fer"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(1536, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(1212, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qvc38"]
-atlas = ExtResource("6_3wfer")
-region = Rect2(1792, 0, 256, 128)
+atlas = ExtResource("6_il56s")
+region = Rect2(1414, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_38l32"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(0, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(0, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_307xv"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(256, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(202, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4vyo6"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(512, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(404, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jqj5c"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(768, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(606, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6tlhi"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(1024, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(808, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qnmue"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(1280, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(1010, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dvity"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(1536, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(1212, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3px14"]
-atlas = ExtResource("5_jaovi")
-region = Rect2(1792, 0, 256, 128)
+atlas = ExtResource("5_lr1kr")
+region = Rect2(1414, 0, 202, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bua2m"]
 atlas = ExtResource("4_2v0cj")
@@ -1558,10 +1558,10 @@ scale = Vector2(4, 4)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_7eutv")
-attack_stamina_cost = 10.0
-heavy_attack_stamina_cost = 30.0
-dodge_stamina_cost = 10.0
-run_stamina_cost_per_second = 5.0
+attack_stamina_cost = 13.0
+heavy_attack_stamina_cost = 35.0
+dodge_stamina_cost = 22.0
+run_stamina_cost_per_second = 10.0
 heavy_hold_threshold = 0.2
 heavy_max_charge_time = 1.0
 heavy_min_damage_multiplier = 1.35
@@ -1597,10 +1597,10 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 attack_active_frame = 3
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_h1088")
+material = SubResource("ShaderMaterial_lr1kr")
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"attack_down"
+animation = &"attack_right"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")

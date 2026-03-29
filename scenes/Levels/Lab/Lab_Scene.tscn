@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bn5p53q3mroyi" path="res://entities/enemies/enemy_tomate.tscn" id="6_7jto1"]
 [ext_resource type="PackedScene" uid="uid://b7vwn73414imm" path="res://entities/enemies/enemy_raizmutante.tscn" id="7_laeky"]
 [ext_resource type="PackedScene" uid="uid://dbv3o1nbs10ug" path="res://entities/collectables/adubobar_collectable.tscn" id="8_vsi8s"]
-[ext_resource type="PackedScene" uid="uid://cuia2q73xmxbb" path="res://entities/collectables/water_collectable.tscn" id="9_j28ye"]
 [ext_resource type="PackedScene" uid="uid://b4rov2dl3c3sg" path="res://entities/world/bigpot_gray_breakable.tscn" id="10_7jto1"]
 [ext_resource type="PackedScene" uid="uid://dd6butxmvwl86" path="res://entities/world/smallpot_gray_breakable.tscn" id="11_laeky"]
+[ext_resource type="PackedScene" uid="uid://ciwvka3fskh4s" path="res://entities/world/mediumpot_gray_breakable.tscn" id="12_laeky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qrgk4"]
 texture = ExtResource("2_cdu7k")
@@ -5422,7 +5422,7 @@ spawn_scene = ExtResource("7_laeky")
 spawn_id = &"enemy2"
 
 [node name="CollectableSpawn_01" type="Marker2D" parent="SpawnPoints" unique_id=362158708]
-position = Vector2(-381, 252)
+position = Vector2(-915, 147)
 gizmo_extents = 46.0
 script = ExtResource("4_nngw1")
 spawn_type = 0
@@ -5433,8 +5433,8 @@ spawn_id = &"collectable1"
 position = Vector2(-778, 149)
 gizmo_extents = 46.0
 script = ExtResource("4_nngw1")
-spawn_type = 0
-spawn_scene = ExtResource("9_j28ye")
+spawn_type = 1
+spawn_scene = ExtResource("12_laeky")
 spawn_id = &"collectable2"
 
 [node name="BreakableSpawn_01" type="Marker2D" parent="SpawnPoints" unique_id=400323655]
@@ -5447,8 +5447,48 @@ spawn_id = &"collectable2"
 
 [node name="BreakableSpawn_02" type="Marker2D" parent="SpawnPoints" unique_id=1941179909]
 position = Vector2(-1162, 257)
-gizmo_extents = 46.0
+gizmo_extents = 25.0
 script = ExtResource("4_nngw1")
 spawn_type = 1
 spawn_scene = ExtResource("11_laeky")
+spawn_id = &"collectable2"
+
+[node name="BreakableSpawn_03" type="Marker2D" parent="SpawnPoints" unique_id=2671996]
+position = Vector2(-1179, 317)
+gizmo_extents = 25.0
+script = ExtResource("4_nngw1")
+spawn_type = 1
+spawn_scene = ExtResource("11_laeky")
+spawn_id = &"collectable2"
+
+[node name="BreakableSpawn_04" type="Marker2D" parent="SpawnPoints" unique_id=1698826948]
+position = Vector2(-1147, 405)
+gizmo_extents = 25.0
+script = ExtResource("4_nngw1")
+spawn_type = 1
+spawn_scene = ExtResource("11_laeky")
+spawn_id = &"collectable2"
+
+[node name="BreakableSpawn_05" type="Marker2D" parent="SpawnPoints" unique_id=1605378291]
+position = Vector2(-1243, 423)
+gizmo_extents = 25.0
+script = ExtResource("4_nngw1")
+spawn_type = 1
+spawn_scene = ExtResource("12_laeky")
+spawn_id = &"collectable2"
+
+[node name="BreakableSpawn_06" type="Marker2D" parent="SpawnPoints" unique_id=580668489]
+position = Vector2(-1282, 337)
+gizmo_extents = 25.0
+script = ExtResource("4_nngw1")
+spawn_type = 1
+spawn_scene = ExtResource("11_laeky")
+spawn_id = &"collectable2"
+
+[node name="BreakableSpawn_07" type="Marker2D" parent="SpawnPoints" unique_id=2066108318]
+position = Vector2(-1278, 256)
+gizmo_extents = 25.0
+script = ExtResource("4_nngw1")
+spawn_type = 1
+spawn_scene = ExtResource("10_7jto1")
 spawn_id = &"collectable2"

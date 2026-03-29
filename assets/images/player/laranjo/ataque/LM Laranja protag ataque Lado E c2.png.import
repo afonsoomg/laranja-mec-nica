@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs67bq2o3jj5v"
-path="res://.godot/imported/LM Laranja protag ataque Lado E.png-ca49b58f12da4476958b76b4e62a676a.ctex"
+uid="uid://b6bwuf0p5qkva"
+path="res://.godot/imported/LM Laranja protag ataque Lado E c2.png-33b1e234c1afb9928bfa6ccb6593f4e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado E.png"
-dest_files=["res://.godot/imported/LM Laranja protag ataque Lado E.png-ca49b58f12da4476958b76b4e62a676a.ctex"]
+source_file="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado E c2.png"
+dest_files=["res://.godot/imported/LM Laranja protag ataque Lado E c2.png-33b1e234c1afb9928bfa6ccb6593f4e3.ctex"]
 
 [params]
 

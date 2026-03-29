@@ -18,6 +18,11 @@ signal stat_changed(stat_name: StringName, new_value: Variant)
 @export var hitbox_duration: float = 0.12
 @export var knockback_force: float = 140.0
 
+@export_group("Enemy AI")
+@export var chase_range: float = 0.0
+@export var lose_target_range: float = 0.0
+@export var ai_attack_range: float = 28.0
+
 @export_group("Critical")
 @export_range(0.0, 1.0, 0.01) var crit_chance: float = 0.0
 @export var crit_multiplier: float = 1.5
@@ -77,3 +82,24 @@ func set_hitbox_duration(value: float) -> void:
 		return
 	hitbox_duration = max(value, 0.0)
 	stat_changed.emit(&"hitbox_duration", hitbox_duration)
+
+
+func set_chase_range(value: float) -> void:
+	if is_equal_approx(chase_range, value):
+		return
+	chase_range = max(value, 0.0)
+	stat_changed.emit(&"chase_range", chase_range)
+
+
+func set_lose_target_range(value: float) -> void:
+	if is_equal_approx(lose_target_range, value):
+		return
+	lose_target_range = max(value, 0.0)
+	stat_changed.emit(&"lose_target_range", lose_target_range)
+
+
+func set_ai_attack_range(value: float) -> void:
+	if is_equal_approx(ai_attack_range, value):
+		return
+	ai_attack_range = max(value, 0.0)
+	stat_changed.emit(&"ai_attack_range", ai_attack_range)	

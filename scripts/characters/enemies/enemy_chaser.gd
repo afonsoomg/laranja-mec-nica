@@ -58,7 +58,8 @@ func _physics_process(delta: float) -> void:
 func _on_hit_landed(hurtbox: HurtboxComponent) -> void:
 	if hurtbox == null:
 		return
-	if hurtbox.get_parent() != target:
+	var current_target: Node = ai_component.get_target() if ai_component != null else null
+	if hurtbox.get_parent() != current_target:
 		return
 	if is_paused_after_hit or is_dead:
 		return

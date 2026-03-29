@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ciwvka3fskh4s"]
 
-[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/world/breakable_base.tscn" id="1_lxhm6"]
+[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/breakable_base.tscn" id="1_lxhm6"]
 [ext_resource type="Texture2D" uid="uid://bv6g2qivcvntn" path="res://assets/images/breakables/breakable pots (gray).png" id="2_s7n7w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcbap"]
@@ -19,7 +19,7 @@ region = Rect2(96, 32, 32, 32)
 atlas = ExtResource("2_s7n7w")
 region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_yefpc"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_s7n7w"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -48,5 +48,11 @@ animations = [{
 [node name="MediumPotGray" unique_id=63644928 instance=ExtResource("1_lxhm6")]
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=376635142]
-sprite_frames = SubResource("SpriteFrames_yefpc")
+sprite_frames = SubResource("SpriteFrames_s7n7w")
 animation = &"idle"
+
+[node name="StatsComponent" parent="." index="1" unique_id=1649969689]
+max_health = 20
+
+[node name="BreakableAudioComponent" parent="." index="7" unique_id=125293759 node_paths=PackedStringArray("breakable")]
+breakable = NodePath("..")

@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://7pq4a3327ntt"]
+
+[ext_resource type="Script" uid="uid://dfrwbh5qmr6ws" path="res://scripts/world/breakable.gd" id="1_yjl25"]
+[ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="2_8llrv"]
+[ext_resource type="Script" uid="uid://ceu58uush3mjr" path="res://scripts/components/StatsComponent.gd" id="3_8vhay"]
+[ext_resource type="Script" uid="uid://cfiv457cdpndg" path="res://scripts/components/HurtboxComponent.gd" id="4_juhat"]
+[ext_resource type="Script" uid="uid://3lvrru5unix3" path="res://scripts/components/HealthComponent.gd" id="5_mtf0b"]
+[ext_resource type="Script" uid="uid://bdcxi6tjpemj4" path="res://scripts/components/BreakableDropComponent.gd" id="6_8vhay"]
+[ext_resource type="Script" uid="uid://cj1rpgji8evyx" path="res://scripts/collectables/drop_entry_resource.gd" id="7_j42fy"]
+[ext_resource type="Script" uid="uid://c4hvjmo1tx7qs" path="res://scripts/components/BreakableAudioComponent.gd" id="7_juhat"]
+[ext_resource type="PackedScene" uid="uid://dbv3o1nbs10ug" path="res://entities/collectables/adubobar_collectable.tscn" id="8_kehi0"]
+[ext_resource type="AudioStream" uid="uid://bw1fyonekkgai" path="res://assets/audio/sfx/Select - 1.wav" id="8_mtf0b"]
+[ext_resource type="Script" uid="uid://xfxcwp6yrhe6" path="res://scripts/collectables/drop_table_resource.gd" id="8_og3xn"]
+[ext_resource type="AudioStream" uid="uid://nh75e3bdkca7" path="res://assets/audio/sfx/clay-jar-break.wav" id="9_8rim3"]
+[ext_resource type="PackedScene" uid="uid://cuia2q73xmxbb" path="res://entities/collectables/water_collectable.tscn" id="9_830ud"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8rim3"]
+shader = ExtResource("2_8llrv")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uk40g"]
+resource_local_to_scene = true
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4uuak"]
+size = Vector2(10.25, 14.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4e4s1"]
+size = Vector2(13.5, 16.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivd"]
+size = Vector2(17.6875, 19.125)
+
+[sub_resource type="Resource" id="Resource_h1qvn"]
+script = ExtResource("7_j42fy")
+scene = ExtResource("8_kehi0")
+weight = 0.5
+metadata/_custom_type_script = "uid://cj1rpgji8evyx"
+
+[sub_resource type="Resource" id="Resource_xnwrm"]
+script = ExtResource("7_j42fy")
+scene = ExtResource("9_830ud")
+weight = 0.5
+metadata/_custom_type_script = "uid://cj1rpgji8evyx"
+
+[sub_resource type="Resource" id="Resource_kehi0"]
+script = ExtResource("8_og3xn")
+random_drops = Array[ExtResource("7_j42fy")]([SubResource("Resource_h1qvn"), SubResource("Resource_xnwrm")])
+no_drop_chance = 0.7
+metadata/_custom_type_script = "uid://xfxcwp6yrhe6"
+
+[node name="BreakableBase" type="StaticBody2D" unique_id=63644928]
+z_index = 1
+scale = Vector2(4, 4)
+collision_layer = 70
+collision_mask = 0
+script = ExtResource("1_yjl25")
+break_on_player_dodge = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=376635142]
+material = SubResource("ShaderMaterial_8rim3")
+sprite_frames = SubResource("SpriteFrames_uk40g")
+animation = &"break"
+
+[node name="StatsComponent" type="Node" parent="." unique_id=1649969689]
+script = ExtResource("3_8vhay")
+max_health = 1
+metadata/_custom_type_script = "uid://ceu58uush3mjr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=118096953]
+position = Vector2(1, 7)
+shape = SubResource("RectangleShape2D_4uuak")
+debug_color = Color(0.6379298, 0.52630675, 0, 0.41960785)
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=1909912015]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_juhat")
+metadata/_custom_type_script = "uid://cfiv457cdpndg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=146093491]
+position = Vector2(1, 7)
+shape = SubResource("RectangleShape2D_4e4s1")
+debug_color = Color(0.9126129, 0.29427844, 1.92523e-07, 0.41960785)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=2115695564]
+script = ExtResource("5_mtf0b")
+metadata/_custom_type_script = "uid://3lvrru5unix3"
+
+[node name="DodgeTrigger" type="Area2D" parent="." unique_id=767836631]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DodgeTrigger" unique_id=1401955407]
+position = Vector2(1, 7)
+shape = SubResource("RectangleShape2D_eyivd")
+
+[node name="BreakableDropComponent" type="Node" parent="." unique_id=363950747 node_paths=PackedStringArray("breakable")]
+script = ExtResource("6_8vhay")
+breakable = NodePath("..")
+drop_table = SubResource("Resource_kehi0")
+scatter_radius = 1.0
+metadata/_custom_type_script = "uid://bdcxi6tjpemj4"
+
+[node name="BreakableAudioComponent" type="Node2D" parent="." unique_id=125293759 node_paths=PackedStringArray("sfx_player")]
+script = ExtResource("7_juhat")
+sfx_player = NodePath("SfxPlayer")
+hit_sfx = ExtResource("8_mtf0b")
+break_sfx = ExtResource("9_8rim3")
+metadata/_custom_type_script = "uid://c4hvjmo1tx7qs"
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="BreakableAudioComponent" unique_id=402673197]
+bus = &"Efeitos"

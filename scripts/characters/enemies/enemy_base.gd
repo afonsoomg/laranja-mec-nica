@@ -9,7 +9,6 @@ var ranged_weapon_component: RangedWeaponComponent
 var detection_area: Area2D
 var ai_component: EnemyAIComponent
 var enemy_health_bar: ProgressBar
-var target: Node2D = null
 var is_active: bool = true
 
 
@@ -35,7 +34,7 @@ func _ready() -> void:
 		Observability.connect_once_safe(detection_area.body_entered, _on_detection_area_body_entered, "EnemyBase._ready body_entered")
 		Observability.connect_once_safe(detection_area.body_exited, _on_detection_area_body_exited, "EnemyBase._ready body_exited")
 	
-	ai_component.set_target(null)
+	ai_component.configure_detection_area(detection_area)
 	enemy_health_bar.max_value = health_component.max_health
 	enemy_health_bar.value = health_component.current_health
 
@@ -46,19 +45,17 @@ func _ready() -> void:
 
 	Observability.connect_once_safe(health_component.health_changed, _on_health_changed, "EnemyBase._ready health_changed")
 	
-	call_deferred("_check_initial_target")
+	call_deferred("_detect_initial_target")
 
 
-func _check_initial_target() -> void:
-	if detection_area == null:
+func _detect_initial_target() -> void:
+	if ai_component == null or detection_area == null:
 		return
 
 	var bodies := detection_area.get_overlapping_bodies()
 	for body in bodies:
 		if body is Node2D and body.is_in_group("player"):
-			target = body
-			if ai_component:
-				ai_component.set_target(target)
+			ai_component.on_detection_body_entered(body)
 			Observability.log_debug(LOG_CATEGORY, "Initial target detected: %s" % body.name)
 			return
 
@@ -71,30 +68,24 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if is_dead:
+	if is_dead or ai_component == null:
 		return
 
-	if body.is_in_group("player"):
-		target = body
-		if ai_component:
-			ai_component.set_target(target)
+	ai_component.on_detection_body_entered(body)
 
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	
-	if body == target:
-		target = null
-		if ai_component:
-			ai_component.set_target(null)
+	if ai_component == null:
+		return
+
+	ai_component.on_detection_body_exited(body)
 
 
 func _on_died() -> void:
 	super._on_died()
 	is_active = false
-	target = null
 
 	if ai_component:
-		ai_component.set_target(null)
 		ai_component.set_dead(true)
 	
 	if body_collision:

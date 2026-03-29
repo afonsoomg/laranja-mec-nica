@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bn5p53q3mroyi"]
 
-[ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemies/enemy_base.tscn" id="1_uq37f"]
+[ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemy_base.tscn" id="1_uq37f"]
 [ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_s8tg3"]
 [ext_resource type="Texture2D" uid="uid://bduf44hnqw20d" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Frente.png" id="4_6idgs"]
 [ext_resource type="Texture2D" uid="uid://du3wyc7vajwir" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Esquerda.png" id="5_l7uiu"]
@@ -29,7 +29,7 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwm60"]
 radius = 29.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_grpj2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqxxn"]
 resource_local_to_scene = true
 shader = ExtResource("3_s8tg3")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
@@ -1073,6 +1073,9 @@ debug_color = Color(0.9964505, 0, 0.19525993, 0.41960785)
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
 attack_damage = 15
 knockback_force = 120.0
+chase_range = 400.0
+lose_target_range = 540.0
+ai_attack_range = 40.0
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
 shape = SubResource("CircleShape2D_nwm60")
@@ -1085,7 +1088,7 @@ decay = 1000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_grpj2")
+material = SubResource("ShaderMaterial_vqxxn")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
 
@@ -1099,11 +1102,6 @@ hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="VfxComponent" parent="." index="10" unique_id=1741814442 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
-
-[node name="EnemyAIComponent" parent="." index="12" unique_id=1403723744]
-chase_range = 400.0
-attack_range = 40.0
-lose_target_range = 540.0
 
 [node name="ProgressBar" parent="." index="16" unique_id=494705679]
 offset_left = -33.0

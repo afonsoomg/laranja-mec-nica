@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cy5ivngtvhb2o"]
 
-[ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemies/enemy_base.tscn" id="1_ntetc"]
+[ext_resource type="PackedScene" uid="uid://bj1vpw5v18aod" path="res://entities/enemy_base.tscn" id="1_ntetc"]
 [ext_resource type="Texture2D" uid="uid://5imlps3qinv" path="res://assets/images/enemies/Icon1.png" id="2_cu1if"]
 [ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="3_r8m5l"]
 [ext_resource type="Texture2D" uid="uid://bduf44hnqw20d" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Frente.png" id="4_i1u7d"]
 [ext_resource type="Script" uid="uid://doq3xcghd36dc" path="res://scripts/components/RangedWeaponComponent.gd" id="4_jufub"]
-[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="5_6vvkl"]
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectile_base.tscn" id="5_6vvkl"]
 [ext_resource type="Texture2D" uid="uid://du3wyc7vajwir" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Esquerda.png" id="5_huyxk"]
 [ext_resource type="Texture2D" uid="uid://djy8wci3posgi" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Direta.png" id="6_h3uo8"]
 [ext_resource type="Texture2D" uid="uid://b8nx0564mdxd4" path="res://assets/images/enemies/Tomate/Ataque/Tomate_Ataque_Trás.png" id="7_clqyg"]

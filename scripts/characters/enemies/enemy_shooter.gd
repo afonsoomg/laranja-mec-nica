@@ -18,8 +18,9 @@ func _physics_process(delta: float) -> void:
 	if aim_dir != Vector2.ZERO:
 		move_component.facing_direction = aim_dir
 
-	if ranged_weapon_component != null and ai_component.target != null:
-		ranged_weapon_component.update_spawn_marker_towards_target(ai_component.target.global_position)
+	var current_target: Node = ai_component.get_target()
+	if ranged_weapon_component != null and current_target != null:
+		ranged_weapon_component.update_spawn_marker_towards_target(current_target.global_position)
 
 	if ai_component.should_attack():
 		if ranged_weapon_component != null and not ranged_weapon_component.is_busy_attacking():

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cuyd23kinuw0"]
 
-[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectiles/projectile_base.tscn" id="1_dsndu"]
+[ext_resource type="PackedScene" uid="uid://ccrp06awp6ltx" path="res://entities/projectile_base.tscn" id="1_dsndu"]
 [ext_resource type="Texture2D" uid="uid://bwpiwu4qqxpjc" path="res://assets/images/projectiles/espinho bala.png" id="2_8cqkf"]
 
 [node name="Projectile" unique_id=60524818 instance=ExtResource("1_dsndu")]

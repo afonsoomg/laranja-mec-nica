@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dd6butxmvwl86"]
 
-[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/world/breakable_base.tscn" id="1_morcw"]
+[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/breakable_base.tscn" id="1_morcw"]
 [ext_resource type="Texture2D" uid="uid://bv6g2qivcvntn" path="res://assets/images/breakables/breakable pots (gray).png" id="2_l14iy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7hu7v"]
@@ -19,7 +19,7 @@ region = Rect2(96, 0, 32, 32)
 atlas = ExtResource("2_l14iy")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_3hpxo"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_l14iy"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -48,4 +48,20 @@ animations = [{
 [node name="SmallPotGray" unique_id=63644928 instance=ExtResource("1_morcw")]
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=376635142]
-sprite_frames = SubResource("SpriteFrames_3hpxo")
+sprite_frames = SubResource("SpriteFrames_l14iy")
+animation = &"idle"
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=118096953]
+position = Vector2(0.125, 7.875)
+
+[node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1909912015) index="0" unique_id=146093491]
+position = Vector2(0.25, 7.875)
+
+[node name="CollisionShape2D" parent="DodgeTrigger" parent_id_path=PackedInt32Array(767836631) index="0" unique_id=1401955407]
+position = Vector2(0.25, 8)
+
+[node name="BreakableDropComponent" parent="." index="6" unique_id=363950747]
+spawn_parent_path = NodePath("")
+
+[node name="BreakableAudioComponent" parent="." index="7" unique_id=125293759 node_paths=PackedStringArray("breakable")]
+breakable = NodePath("..")

@@ -2,6 +2,7 @@ extends StaticBody2D
 class_name Breakable
 
 signal broken(reason: String)
+signal damaged(damage: int, direction: Vector2, force: float, is_critical: bool)
 
 @export var queue_free_on_break: bool = true
 @export var break_free_delay: float = 0.0
@@ -23,6 +24,9 @@ func _ready() -> void:
 
 	if dodge_trigger != null and not dodge_trigger.body_entered.is_connected(_on_dodge_trigger_body_entered):
 		dodge_trigger.body_entered.connect(_on_dodge_trigger_body_entered)
+
+	if hurtbox_component != null and not hurtbox_component.hit_received.is_connected(_on_hit_receive):
+		hurtbox_component.hit_received.connect(_on_hit_receive)
 
 	if dodge_trigger != null:
 		dodge_trigger.monitoring = break_on_player_dodge
@@ -89,3 +93,9 @@ func _on_dodge_trigger_body_entered(body: Node) -> void:
 	var combat_state := body.get_node_or_null("CombatStateComponent")
 	if combat_state != null and combat_state.is_dodging:
 		break_now("dodge")
+
+func _on_hit_receive(damage: int, direction: Vector2, force: float, is_critical: bool) -> void:
+	if is_broken:
+		return
+		
+	damaged.emit(damage, direction, force, is_critical)

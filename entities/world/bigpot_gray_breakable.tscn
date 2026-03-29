@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b4rov2dl3c3sg"]
 
-[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/world/breakable_base.tscn" id="1_kayb3"]
+[ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/breakable_base.tscn" id="1_kayb3"]
 [ext_resource type="Texture2D" uid="uid://bv6g2qivcvntn" path="res://assets/images/breakables/breakable pots (gray).png" id="2_elr67"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_neeqs"]
@@ -19,7 +19,7 @@ region = Rect2(96, 64, 32, 32)
 atlas = ExtResource("2_elr67")
 region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_0q4pv"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_elr67"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -48,13 +48,16 @@ animations = [{
 [node name="BigPotGray" unique_id=63644928 instance=ExtResource("1_kayb3")]
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=376635142]
-sprite_frames = SubResource("SpriteFrames_0q4pv")
-frame = 2
-frame_progress = 1.0
+sprite_frames = SubResource("SpriteFrames_elr67")
+animation = &"idle"
 
 [node name="StatsComponent" parent="." index="1" unique_id=1649969689]
 walk_speed = 0.0
 run_speed = 0.0
 acceleration = 0.0
 friction = 0.0
+max_health = 30
 attack_damage = 0
+
+[node name="BreakableAudioComponent" parent="." index="7" unique_id=125293759 node_paths=PackedStringArray("breakable")]
+breakable = NodePath("..")
