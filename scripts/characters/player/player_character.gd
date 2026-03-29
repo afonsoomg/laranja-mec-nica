@@ -1,5 +1,7 @@
 extends CharacterBase
 
+@export var combat_tuning: CombatTuningResource
+
 @export_group("Stamina")
 @export var attack_stamina_cost: float = 20.0
 @export var heavy_attack_stamina_cost: float = 30.0
@@ -86,7 +88,7 @@ func _physics_process(delta: float) -> void:
 		var can_run := _update_locomotion_state_from_live_input()
 
 		if can_run:
-			var spent := stamina_component.spend_over_time(run_stamina_cost_per_second, delta)
+			var spent := stamina_component.spend_over_time(_get_run_stamina_cost_per_second(), delta)
 			if not spent:
 				move_component.set_running(false)
 
@@ -120,7 +122,7 @@ func _handle_attack_intent(delta: float) -> void:
 		return
 
 	if input_component.is_attack_just_released():
-		if _attack_hold_elapsed < heavy_hold_threshold:
+		if _attack_hold_elapsed < _get_heavy_hold_threshold():
 			_try_start_light_attack()
 		_clear_attack_intent("tap_released")
 		return
@@ -130,7 +132,7 @@ func _handle_attack_intent(delta: float) -> void:
 		return
 
 	_attack_hold_elapsed += max(delta, 0.0)
-	if _attack_hold_elapsed >= heavy_hold_threshold:
+	if _attack_hold_elapsed >= _get_heavy_hold_threshold():
 		_try_start_charge()
 
 
@@ -149,7 +151,7 @@ func _begin_attack_intent() -> void:
 		"attack_press",
 		{
 			"direction": _attack_intent_direction,
-			"heavy_hold_threshold": heavy_hold_threshold,
+			"heavy_hold_threshold": _get_heavy_hold_threshold(),
 			"stamina": stamina_component.current_stamina
 		}
 	)
@@ -159,14 +161,15 @@ func _try_start_light_attack() -> void:
 	if not combat_state.can_start_attack():
 		return
 
-	if not stamina_component.spend(attack_stamina_cost):
+	var light_attack_cost := _get_light_attack_stamina_cost()
+	if not stamina_component.spend(light_attack_cost):
 		return
 
 	move_component.facing_direction = _attack_intent_direction
 	locked_attack_direction = _attack_intent_direction
 
 	if not combat_state.request_attack(_attack_intent_direction):
-		stamina_component.restore(attack_stamina_cost)
+		stamina_component.restore(light_attack_cost)
 
 
 func _try_start_charge() -> void:
@@ -177,7 +180,8 @@ func _try_start_charge() -> void:
 		_clear_attack_intent("charge_blocked")
 		return
 
-	if not stamina_component.can_spend(heavy_attack_stamina_cost):
+	var heavy_attack_cost := _get_heavy_attack_stamina_cost()
+	if not stamina_component.can_spend(heavy_attack_cost):
 		DebugHelper.trace(
 			"Combat",
 			self,
@@ -185,7 +189,7 @@ func _try_start_charge() -> void:
 			{
 				"reason": "stamina_insufficient_for_charge",
 				"stamina": stamina_component.current_stamina,
-				"required": heavy_attack_stamina_cost
+				"required": heavy_attack_cost
 			}
 		)
 		_clear_attack_intent("stamina_failed")
@@ -193,7 +197,8 @@ func _try_start_charge() -> void:
 
 	move_component.facing_direction = _attack_intent_direction
 	locked_attack_direction = _attack_intent_direction
-	if combat_state.request_charge_start(_attack_intent_direction, heavy_max_charge_time):
+	
+	if combat_state.request_charge_start(_attack_intent_direction, _get_heavy_max_charge_time()):
 		_clear_attack_intent("charge_started")
 
 
@@ -201,35 +206,38 @@ func _try_release_charged_attack() -> void:
 	if not combat_state.is_charging:
 		return
 
-	if not stamina_component.spend(heavy_attack_stamina_cost):
+	var heavy_attack_cost := _get_heavy_attack_stamina_cost()
+	if not stamina_component.spend(heavy_attack_cost):
 		combat_state.cancel_attack_or_charge("stamina_failed")
 		DebugHelper.trace("Combat", self, "heavy_cancelled", {"reason": "stamina_failed_on_release"})
 		return
 
 	var charge_ratio: float = combat_state.get_charge_ratio()
 	var attack_data := {
-		"damage_multiplier": lerpf(heavy_min_damage_multiplier, heavy_max_damage_multiplier, charge_ratio),
-		"knockback_multiplier": lerpf(heavy_min_knockback_multiplier, heavy_max_knockback_multiplier, charge_ratio),
-		"hitbox_duration": heavy_hitbox_duration,
-		"recovery_duration": heavy_recovery_duration
+		"damage_multiplier": lerpf(_get_heavy_min_damage_multiplier(), _get_heavy_max_damage_multiplier(), charge_ratio),
+		"knockback_multiplier": lerpf(_get_heavy_min_knockback_multiplier(), _get_heavy_max_knockback_multiplier(), charge_ratio),
+		"hitbox_duration": _get_heavy_hitbox_duration(),
+		"recovery_duration": _get_heavy_recovery_duration()
 	}
 
 	if not combat_state.release_charged_attack(charge_ratio, attack_data):
-		stamina_component.restore(heavy_attack_stamina_cost)
+		stamina_component.restore(heavy_attack_cost)
 		return
 
 	_apply_heavy_lunge(locked_attack_direction)
 
 
 func _apply_heavy_lunge(direction: Vector2) -> void:
-	if heavy_lunge_speed <= 0.0 or heavy_lunge_duration <= 0.0:
+	var heavy_lunge_speed_value := _get_heavy_lunge_speed()
+	var heavy_lunge_duration_value := _get_heavy_lunge_duration()
+	if heavy_lunge_speed_value <= 0.0 or heavy_lunge_duration_value <= 0.0:
 		return
 
 	var lunge_dir := direction
 	if lunge_dir == Vector2.ZERO:
 		lunge_dir = move_component.facing_direction
 
-	move_component.apply_forced_velocity_for_duration(lunge_dir.normalized() * heavy_lunge_speed, heavy_lunge_duration)
+	move_component.apply_forced_velocity_for_duration(lunge_dir.normalized() * heavy_lunge_speed_value, heavy_lunge_duration_value)
 
 
 func _clear_attack_intent(reason: String) -> void:
@@ -253,7 +261,7 @@ func _try_start_dodge() -> void:
 	if dodge_dir == Vector2.ZERO:
 		return
 
-	if not stamina_component.can_spend(dodge_stamina_cost):
+	if not stamina_component.can_spend(_get_dodge_stamina_cost()):
 		return
 
 	if not combat_state.start_dodge():
@@ -263,7 +271,7 @@ func _try_start_dodge() -> void:
 		combat_state.finish_dodge()
 		return
 
-	if not stamina_component.spend(dodge_stamina_cost):
+	if not stamina_component.spend(_get_dodge_stamina_cost()):
 		dodge_component.finish_dodge()
 		combat_state.finish_dodge()
 		return
@@ -330,8 +338,7 @@ func _on_attack_started(_direction: Vector2) -> void:
 
 
 func _on_dodge_started() -> void:
-	if combat_state != null and (combat_state.is_attacking or combat_state.is_charging):
-		combat_state.cancel_attack_or_charge("dodge_started")
+	pass
 
 
 func _on_dodge_finished() -> void:
@@ -364,3 +371,87 @@ func _update_locomotion_state_from_live_input() -> bool:
 	move_component.set_move_input(input_dir)
 	move_component.set_running(can_run)
 	return can_run
+
+
+func _get_light_attack_stamina_cost() -> float:
+	if combat_tuning != null:
+		return combat_tuning.light_attack_stamina_cost
+	return attack_stamina_cost
+
+
+func _get_heavy_attack_stamina_cost() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_attack_stamina_cost
+	return heavy_attack_stamina_cost
+
+
+func _get_dodge_stamina_cost() -> float:
+	if combat_tuning != null:
+		return combat_tuning.dodge_stamina_cost
+	return dodge_stamina_cost
+
+
+func _get_run_stamina_cost_per_second() -> float:
+	if combat_tuning != null:
+		return combat_tuning.run_stamina_cost_per_second
+	return run_stamina_cost_per_second
+
+
+func _get_heavy_hold_threshold() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_hold_threshold
+	return heavy_hold_threshold
+
+
+func _get_heavy_max_charge_time() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_max_charge_time
+	return heavy_max_charge_time
+
+
+func _get_heavy_min_damage_multiplier() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_min_damage_multiplier
+	return heavy_min_damage_multiplier
+
+
+func _get_heavy_max_damage_multiplier() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_max_damage_multiplier
+	return heavy_max_damage_multiplier
+
+
+func _get_heavy_min_knockback_multiplier() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_min_knockback_multiplier
+	return heavy_min_knockback_multiplier
+
+
+func _get_heavy_max_knockback_multiplier() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_max_knockback_multiplier
+	return heavy_max_knockback_multiplier
+
+
+func _get_heavy_hitbox_duration() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_hitbox_duration
+	return heavy_hitbox_duration
+
+
+func _get_heavy_recovery_duration() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_recovery_duration
+	return heavy_recovery_duration
+
+
+func _get_heavy_lunge_speed() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_lunge_speed
+	return heavy_lunge_speed
+
+
+func _get_heavy_lunge_duration() -> float:
+	if combat_tuning != null:
+		return combat_tuning.heavy_lunge_duration
+	return heavy_lunge_duration

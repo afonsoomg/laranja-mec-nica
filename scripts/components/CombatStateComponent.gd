@@ -11,6 +11,7 @@ signal attack_finished
 signal attack_cancelled(reason: String)
 signal dodge_started
 signal dodge_finished
+signal combat_assertion_failed(message: String)
 
 @export_group("Component References")
 @export var weapon_component: WeaponComponent
@@ -76,6 +77,7 @@ func _ready() -> void:
 	if animation_component != null and not animation_component.attack_hit_frame_reached.is_connected(_on_attack_hit_frame_reached):
 		animation_component.attack_hit_frame_reached.connect(_on_attack_hit_frame_reached)
 
+	_assert_phase_invariants("ready")
 
 func can_start_attack() -> bool:
 	if current_phase != CombatPhase.IDLE:
@@ -248,6 +250,19 @@ func interrupt_attack(reason: String = "interrupted") -> void:
 	cancel_attack_or_charge(reason)
 
 
+func notify_owner_hurt(reason: String = "hurt") -> void:
+	if is_attacking or is_charging:
+		cancel_attack_or_charge(reason)
+
+
+func notify_owner_died(reason: String = "death") -> void:
+	if is_attacking or is_charging:
+		cancel_attack_or_charge(reason)
+
+	if is_dodging:
+		finish_dodge()
+
+
 func finish_attack() -> void:
 	if not is_attacking:
 		return
@@ -371,6 +386,8 @@ func _transition_to(next_phase: CombatPhase, reason: String) -> void:
 	var next_name := get_phase_name(current_phase)
 	print("[CombatState] %s -> %s | reason=%s" % [previous_name, next_name, reason])
 	combat_transitioned.emit(previous_name, next_name, reason)
+	
+	_assert_phase_invariants("transition:%s->%s" % [previous_name, next_name])
 
 
 func get_phase_name(phase: CombatPhase = current_phase) -> String:
@@ -417,3 +434,25 @@ func _quantize_to_4_directions(dir: Vector2) -> Vector2:
 		return Vector2.RIGHT if dir.x > 0.0 else Vector2.LEFT
 
 	return Vector2.DOWN if dir.y > 0.0 else Vector2.UP
+
+
+func _assert_phase_invariants(context: String) -> void:
+	var attacking := is_attacking
+	var charging := is_charging
+	var dodging := is_dodging
+
+	if attacking and charging:
+		_emit_assertion_failure("Invalid combat state: attacking and charging simultaneously (%s)." % context)
+
+	if dodging and (attacking or charging):
+		_emit_assertion_failure("Invalid combat state: dodging overlaps attack/charge (%s)." % context)
+
+	if (attacking or charging) and current_attack_direction == Vector2.ZERO:
+		_emit_assertion_failure("Invalid combat state: non-idle phase with zero attack direction (%s)." % context)
+
+
+func _emit_assertion_failure(message: String) -> void:
+	push_error("[CombatStateAssertion] %s" % message)
+	combat_assertion_failed.emit(message)
+	if OS.is_debug_build():
+		assert(false, message)

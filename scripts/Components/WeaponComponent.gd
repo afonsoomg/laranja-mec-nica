@@ -168,10 +168,12 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func _roll_damage() -> Dictionary:
 	var damage_multiplier: float = max(float(_runtime_attack_data.get("damage_multiplier", 1.0)), 0.0)
-	var base_damage := int(round(stats_component.attack_damage * damage_multiplier))
-	var crit_chance := clampf(stats_component.crit_chance, 0.0, 1.0)
-	var crit_multiplier: float = max(stats_component.crit_multiplier, 1.0)
-
+	var base_attack_damage := stats_component.get_attack_damage() if stats_component != null else 0
+	var base_damage := int(round(base_attack_damage * damage_multiplier))
+	var crit_chance := stats_component.get_crit_chance() if stats_component != null else 0.0
+	var crit_multiplier: float = stats_component.get_crit_multiplier() if stats_component != null else 1.0
+	
+	
 	var is_critical := randf() < crit_chance
 	var final_damage := base_damage
 

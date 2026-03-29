@@ -86,11 +86,10 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	)
 	
 	if combat_state_component != null and (combat_state_component.is_attacking or combat_state_component.is_charging):
-		combat_state_component.cancel_attack_or_charge("hurt")
+		combat_state_component.notify_owner_hurt("hurt")
 	
 	if animation_component:
 		animation_component.interrupt_for_hurt()
-
 
 
 func _set_shader_blink_intensity(newValue : float):
@@ -114,7 +113,7 @@ func _on_died() -> void:
 		animation_component.play_dying()
 		
 	if combat_state_component != null:
-		combat_state_component.cancel_attack_or_charge("death")
+		combat_state_component.notify_owner_died("death")
 
 
 func _apply_final_movement() -> void:

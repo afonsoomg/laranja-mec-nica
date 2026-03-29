@@ -136,6 +136,7 @@ func _on_start_game() -> void:
 	load_world()
 
 func _on_player_died() -> void:
+	await get_tree().create_timer(2).timeout
 	load_game_over()
 
 func _on_retry() -> void:
