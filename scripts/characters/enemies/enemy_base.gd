@@ -88,6 +88,12 @@ func _on_died() -> void:
 	if ai_component:
 		ai_component.set_dead(true)
 	
+	if enemy_health_bar:
+		enemy_health_bar.visible = false
+
+	if animated_sprite:
+		animated_sprite.modulate = Color(0.8, 0.8, 0.8, 0.9)
+	
 	if body_collision:
 		body_collision.set_deferred("disabled", true)
 

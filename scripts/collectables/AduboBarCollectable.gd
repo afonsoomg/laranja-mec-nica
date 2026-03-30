@@ -1,26 +1,33 @@
 extends CollectableBase
 class_name AduboBarCollectable
 
-const Observer = preload("res://scripts/utils/observability.gd")
-const LOG_CATEGORY := "AduboBarCollectable"
-
-@export_range(0.0, 1.0, 0.01) var crit_bonus: float = 0.25
-@export var buff_duration: float = 8.0
-
-func _ready() -> void:
-	super._ready()
-	Observer.log_debug(LOG_CATEGORY, "Collectable ready.")
+@export var item_id: StringName = &"fertilizer_bar"
+@export var amount: int = 1
+@export var full_inventory_message: String = "Sem espaço para mais barra de adubo."
 
 
 func apply_to_collector(collector: Node) -> bool:
 	if collector == null:
 		return false
 
-	if not collector.has_node("BuffComponent"):
+	var inventory := collector.get_node_or_null("InventoryComponent") as InventoryComponent
+	if inventory == null:
 		return false
 
-	var buff_component := collector.get_node("BuffComponent") as BuffComponent
-	if buff_component == null:
+	var added := inventory.add_item(item_id, amount)
+	if added <= 0:
+		_show_feedback(full_inventory_message)
 		return false
+	_show_feedback("Barra de adubo +%d" % added)
 
-	return buff_component.apply_crit_buff(crit_bonus, buff_duration)
+	var audio_component := collector.get_node_or_null("AudioComponent") as AudioComponent
+	if audio_component:
+		audio_component.play_collect()
+
+	return true
+
+
+func _show_feedback(message: String) -> void:
+	var hud := get_tree().get_first_node_in_group("player_hud") as PlayerHUD
+	if hud:
+		hud.show_message(message)

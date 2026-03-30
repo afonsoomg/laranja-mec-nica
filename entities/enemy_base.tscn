@@ -8,13 +8,14 @@
 [ext_resource type="Script" uid="uid://bcn0vlwmj44jy" path="res://scripts/components/VfxComponent.gd" id="6_ks5hg"]
 [ext_resource type="Script" uid="uid://dyordov7s6aup" path="res://scripts/components/AudioComponent.gd" id="6_ona3f"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ona3f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0doab"]
 resource_local_to_scene = true
 shader = ExtResource("3_w28g0")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
 shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ona3f"]
+resource_local_to_scene = true
 radius = 195.50256
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yc03e"]
@@ -27,7 +28,7 @@ script = ExtResource("2_3iigx")
 move_component = NodePath("../MoveComponent")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_ona3f")
+material = SubResource("ShaderMaterial_0doab")
 
 [node name="AudioComponent" parent="." index="9" unique_id=602596628 node_paths=PackedStringArray("sfx_player")]
 script = ExtResource("6_ona3f")

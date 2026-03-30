@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dmtv8ancwmtne"
+path="res://.godot/imported/Swipe - 2.wav-dc24536e02c372caa7bcf13d98456716.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Swipe - 2.wav"
+dest_files=["res://.godot/imported/Swipe - 2.wav-dc24536e02c372caa7bcf13d98456716.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

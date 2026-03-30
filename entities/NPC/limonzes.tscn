@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b0fx7633nbmfo"]
+
+[ext_resource type="Texture2D" uid="uid://dg8p2p8o2ckmn" path="res://assets/images/sprites.png" id="1_jkmf8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng8wr"]
+atlas = ExtResource("1_jkmf8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2iy60"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ng8wr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Limonzes" type="AnimatedSprite2D" unique_id=382366852]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_2iy60")

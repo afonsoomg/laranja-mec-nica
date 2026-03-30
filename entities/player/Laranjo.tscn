@@ -2,8 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://d0ntfc42udjd8" path="res://entities/character_base.tscn" id="1_fomey"]
 [ext_resource type="Script" uid="uid://dxldwgd6bo0t7" path="res://scripts/characters/player/player_character.gd" id="2_7eutv"]
+[ext_resource type="Script" uid="uid://d1mikhq0a36xw" path="res://scripts/resource/CombatTuningResource.gd" id="3_3wfer"]
 [ext_resource type="Shader" uid="uid://dbksy0psmfwh8" path="res://shaders/character_base.gdshader" id="3_sggm6"]
-[ext_resource type="Texture2D" uid="uid://c0fvdt5rf726w" path="res://assets/images/player/Swordsman_lvl3_attack_with_shadow.png" id="4_2v0cj"]
+[ext_resource type="Texture2D" uid="uid://dofmtrcp4m13v" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque costas (cara).png" id="4_il56s"]
 [ext_resource type="Texture2D" uid="uid://bi7fflo0pkrxl" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado D c2.png" id="5_lr1kr"]
 [ext_resource type="Texture2D" uid="uid://0y0vta4060g" path="res://assets/images/player/Swordsman_lvl3_Death_with_shadow.png" id="5_txk35"]
 [ext_resource type="Texture2D" uid="uid://b6bwuf0p5qkva" path="res://assets/images/player/laranjo/ataque/LM Laranja protag ataque Lado E c2.png" id="6_il56s"]
@@ -33,6 +34,13 @@
 [ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="24_38l32"]
 [ext_resource type="Script" uid="uid://df0mnut1t73ei" path="res://scripts/components/StaminaComponent.gd" id="25_307xv"]
 [ext_resource type="Script" uid="uid://b7lo7c1cui6er" path="res://scripts/components/DodgeComponent.gd" id="26_4vyo6"]
+[ext_resource type="AudioStream" uid="uid://b8sd5csvngb2b" path="res://assets/audio/sfx/footsteps/08_Step_rock_02.wav" id="27_gj2al"]
+[ext_resource type="Script" uid="uid://cd2fk2j2fmnn5" path="res://scripts/components/InventoryComponent.gd" id="35_jaovi"]
+[ext_resource type="Script" uid="uid://fbj43uce6fqv" path="res://scripts/components/InteractionComponent.gd" id="36_3wfer"]
+
+[sub_resource type="Resource" id="Resource_pgfgn"]
+script = ExtResource("3_3wfer")
+metadata/_custom_type_script = "uid://d1mikhq0a36xw"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltqxl"]
 radius = 5.25
@@ -48,37 +56,37 @@ shader = ExtResource("3_sggm6")
 shader_parameter/blink_color = Color(1, 0, 0, 1)
 shader_parameter/blink_intensity = 0.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8xqvn"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(0, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b6m2"]
+atlas = ExtResource("4_il56s")
+region = Rect2(0, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_igjlh"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(64, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1aod"]
+atlas = ExtResource("4_il56s")
+region = Rect2(128, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h6ced"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(128, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc21r"]
+atlas = ExtResource("4_il56s")
+region = Rect2(256, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y51ln"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(192, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6givx"]
+atlas = ExtResource("4_il56s")
+region = Rect2(384, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iooyg"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(256, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac0jj"]
+atlas = ExtResource("4_il56s")
+region = Rect2(512, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4s056"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(320, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_si754"]
+atlas = ExtResource("4_il56s")
+region = Rect2(640, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2u3gq"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(384, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dae7s"]
+atlas = ExtResource("4_il56s")
+region = Rect2(768, 0, 128, 202)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_obon7"]
-atlas = ExtResource("4_2v0cj")
-region = Rect2(448, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5loyg"]
+atlas = ExtResource("4_il56s")
+region = Rect2(896, 0, 128, 202)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wmsqq"]
 atlas = ExtResource("6_il56s")
@@ -840,28 +848,28 @@ region = Rect2(896, 0, 128, 128)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8xqvn")
+"texture": SubResource("AtlasTexture_7b6m2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_igjlh")
+"texture": SubResource("AtlasTexture_l1aod")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_h6ced")
+"texture": SubResource("AtlasTexture_yc21r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y51ln")
+"texture": SubResource("AtlasTexture_6givx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_iooyg")
+"texture": SubResource("AtlasTexture_ac0jj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4s056")
+"texture": SubResource("AtlasTexture_si754")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2u3gq")
+"texture": SubResource("AtlasTexture_dae7s")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_obon7")
+"texture": SubResource("AtlasTexture_5loyg")
 }],
 "loop": false,
 "name": &"attack_down",
@@ -1553,26 +1561,35 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqxl"]
 size = Vector2(12, 13.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pgfgn"]
+radius = 12.509996
+
 [node name="Laranjo" unique_id=232863277 instance=ExtResource("1_fomey")]
-z_index = 1
+z_index = 2
 scale = Vector2(4, 4)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_7eutv")
+combat_tuning = SubResource("Resource_pgfgn")
 attack_stamina_cost = 13.0
 heavy_attack_stamina_cost = 35.0
 dodge_stamina_cost = 22.0
-run_stamina_cost_per_second = 10.0
-heavy_hold_threshold = null
-heavy_max_charge_time = null
-heavy_min_damage_multiplier = null
-heavy_max_damage_multiplier = null
-heavy_min_knockback_multiplier = null
-heavy_max_knockback_multiplier = null
-heavy_hitbox_duration = null
-heavy_recovery_duration = null
+run_stamina_cost_per_second = 5.0
+heavy_hold_threshold = 0.3
+heavy_max_charge_time = 0.8
+heavy_min_damage_multiplier = 1.1
+heavy_max_damage_multiplier = 2.0
+heavy_min_knockback_multiplier = 1.0
+heavy_max_knockback_multiplier = 1.1
+heavy_hitbox_duration = 0.25
+heavy_recovery_duration = 0.25
 heavy_lunge_speed = 400.0
-heavy_lunge_duration = null
+heavy_lunge_duration = 0.2
+water_item_id = &"water"
+fertilizer_item_id = &"fertilizer_bar"
+water_heal_amount = 30
+fertilizer_crit_bonus = 0.9
+fertilizer_buff_duration = 12.0
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1583,6 +1600,7 @@ walk_speed = 100.0
 run_speed = 250.0
 acceleration = 1000.0
 attack_damage = 12
+attack_cooldown = 0.15
 crit_chance = 0.1
 
 [node name="HurtboxComponent" parent="." index="3" unique_id=1218474791]
@@ -1601,7 +1619,9 @@ attack_active_frame = 5
 material = SubResource("ShaderMaterial_lr1kr")
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_wssc2")
-animation = &"attack_left"
+animation = &"attack_down"
+frame = 7
+frame_progress = 1.0
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
@@ -1655,6 +1675,7 @@ sfx_player = NodePath("SfxPlayer")
 attack_sfx = ExtResource("17_2k0m1")
 hurt_sfx = ExtResource("18_4rp30")
 death_sfx = ExtResource("19_xat2i")
+footstep_sfx = Array[AudioStream]([ExtResource("27_gj2al")])
 heal_sfx = ExtResource("20_0ai67")
 crit_buff_start_sfx = ExtResource("21_h7o5s")
 crit_buff_end_sfx = ExtResource("22_gwcrm")
@@ -1685,6 +1706,7 @@ metadata/_custom_type_script = "uid://cmv0akvyet1k5"
 
 [node name="StaminaComponent" type="Node" parent="." index="18" unique_id=1655200128]
 script = ExtResource("25_307xv")
+regen_per_second = 30.0
 metadata/_custom_type_script = "uid://df0mnut1t73ei"
 
 [node name="DodgeComponent" type="Node" parent="." index="19" unique_id=1426893483 node_paths=PackedStringArray("move_component")]
@@ -1692,3 +1714,15 @@ script = ExtResource("26_4vyo6")
 move_component = NodePath("../MoveComponent")
 start_speed = 2000.0
 metadata/_custom_type_script = "uid://b7lo7c1cui6er"
+
+[node name="InventoryComponent" type="Node" parent="." index="20" unique_id=625205473]
+script = ExtResource("35_jaovi")
+metadata/_custom_type_script = "uid://cd2fk2j2fmnn5"
+
+[node name="InteractionComponent" type="Area2D" parent="." index="21" unique_id=2115781749]
+script = ExtResource("36_3wfer")
+metadata/_custom_type_script = "uid://fbj43uce6fqv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionComponent" index="0" unique_id=1083581472]
+position = Vector2(-0.25, 0.25)
+shape = SubResource("CircleShape2D_pgfgn")

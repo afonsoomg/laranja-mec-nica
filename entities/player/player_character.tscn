@@ -22,7 +22,9 @@
 [ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/sfx/69_Enemy_death_01.wav" id="17_at3bx"]
 [ext_resource type="AudioStream" uid="uid://c7kh0yn1uu718" path="res://assets/audio/sfx/02_Heal_02.wav" id="18_hblhq"]
 [ext_resource type="AudioStream" uid="uid://6po2dov2rnpc" path="res://assets/audio/sfx/16_Atk_buff_04.wav" id="19_yr7e7"]
+[ext_resource type="AudioStream" uid="uid://dg5anbuywo8ht" path="res://assets/audio/sfx/footsteps/Footstep (Concrete - 1).wav" id="20_jwdib"]
 [ext_resource type="AudioStream" uid="uid://b4imtw11lyfcg" path="res://assets/audio/sfx/21_Debuff_01.wav" id="20_wssc2"]
+[ext_resource type="AudioStream" uid="uid://cj770whcvjt2i" path="res://assets/audio/sfx/footsteps/Footstep (Concrete - 2).wav" id="21_ln7ar"]
 [ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="24_wssc2"]
 [ext_resource type="Script" uid="uid://df0mnut1t73ei" path="res://scripts/components/StaminaComponent.gd" id="24_yr7e7"]
 [ext_resource type="Script" uid="uid://b7lo7c1cui6er" path="res://scripts/components/DodgeComponent.gd" id="26_n1h10"]
@@ -35,7 +37,7 @@ height = 23.5
 radius = 7.0
 height = 26.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n1h10"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_77n0i"]
 resource_local_to_scene = true
 shader = ExtResource("3_yr7e7")
 shader_parameter/blink_color = Color(1, 0, 0, 1)
@@ -1837,19 +1839,19 @@ collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_u37yl")
 attack_stamina_cost = 10.0
-heavy_attack_stamina_cost = 30.0
+heavy_attack_stamina_cost = null
 dodge_stamina_cost = 10.0
 run_stamina_cost_per_second = 5.0
-heavy_hold_threshold = 0.2
-heavy_max_charge_time = 1.0
-heavy_min_damage_multiplier = 1.35
-heavy_max_damage_multiplier = 2.2
-heavy_min_knockback_multiplier = 1.1
-heavy_max_knockback_multiplier = 1.8
-heavy_hitbox_duration = 0.18
-heavy_recovery_duration = 0.35
+heavy_hold_threshold = null
+heavy_max_charge_time = null
+heavy_min_damage_multiplier = null
+heavy_max_damage_multiplier = null
+heavy_min_knockback_multiplier = null
+heavy_max_knockback_multiplier = null
+heavy_hitbox_duration = null
+heavy_recovery_duration = null
 heavy_lunge_speed = 500.0
-heavy_lunge_duration = 0.08
+heavy_lunge_duration = null
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1874,7 +1876,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 attack_active_frame = 3
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_n1h10")
+material = SubResource("ShaderMaterial_77n0i")
 sprite_frames = SubResource("SpriteFrames_wssc2")
 animation = &"hurt_down"
 
@@ -1929,6 +1931,7 @@ sfx_player = NodePath("SfxPlayer")
 attack_sfx = ExtResource("15_2ll1q")
 hurt_sfx = ExtResource("16_5f50k")
 death_sfx = ExtResource("17_at3bx")
+footstep_sfx = Array[AudioStream]([ExtResource("20_jwdib"), ExtResource("21_ln7ar")])
 heal_sfx = ExtResource("18_hblhq")
 crit_buff_start_sfx = ExtResource("19_yr7e7")
 crit_buff_end_sfx = ExtResource("20_wssc2")

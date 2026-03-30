@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://clo8tm1c0d7hx"]
+
+[ext_resource type="Script" uid="uid://dkq1yajm6yi6q" path="res://scripts/interaction/KeyDoorInteractable.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_door"]
+size = Vector2(14, 18)
+
+[node name="DoorInteractable" type="Area2D" unique_id=743736777 node_paths=PackedStringArray("collision_node", "closed_visual", "opened_visual")]
+collision_mask = 2
+script = ExtResource("1_door")
+collision_node = NodePath("StaticBody2D/DoorCollision")
+closed_visual = NodePath("ClosedVisual")
+opened_visual = NodePath("OpenedVisual")
+prompt_text = "Abrir porta"
+interaction_priority = 1
+
+[node name="ClosedVisual" type="ColorRect" parent="." unique_id=1788763732]
+offset_left = -8.0
+offset_top = -10.0
+offset_right = 8.0
+offset_bottom = 10.0
+color = Color(0.35, 0.24, 0.08, 1)
+
+[node name="OpenedVisual" type="ColorRect" parent="." unique_id=571416180]
+visible = false
+offset_left = -8.0
+offset_top = -10.0
+offset_right = 8.0
+offset_bottom = 10.0
+color = Color(0.2, 0.5, 0.2, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1625217690]
+shape = SubResource("RectShape_door")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1004388201]
+collision_mask = 2
+
+[node name="DoorCollision" type="CollisionShape2D" parent="StaticBody2D" unique_id=990124504]
+shape = SubResource("RectShape_door")

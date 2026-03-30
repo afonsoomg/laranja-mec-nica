@@ -40,10 +40,16 @@ func on_detection_body_entered(body: Node2D) -> void:
 	if is_dead or body == null or not body.is_in_group("player"):
 		return
 
-	if target != null and is_instance_valid(target):
+	if target == null or not is_instance_valid(target):
+		_set_target(body)
 		return
 
-	_set_target(body)
+	var owner_node := get_parent() as Node2D
+	if owner_node == null:
+		return
+
+	if owner_node.global_position.distance_to(body.global_position) < owner_node.global_position.distance_to(target.global_position):
+		_set_target(body)
 
 
 func on_detection_body_exited(body: Node2D) -> void:
@@ -83,7 +89,7 @@ func update_ai(owner_position: Vector2) -> void:
 
 	if distance_to_target > _get_lose_target_range():
 		current_state = AIState.IDLE
-		target = null
+		_clear_target()
 		return
 
 	if distance_to_target <= _get_attack_range():
@@ -139,13 +145,28 @@ func _clear_target() -> void:
 func _find_target_inside_detection_area() -> Node2D:
 	if detection_area == null:
 		return null
+		
+	var owner_node := get_parent() as Node2D
+	if owner_node == null:
+		return null
+
+	var best_target: Node2D = null
+	var best_distance := INF
 
 	var bodies := detection_area.get_overlapping_bodies()
 	for body in bodies:
-		if body is Node2D and body.is_in_group("player"):
-			return body
+		if not (body is Node2D) or not body.is_in_group("player"):
+			continue
 
-	return null
+		var distance := owner_node.global_position.distance_to((body as Node2D).global_position)
+		if distance < best_distance:
+			best_distance = distance
+			best_target = body as Node2D
+
+	if best_target != null:
+		_set_target(best_target)
+
+	return best_target
 
 
 func _extract_detection_range_from_shape() -> float:

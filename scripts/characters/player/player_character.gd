@@ -20,11 +20,25 @@ extends CharacterBase
 @export var heavy_lunge_speed: float = 120.0
 @export var heavy_lunge_duration: float = 0.08
 
+@export_group("Consumable Items")
+@export var water_item_id: StringName = &"water"
+@export var fertilizer_item_id: StringName = &"fertilizer_bar"
+@export var water_heal_amount: int = 6
+@export_range(0.0, 1.0, 0.01) var fertilizer_crit_bonus: float = 0.25
+@export var fertilizer_buff_duration: float = 8.0
+
+
+signal interaction_prompt_changed(prompt_text: String, visible: bool)
+signal feedback_requested(message: String)
+signal note_requested(title: String, body: String)
+
 var input_component: InputComponent
 var weapon_component: WeaponComponent
 var stamina_component: StaminaComponent
 var combat_state: CombatStateComponent
 var dodge_component: DodgeComponent
+var inventory_component: InventoryComponent
+var interaction_component: InteractionComponent
 
 var locked_attack_direction: Vector2 = Vector2.DOWN
 
@@ -41,6 +55,8 @@ func _ready() -> void:
 		{"path": NodePath("StaminaComponent"), "expected_type": "StaminaComponent", "name": "StaminaComponent", "assign_to": "stamina_component"},
 		{"path": NodePath("CombatStateComponent"), "expected_type": "CombatStateComponent", "name": "CombatStateComponent", "assign_to": "combat_state"},
 		{"path": NodePath("DodgeComponent"), "expected_type": "DodgeComponent", "name": "DodgeComponent", "assign_to": "dodge_component"},
+		{"path": NodePath("InventoryComponent"), "expected_type": "InventoryComponent", "name": "InventoryComponent", "assign_to": "inventory_component"},
+		{"path": NodePath("InteractionComponent"), "expected_type": "InteractionComponent", "name": "InteractionComponent", "assign_to": "interaction_component"},
 	]):
 		set_physics_process(false)
 		return
@@ -59,17 +75,24 @@ func _ready() -> void:
 	if not dodge_component.dodge_finished.is_connected(_on_component_dodge_finished):
 		dodge_component.dodge_finished.connect(_on_component_dodge_finished)
 	
+	if interaction_component != null and not interaction_component.current_interactable_changed.is_connected(_on_interactable_changed):
+		interaction_component.current_interactable_changed.connect(_on_interactable_changed)
+	
 	if not combat_state.attack_cancelled.is_connected(_on_attack_or_charge_cancelled):
 		combat_state.attack_cancelled.connect(_on_attack_or_charge_cancelled)
 
 	if not combat_state.attack_finished.is_connected(_on_attack_finished):
 		combat_state.attack_finished.connect(_on_attack_finished)
 
+
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 	
 	dodge_component.tick(delta)
+	if interaction_component != null:
+		interaction_component.tick(self)
+	_handle_item_use_input()
 	_handle_combat_input(delta)
 
 	if combat_state.is_dodging:
@@ -96,6 +119,64 @@ func _physics_process(delta: float) -> void:
 		animation_component.update_animation()
 
 	super._physics_process(delta)
+
+
+func _handle_item_use_input() -> void:
+	if input_component.is_use_item1_just_pressed():
+		_use_water_item()
+
+	if input_component.is_use_item2_just_pressed():
+		_use_fertilizer_item()
+
+
+func _use_water_item() -> void:
+	if inventory_component == null:
+		return
+
+	if not inventory_component.consume_item(water_item_id, 1):
+		feedback_requested.emit("Sem água no inventário.")
+		return
+
+	if health_component == null or health_component.is_dead:
+		feedback_requested.emit("Não é possível usar água agora.")
+		inventory_component.add_item(water_item_id, 1)
+		return
+
+	if health_component.current_health >= health_component.max_health:
+		feedback_requested.emit("Vida já está cheia.")
+		inventory_component.add_item(water_item_id, 1)
+		return
+
+	health_component.heal(water_heal_amount)
+	feedback_requested.emit("Água usada. +%d HP" % water_heal_amount)
+
+	if audio_component:
+		audio_component.play_heal()
+
+	if vfx_component:
+		vfx_component.play_heal_burst()
+
+
+func _use_fertilizer_item() -> void:
+	if inventory_component == null:
+		return
+
+	if not inventory_component.consume_item(fertilizer_item_id, 1):
+		feedback_requested.emit("Sem barra de adubo no inventário.")
+		return
+
+	var buff_component := get_node_or_null("BuffComponent") as BuffComponent
+	if buff_component == null:
+		inventory_component.add_item(fertilizer_item_id, 1)
+		feedback_requested.emit("Buff indisponível.")
+		return
+
+	if not buff_component.apply_crit_buff(fertilizer_crit_bonus, fertilizer_buff_duration):
+		inventory_component.add_item(fertilizer_item_id, 1)
+		feedback_requested.emit("Não foi possível aplicar buff.")
+		return
+
+	feedback_requested.emit("Crítico aumentado por %.1fs." % fertilizer_buff_duration)
 
 
 func _handle_combat_input(delta: float) -> void:
@@ -455,3 +536,11 @@ func _get_heavy_lunge_duration() -> float:
 	if combat_tuning != null:
 		return combat_tuning.heavy_lunge_duration
 	return heavy_lunge_duration
+
+
+func _on_interactable_changed(interactable: InteractableBase) -> void:
+	if interactable == null:
+		interaction_prompt_changed.emit("", false)
+		return
+
+	interaction_prompt_changed.emit(interactable.get_prompt_text(), true)

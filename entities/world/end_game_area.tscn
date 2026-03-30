@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bjb4574awet0s"]
+
+[ext_resource type="Script" uid="uid://bt3knj1imppkf" path="res://scripts/world/end_game_area.gd" id="1_bb3bs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a62ty"]
+
+[node name="EndGameArea" type="Area2D" unique_id=1221316023]
+script = ExtResource("1_bb3bs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=308418996]
+shape = SubResource("RectangleShape2D_a62ty")

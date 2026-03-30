@@ -20,8 +20,12 @@
 [ext_resource type="Texture2D" uid="uid://cifu8jpagmv4t" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Direita.png" id="17_grpj2"]
 [ext_resource type="Texture2D" uid="uid://dxkawbp1dx0wh" path="res://assets/images/enemies/Tomate/idle/Tomate_Idle_Tras.png" id="18_40qvc"]
 [ext_resource type="Script" uid="uid://cmv0akvyet1k5" path="res://scripts/components/CombatStateComponent.gd" id="20_grpj2"]
+[ext_resource type="AudioStream" uid="uid://dyvtfsfuir570" path="res://assets/audio/sfx/03_Claw_03.wav" id="20_kjkas"]
 [ext_resource type="AudioStream" uid="uid://bgn5rmonbulte" path="res://assets/audio/sfx/08_Bite_04.wav" id="20_vqxxn"]
 [ext_resource type="AudioStream" uid="uid://2ac6856soko1" path="res://assets/audio/sfx/69_Enemy_death_01.wav" id="21_2tl3r"]
+[ext_resource type="AudioStream" uid="uid://be7w5rgr5b5oj" path="res://assets/audio/sfx/footsteps/Footstep (Flesh - 1).wav" id="23_mrurf"]
+[ext_resource type="AudioStream" uid="uid://cslh6yc8mqr72" path="res://assets/audio/sfx/footsteps/Footstep (Flesh - 2).wav" id="24_inbyn"]
+[ext_resource type="Script" uid="uid://bhv2g1swjwce4" path="res://scripts/components/WeaponComponent.gd" id="26_mrurf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qnpvi"]
 radius = 28.0
@@ -29,7 +33,7 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwm60"]
 radius = 29.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqxxn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrurf"]
 resource_local_to_scene = true
 shader = ExtResource("3_s8tg3")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
@@ -1059,11 +1063,24 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_inbyn"]
+resource_local_to_scene = true
+radius = 514.0039
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inbyn"]
+
 [node name="Tomate" unique_id=232863277 instance=ExtResource("1_uq37f")]
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("7_lamsl")
-hit_pause_duration = 2.0
+hit_pause_duration = 0.3
+attack_windup_duration = 0.5
+attack_cooldown_duration = 3.0
+attack_lunge_speed = 700.0
+attack_lunge_duration = 0.16
+damage_flash_duration = 0.5
+damage_flash_intensity = 0.7
+critical_flash_intensity = 1.0
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 0)
@@ -1071,11 +1088,13 @@ shape = SubResource("CircleShape2D_qnpvi")
 debug_color = Color(0.9964505, 0, 0.19525993, 0.41960785)
 
 [node name="StatsComponent" parent="." index="1" unique_id=562620079]
+max_health = 50
 attack_damage = 15
 knockback_force = 120.0
-chase_range = 400.0
-lose_target_range = 540.0
-ai_attack_range = 40.0
+chase_range = 500.0
+lose_target_range = 600.0
+ai_attack_range = 150.0
+crit_chance = 0.2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
 shape = SubResource("CircleShape2D_nwm60")
@@ -1088,7 +1107,7 @@ decay = 1000.0
 animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
-material = SubResource("ShaderMaterial_vqxxn")
+material = SubResource("ShaderMaterial_mrurf")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
 animation = &"attack_down"
 
@@ -1096,12 +1115,17 @@ animation = &"attack_down"
 hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="AudioComponent" parent="." index="9" unique_id=602596628 node_paths=PackedStringArray("hurtbox_component")]
+attack_sfx = ExtResource("20_kjkas")
 hurt_sfx = ExtResource("20_vqxxn")
 death_sfx = ExtResource("21_2tl3r")
+footstep_sfx = Array[AudioStream]([ExtResource("23_mrurf"), ExtResource("24_inbyn")])
 hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="VfxComponent" parent="." index="10" unique_id=1741814442 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
+
+[node name="CollisionShape2D" parent="DetectionArea" parent_id_path=PackedInt32Array(1880334663) index="0" unique_id=644740111]
+shape = SubResource("CircleShape2D_inbyn")
 
 [node name="ProgressBar" parent="." index="16" unique_id=494705679]
 offset_left = -33.0
@@ -1109,8 +1133,22 @@ offset_top = -46.0
 offset_right = 30.0
 offset_bottom = -39.0
 
-[node name="CombatStateComponent" type="Node" parent="." index="17" unique_id=1366898871 node_paths=PackedStringArray("animation_component", "stats_component")]
+[node name="CombatStateComponent" type="Node" parent="." index="17" unique_id=1366898871 node_paths=PackedStringArray("weapon_component", "animation_component", "stats_component")]
 script = ExtResource("20_grpj2")
+weapon_component = NodePath("../WeaponComponent")
 animation_component = NodePath("../AnimationComponent")
 stats_component = NodePath("../StatsComponent")
 metadata/_custom_type_script = "uid://cmv0akvyet1k5"
+
+[node name="WeaponComponent" type="Node" parent="." index="18" unique_id=699419726 node_paths=PackedStringArray("stats_component", "move_component", "attack_hitbox", "attack_collision_shape")]
+script = ExtResource("26_mrurf")
+stats_component = NodePath("../StatsComponent")
+move_component = NodePath("../MoveComponent")
+attack_hitbox = NodePath("../AttackHitbox")
+attack_collision_shape = NodePath("../AttackHitbox/CollisionShape2D")
+metadata/_custom_type_script = "uid://bhv2g1swjwce4"
+
+[node name="AttackHitbox" type="Area2D" parent="." index="19" unique_id=373364007]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=1649295703]
+shape = SubResource("RectangleShape2D_inbyn")

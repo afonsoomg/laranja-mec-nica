@@ -16,6 +16,7 @@ signal damaged(damage: int, direction: Vector2, force: float, is_critical: bool)
 @onready var dodge_trigger: Area2D = $DodgeTrigger
 
 var is_broken: bool = false
+var _is_breaking: bool = false
 
 
 func _ready() -> void:
@@ -38,9 +39,10 @@ func _ready() -> void:
 
 
 func break_now(reason: String = "manual") -> void:
-	if is_broken:
+	if is_broken or _is_breaking:
 		return
 
+	_is_breaking = true
 	is_broken = true
 
 	if hurtbox_component != null:
@@ -63,12 +65,17 @@ func break_now(reason: String = "manual") -> void:
 			animated_sprite.play("break")
 
 	broken.emit(reason)
+	set_physics_process(false)
+	set_process(false)
 
 	if queue_free_on_break:
 		call_deferred("_queue_free_after_break")
 
 
 func _queue_free_after_break() -> void:
+	if not is_inside_tree():
+		return
+	
 	if animated_sprite != null and animated_sprite.sprite_frames != null:
 		if animated_sprite.sprite_frames.has_animation("break") and animated_sprite.animation == "break":
 			await animated_sprite.animation_finished

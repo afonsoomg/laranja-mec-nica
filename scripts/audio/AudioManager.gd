@@ -9,8 +9,8 @@ var tilemaps: Array[TileMapLayer] = []
 
 const footstep_sounds = {
 	"c": [
-		preload("res://assets/audio/sfx/footsteps/08_Step_rock_02.wav"),
-		#preload("res://assets/audio/sfx/footsteps/12_Step_wood_03.wav"),
+		preload("res://assets/audio/sfx/footsteps/Footstep (Concrete - 1).wav"),
+		preload("res://assets/audio/sfx/footsteps/Footstep (Concrete - 2).wav"),
 		#preload("res://assets/audio/sfx/footsteps/03_Step_grass_03.wav")
 	]
 }

@@ -9,6 +9,9 @@ class_name InputComponent
 @export var run_action: StringName = &"game_run"
 @export var attack_action: StringName = &"game_attack"
 @export var dodge_action: StringName = &"game_dodge"
+@export var interact_action: StringName = &"game_interact"
+@export var use_item1_action: StringName = &"game_use_item1"
+@export var use_item2_action: StringName = &"game_use_item2"
 
 
 func get_input_vector() -> Vector2:
@@ -36,3 +39,15 @@ func is_attack_just_pressed() -> bool:
 
 func is_attack_just_released() -> bool:
 	return Input.is_action_just_released(attack_action)
+
+
+func is_interact_just_pressed() -> bool:
+	return Input.is_action_just_pressed(interact_action)
+
+
+func is_use_item1_just_pressed() -> bool:
+	return Input.is_action_just_pressed(use_item1_action)
+
+
+func is_use_item2_just_pressed() -> bool:
+	return Input.is_action_just_pressed(use_item2_action)

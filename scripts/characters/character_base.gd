@@ -17,6 +17,10 @@ var combat_state_component: CombatStateComponent
 var _last_footstep_frame := -1
 var is_dead: bool = false
 
+@export_group("Hit Feedback")
+@export var damage_flash_duration: float = 0.12
+@export var damage_flash_intensity: float = 1.0
+@export var critical_flash_intensity: float = 1.35
 
 func _ready() -> void:
 	if not ComponentValidator.require_nodes(self, [
@@ -71,8 +75,7 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 	if is_dead:
 		return
 
-	var tween = get_tree().create_tween()
-	tween.tween_method(_set_shader_blink_intensity, 1.0, 0.0, 0.5)
+	_play_damage_flash(_is_critical)
 	
 	DebugHelper.trace(
 		"Combat",
@@ -92,8 +95,21 @@ func _on_hit_received(_damage: int, _direction: Vector2, _force: float, _is_crit
 		animation_component.interrupt_for_hurt()
 
 
-func _set_shader_blink_intensity(newValue : float):
-	animated_sprite.material.set_shader_parameter("blink_intensity", newValue)
+func _play_damage_flash(is_critical: bool) -> void:
+	if animated_sprite == null or animated_sprite.material == null:
+		return
+
+	var target_intensity := critical_flash_intensity if is_critical else damage_flash_intensity
+	_set_shader_blink_intensity(target_intensity)
+
+	var tween := get_tree().create_tween()
+	tween.tween_method(_set_shader_blink_intensity, target_intensity, 0.0, max(damage_flash_duration, 0.01))
+
+
+func _set_shader_blink_intensity(new_value: float) -> void:
+	if animated_sprite == null or animated_sprite.material == null:
+		return
+	animated_sprite.material.set_shader_parameter("blink_intensity", new_value)
 
 
 func _on_died() -> void:
@@ -108,6 +124,8 @@ func _on_died() -> void:
 		
 	if audio_component:
 		audio_component.play_death()
+		
+	_set_shader_blink_intensity(0.0)
 
 	if animation_component:
 		animation_component.play_dying()
@@ -129,7 +147,11 @@ func _apply_final_movement() -> void:
 	move_and_slide()
 
 
-func _play_footstep():
+func _play_footstep() -> void:
+	if audio_component != null and not audio_component.footstep_sfx.is_empty():
+		audio_component.play_footstep()
+		return
+		
 	AudioManagerCustom.play_footstep(global_position)
 
 

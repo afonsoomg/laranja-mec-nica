@@ -58,7 +58,9 @@ animations = [{
 [node name="WaterCollectable" unique_id=300314204 instance=ExtResource("1_bcwto")]
 scale = Vector2(2, 2)
 script = ExtResource("2_3htwm")
-heal_amount = 20
+item_id = &"water"
+amount = 1
+full_inventory_message = "Sem espaço para mais água."
 collect_sfx = ExtResource("3_mh7rl")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]

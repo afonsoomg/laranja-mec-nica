@@ -1217,6 +1217,10 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mga4d"]
+resource_local_to_scene = true
+radius = 1000.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a3opq"]
 radius = 15.0
 height = 57.0
@@ -1224,6 +1228,7 @@ height = 57.0
 [node name="RaizMutante" unique_id=232863277 instance=ExtResource("1_vus6u")]
 scale = Vector2(2, 2)
 script = ExtResource("2_q4faw")
+damage_flash_intensity = 0.4
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1779847478]
 position = Vector2(0, 9.5)
@@ -1234,12 +1239,14 @@ walk_speed = 0.0
 run_speed = 0.0
 acceleration = 0.0
 friction = 0.0
-max_health = 60
+max_health = 35
 attack_cooldown = 5.0
 knockback_force = 60.0
 chase_range = 1000.0
 lose_target_range = 1000.0
-ai_attack_range = 1000.0
+ai_attack_range = 700.0
+crit_chance = 0.1
+crit_multiplier = 1.2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
 position = Vector2(0, 10)
@@ -1290,6 +1297,9 @@ gizmo_extents = 15.5
 
 [node name="DetectionArea" parent="." index="15" unique_id=1880334663]
 monitorable = true
+
+[node name="CollisionShape2D" parent="DetectionArea" index="0" unique_id=644740111]
+shape = SubResource("CircleShape2D_mga4d")
 
 [node name="CollisionShape2D" parent="TouchDamageArea" parent_id_path=PackedInt32Array(414827260) index="0" unique_id=222369610]
 position = Vector2(0.5, 7.5)
