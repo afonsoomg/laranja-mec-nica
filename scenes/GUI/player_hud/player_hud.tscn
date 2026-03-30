@@ -169,6 +169,16 @@ theme_override_font_sizes/font_size = 16
 text = "Mensagem"
 horizontal_alignment = 1
 
+[node name="CompletionMessageLabel" type="Label" parent="." unique_id=2048926678]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 91.0
+offset_right = 952.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 16
+text = "Mensagem"
+horizontal_alignment = 1
+
 [node name="InventoryLabel" type="Label" parent="." unique_id=110000003]
 layout_mode = 0
 offset_left = 14.0

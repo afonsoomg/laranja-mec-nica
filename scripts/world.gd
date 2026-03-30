@@ -18,6 +18,9 @@ const LOG_CATEGORY := "World"
 @onready var breakables_holder: Node = $Breakables
 
 signal player_died
+signal level_completed(completion_message: String, message_duration: float, delay_before_fade: float, end_scene_path: String, fade_duration: float)
+
+var _is_ending: bool = false
 
 func _ready() -> void:
 	AudioManagerCustom.play_music(world_music)
@@ -44,6 +47,7 @@ func load_level(level_path: String) -> void:
 	
 	_register_tilemaps_for_audio(level)
 	_setup_spawns(level)
+	_register_end_game_areas(level)
 
 
 func _setup_spawns(level: Node) -> void:
@@ -204,8 +208,32 @@ func _register_tilemaps_for_audio(root: Node) -> void:
 
 
 func _on_player_died() -> void:
+	_is_ending = true
 	player_died.emit()
 
 
 func get_player() -> CharacterBase:
 	return $PlayerCharacter
+
+
+func _register_end_game_areas(root: Node) -> void:
+	for child in root.get_children():
+		if child is EndGameArea:
+			var end_area := child as EndGameArea
+			if not end_area.end_requested.is_connected(_on_end_area_requested):
+				end_area.end_requested.connect(_on_end_area_requested)
+		_register_end_game_areas(child)
+
+
+func _on_end_area_requested(completion_message: String, message_duration: float, delay_before_fade: float, end_scene_path: String, fade_duration: float) -> void:
+	if _is_ending:
+		return
+
+	if get_tree().paused:
+		return
+
+	if player == null or player.is_dead:
+		return
+
+	_is_ending = true
+	level_completed.emit(completion_message, message_duration, delay_before_fade, end_scene_path, fade_duration)

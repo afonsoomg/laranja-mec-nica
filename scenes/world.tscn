@@ -25,14 +25,14 @@ breakable_scene = ExtResource("6_7r4gi")
 [node name="Breakables" type="Node" parent="." unique_id=530700594]
 
 [node name="PlayerCharacter" parent="." unique_id=232863277 instance=ExtResource("6_qfnet")]
-heavy_attack_stamina_cost = null
-heavy_hold_threshold = null
-heavy_max_charge_time = null
-heavy_min_damage_multiplier = null
-heavy_max_damage_multiplier = null
-heavy_min_knockback_multiplier = null
-heavy_max_knockback_multiplier = null
-heavy_hitbox_duration = null
-heavy_recovery_duration = null
+heavy_attack_stamina_cost = 30.0
+heavy_hold_threshold = 0.2
+heavy_max_charge_time = 1.0
+heavy_min_damage_multiplier = 1.35
+heavy_max_damage_multiplier = 2.2
+heavy_min_knockback_multiplier = 1.1
+heavy_max_knockback_multiplier = 1.8
+heavy_hitbox_duration = 0.18
+heavy_recovery_duration = 0.35
 heavy_lunge_speed = 500.0
-heavy_lunge_duration = null
+heavy_lunge_duration = 0.08

@@ -24,9 +24,10 @@ var note_panel: Panel
 var note_title_label: Label
 var note_body_label: RichTextLabel
 var message_timer: Timer
+var completion_message_label: Label
 
 var time_elapsed: float = 0.0
-
+var _message_tween: Tween = null
 
 func _ready() -> void:
 	add_to_group("player_hud")
@@ -44,10 +45,12 @@ func _ready() -> void:
 		{"path": NodePath("NotePanel/VBoxContainer/Title"), "expected_type": "Label", "name": "NoteTitleLabel", "assign_to": "note_title_label"},
 		{"path": NodePath("NotePanel/VBoxContainer/Body"), "expected_type": "RichTextLabel", "name": "NoteBodyLabel", "assign_to": "note_body_label"},
 		{"path": NodePath("MessageTimer"), "expected_type": "Timer", "name": "MessageTimer", "assign_to": "message_timer"},
+		{"path": NodePath("CompletionMessageLabel"), "expected_type": "Label", "name": "CompletionMessageLabel", "assign_to": "completion_message_label"},
 	]):
 		set_process(false)
 		return
 	pause_menu.visible = false
+	completion_message_label.visible = false
 	interaction_prompt_label.visible = false
 	message_label.visible = false
 	note_panel.visible = false
@@ -151,6 +154,28 @@ func _input(event: InputEvent) -> void:
 		note_panel.visible = false
 		get_viewport().set_input_as_handled()
 
+
+func show_completion_message(message: String, duration: float = 1.2) -> void:
+	if completion_message_label == null:
+		return
+
+	if _message_tween != null:
+		_message_tween.kill()
+		_message_tween = null
+
+	completion_message_label.text = message
+	completion_message_label.modulate = Color(1, 1, 1, 1)
+	completion_message_label.visible = true
+
+	var wait_time: float = max(duration, 0.0)
+	_message_tween = create_tween()
+	_message_tween.tween_interval(wait_time)
+	_message_tween.tween_property(completion_message_label, "modulate:a", 0.0, 0.25)
+	_message_tween.finished.connect(func() -> void:
+		completion_message_label.visible = false
+		completion_message_label.modulate = Color(1, 1, 1, 1)
+		_message_tween = null
+	)
 
 func _on_pause_pressed() -> void:
 	var paused := not get_tree().paused

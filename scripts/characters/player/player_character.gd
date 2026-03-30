@@ -45,6 +45,7 @@ var locked_attack_direction: Vector2 = Vector2.DOWN
 var _attack_intent_active: bool = false
 var _attack_intent_direction: Vector2 = Vector2.DOWN
 var _attack_hold_elapsed: float = 0.0
+var controls_locked: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -88,6 +89,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
+	
+	if controls_locked:
+		move_component.set_move_input(Vector2.ZERO)
+		move_component.set_running(false)
+		move_component.stop()
+		animation_component.update_animation()
+		super._physics_process(delta)
+		return
+	
 	
 	dodge_component.tick(delta)
 	if interaction_component != null:
@@ -177,6 +187,18 @@ func _use_fertilizer_item() -> void:
 		return
 
 	feedback_requested.emit("Crítico aumentado por %.1fs." % fertilizer_buff_duration)
+
+
+func set_controls_locked(locked: bool) -> void:
+	controls_locked = locked
+	if move_component == null:
+		return
+
+	move_component.can_move = not locked
+	if locked:
+		move_component.set_move_input(Vector2.ZERO)
+		move_component.set_running(false)
+		move_component.stop()
 
 
 func _handle_combat_input(delta: float) -> void:
