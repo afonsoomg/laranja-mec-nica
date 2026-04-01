@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://xj1mq8gtlenu"
-path="res://.godot/imported/Pixeldrop.ttf-2a507796eb54874b6171de4214edd288.fontdata"
+uid="uid://m7aintwyf858"
+path="res://.godot/imported/Orange Squash Free.otf-8624276fa177af6aa364b316db18d9c0.fontdata"
 
 [deps]
 
-source_file="res://scenes/GUI/gameUI/Pixeldrop.ttf"
-dest_files=["res://.godot/imported/Pixeldrop.ttf-2a507796eb54874b6171de4214edd288.fontdata"]
+source_file="res://scenes/GUI/gameUI/Orange Squash Free.otf"
+dest_files=["res://.godot/imported/Orange Squash Free.otf-8624276fa177af6aa364b316db18d9c0.fontdata"]
 
 [params]
 

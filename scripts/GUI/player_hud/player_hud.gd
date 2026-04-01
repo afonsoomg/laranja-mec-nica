@@ -1,5 +1,7 @@
 extends Control
 class_name PlayerHUD
+@onready var pausebuttons: VBoxContainer = $MarginContainer/PauseMenu/Panel/pausebuttons
+@onready var opcoes: Panel = $MarginContainer/PauseMenu/Opcoes
 
 const Observer = preload("res://scripts/utils/observability.gd")
 const LOG_CATEGORY := "PlayerHUD"
@@ -30,6 +32,10 @@ var time_elapsed: float = 0.0
 var _message_tween: Tween = null
 
 func _ready() -> void:
+	
+	pausebuttons.visible = true
+	opcoes.visible = false
+	
 	add_to_group("player_hud")
 	
 	if not ComponentValidator.require_nodes(self, [
@@ -225,3 +231,13 @@ func _process(delta: float):
 	
 	timer_label.text = "%02d:%02d" % [minutes, seconds]
 	
+
+
+func _on_opcoes_pressed() -> void:
+	pausebuttons.visible = false
+	opcoes.visible = true
+
+func _on_voltar_opcoes_pressed() -> void:
+	confirm_exit.hide()
+	get_tree().paused = false
+	pause_menu.visible = false

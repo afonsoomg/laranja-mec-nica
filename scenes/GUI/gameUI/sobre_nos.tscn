@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bcr0t5asiyyll"]
+
+[ext_resource type="Script" uid="uid://bexn3mj8q4dtu" path="res://scenes/GUI/gameUI/sobre_nos.gd" id="1_32q0i"]
+[ext_resource type="PackedScene" uid="uid://cljdbobr4p7fi" path="res://scenes/GUI/player_hud/tittleCustom2.tscn" id="1_c423k"]
+[ext_resource type="PackedScene" uid="uid://dyjkdv4kpa5tp" path="res://scenes/GUI/gameUI/labelcutommi.tscn" id="2_k14rn"]
+[ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/gameUI/buttonCustom.tscn" id="4_vn81n"]
+
+[node name="Control" type="Control" unique_id=1399314859]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_32q0i")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=290848503]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.57254905, 0.16078432, 1)
+
+[node name="sceneTittle2" parent="ColorRect" unique_id=1492438221 instance=ExtResource("1_c423k")]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 12.0
+offset_right = 598.0
+offset_bottom = 74.0
+text = "SOBRE NÓS"
+
+[node name="nome1" parent="ColorRect" unique_id=1258130975 instance=ExtResource("2_k14rn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.023000002
+anchor_bottom = 0.027
+offset_left = 200.0
+offset_top = 106.0
+offset_right = 260.91998
+offset_bottom = 120.42
+text = "Afonso"
+
+[node name="nome2" parent="ColorRect" unique_id=1425636278 instance=ExtResource("2_k14rn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.023000002
+anchor_bottom = 0.027
+offset_left = 200.0
+offset_top = 345.0
+offset_right = 249.92
+offset_bottom = 359.42
+text = "Victor"
+
+[node name="nome3" parent="ColorRect" unique_id=448889403 instance=ExtResource("2_k14rn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.023000002
+anchor_bottom = 0.027
+offset_left = 616.0
+offset_top = 221.0
+offset_right = 642.92
+offset_bottom = 235.42
+text = "Sara"
+
+[node name="nome4" parent="ColorRect" unique_id=1067906050 instance=ExtResource("2_k14rn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.023000002
+anchor_bottom = 0.027
+offset_left = 608.0
+offset_top = 108.0
+offset_right = 665.92
+offset_bottom = 122.42
+text = "Jessica"
+
+[node name="nome5" parent="ColorRect" unique_id=701884114 instance=ExtResource("2_k14rn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.023000002
+anchor_bottom = 0.027
+offset_left = 196.0
+offset_top = 219.0
+offset_right = 256.91998
+offset_bottom = 233.42
+text = "Vinicios"
+
+[node name="voltar_sobre" parent="ColorRect" unique_id=1577900676 instance=ExtResource("4_vn81n")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -90.75
+offset_top = -70.0
+offset_right = 102.25
+offset_bottom = -13.0
+grow_vertical = 0
+text = "VOLTAR"
+
+[connection signal="pressed" from="ColorRect/voltar_sobre" to="." method="_on_voltar_sobre_pressed"]

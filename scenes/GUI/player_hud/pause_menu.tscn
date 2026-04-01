@@ -1,6 +1,22 @@
 [gd_scene format=3 uid="uid://ck1ja8i6pmbmf"]
 
 [ext_resource type="PackedScene" uid="uid://bo2ek8op504dv" path="res://scenes/GUI/player_hud/button_hud.tscn" id="1_d1uoa"]
+[ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/gameUI/buttonCustom.tscn" id="2_kl3fb"]
+[ext_resource type="Script" uid="uid://bcpw7ghv47rny" path="res://scenes/GUI/gameUI/audio_control.gd" id="3_sfmyl"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_pli1r"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_4ae7c"]
+color = Color(0.92941177, 0.40392157, 0.11372549, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_utfpi"]
+color = Color(0.90704423, 0.3892429, 0.09781457, 1)
+thickness = 6
 
 [node name="PauseMenu" type="Control" unique_id=2120508471]
 process_mode = 1
@@ -45,6 +61,12 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Continuar"
 
+[node name="continuar2" parent="Panel/VBoxContainer" unique_id=1473639781 instance=ExtResource("1_d1uoa")]
+process_mode = 2
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Continuar"
+
 [node name="voltar_menu_pause" parent="Panel/VBoxContainer" unique_id=1510950529 instance=ExtResource("1_d1uoa")]
 process_mode = 2
 custom_minimum_size = Vector2(200, 0)
@@ -62,3 +84,177 @@ process_mode = 3
 title = "Tem Certeza?"
 ok_button_text = "Sair"
 dialog_text = "Seu progresso não será salvo. Tem Certeza que quer sair?"
+
+[node name="Opcoes" type="Panel" parent="." unique_id=1489792853]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = -86.0
+offset_right = 228.5
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Opcoes" unique_id=233077274]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -229.375
+offset_right = 229.375
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 33
+text = "Opções"
+horizontal_alignment = 1
+
+[node name="voltar_opcoes" parent="Opcoes" unique_id=1577900676 instance=ExtResource("2_kl3fb")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -90.75
+offset_top = -70.0
+offset_right = 102.25
+offset_bottom = -13.0
+grow_vertical = 0
+text = "Voltar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Opcoes" unique_id=1348246188]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -461.5
+offset_top = -110.5
+offset_right = -41.5
+offset_bottom = -6.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="muscaContainer" type="HBoxContainer" parent="Opcoes/VBoxContainer" unique_id=1125556799]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="Musca" type="Label" parent="Opcoes/VBoxContainer/muscaContainer" unique_id=712652906]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 23
+text = "Música"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Opcoes/VBoxContainer/muscaContainer" unique_id=2088680229]
+layout_mode = 2
+
+[node name="AudioMusicaControl" type="HSlider" parent="Opcoes/VBoxContainer/muscaContainer" unique_id=528464682]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_pli1r")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_4ae7c")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_utfpi")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("3_sfmyl")
+audio_bus_name = "Música"
+
+[node name="efeitosContainer2" type="HBoxContainer" parent="Opcoes/VBoxContainer" unique_id=730197447]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="efeitos" type="Label" parent="Opcoes/VBoxContainer/efeitosContainer2" unique_id=256126079]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 23
+text = "Efeitos"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Opcoes/VBoxContainer/efeitosContainer2" unique_id=781693551]
+layout_mode = 2
+
+[node name="AudioEfeitosControl" type="HSlider" parent="Opcoes/VBoxContainer/efeitosContainer2" unique_id=93328038]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_pli1r")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_4ae7c")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_utfpi")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("3_sfmyl")
+audio_bus_name = "Efeitos"
+
+[node name="ambienteContainer3" type="HBoxContainer" parent="Opcoes/VBoxContainer" unique_id=908564766]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ambiente" type="Label" parent="Opcoes/VBoxContainer/ambienteContainer3" unique_id=1510128348]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 23
+text = "Ambiente"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Opcoes/VBoxContainer/ambienteContainer3" unique_id=883239075]
+layout_mode = 2
+
+[node name="AudioAmbienteControl" type="HSlider" parent="Opcoes/VBoxContainer/ambienteContainer3" unique_id=1124777950]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_pli1r")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_4ae7c")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_utfpi")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("3_sfmyl")
+audio_bus_name = "Ambiente"
+
+[node name="uiContainer4" type="HBoxContainer" parent="Opcoes/VBoxContainer" unique_id=2042741185]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ui" type="Label" parent="Opcoes/VBoxContainer/uiContainer4" unique_id=1618046259]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 23
+text = "UI"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Opcoes/VBoxContainer/uiContainer4" unique_id=501159955]
+layout_mode = 2
+
+[node name="AudioUIControl" type="HSlider" parent="Opcoes/VBoxContainer/uiContainer4" unique_id=1373846678]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_pli1r")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_4ae7c")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_utfpi")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("3_sfmyl")
+audio_bus_name = "UI"
+
+[connection signal="value_changed" from="Opcoes/VBoxContainer/muscaContainer/AudioMusicaControl" to="Opcoes/VBoxContainer/muscaContainer/AudioMusicaControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Opcoes/VBoxContainer/efeitosContainer2/AudioEfeitosControl" to="Opcoes/VBoxContainer/efeitosContainer2/AudioEfeitosControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Opcoes/VBoxContainer/ambienteContainer3/AudioAmbienteControl" to="Opcoes/VBoxContainer/ambienteContainer3/AudioAmbienteControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Opcoes/VBoxContainer/uiContainer4/AudioUIControl" to="Opcoes/VBoxContainer/uiContainer4/AudioUIControl" method="_on_value_changed"]

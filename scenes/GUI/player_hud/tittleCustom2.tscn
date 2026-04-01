@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cljdbobr4p7fi"]
+
+[ext_resource type="FontFile" uid="uid://m7aintwyf858" path="res://scenes/GUI/gameUI/Orange Squash Free.otf" id="1_o2s44"]
+
+[node name="sceneTittle2" type="Label" unique_id=1492438221]
+offset_left = 283.0
+offset_top = 123.0
+offset_right = 645.0
+offset_bottom = 185.0
+theme_override_fonts/font = ExtResource("1_o2s44")
+theme_override_font_sizes/font_size = 53
+text = "JOGO PAUSADO"

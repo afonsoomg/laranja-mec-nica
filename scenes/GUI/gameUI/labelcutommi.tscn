@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dyjkdv4kpa5tp"]
+
+[ext_resource type="FontFile" uid="uid://co0oihmsn4gar" path="res://scenes/GUI/gameUI/Orange Days.otf" id="1_r4ynh"]
+
+[node name="ui" type="Label" unique_id=1258130975]
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_r4ynh")
+theme_override_font_sizes/font_size = 23
+text = "UI"
+horizontal_alignment = 1
