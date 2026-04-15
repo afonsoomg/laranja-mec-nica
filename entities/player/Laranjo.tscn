@@ -1830,9 +1830,13 @@ move_component = NodePath("../MoveComponent")
 combat_state_component = NodePath("../CombatStateComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
 animation_component = NodePath("../AnimationComponent")
-dodge_duration = 0.35
-dodge_distance = 256.0
+dodge_duration = 0.28
+dodge_distance = 128.0
+dodge_ease = 2
 lock_input_during_dodge = false
+invulnerability_duration = 0.35
+stuck_abort_speed_threshold = 10.0
+stuck_abort_frames = 10
 metadata/_custom_type_script = "uid://b7lo7c1cui6er"
 
 [node name="InventoryComponent" type="Node" parent="." index="20" unique_id=625205473]

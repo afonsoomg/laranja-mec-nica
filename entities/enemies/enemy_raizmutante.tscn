@@ -1215,11 +1215,163 @@ animations = [{
 "loop": true,
 "name": &"idle_up",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jj2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7knkb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwq4x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aww1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ityoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fefrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rw4nx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_geaf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypkr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oksvi")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4s607")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e16k7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bmnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpuwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn47g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uonf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3feqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfrpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_865q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hg1x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rov0g")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qj8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywcim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn4ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8ofk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ci30w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g8jg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ws5a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u18y6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clia8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1ydn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1fsq")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tnsq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shq17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rn0o4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibiub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwxuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ghme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sp3d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpiw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yaeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3exnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7yyf")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 7.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mga4d"]
 resource_local_to_scene = true
-radius = 1000.0
+radius = 450.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a3opq"]
 radius = 15.0
@@ -1242,13 +1394,16 @@ friction = 0.0
 max_health = 35
 attack_cooldown = 5.0
 knockback_force = 60.0
-chase_range = 1000.0
-lose_target_range = 1000.0
-ai_attack_range = 700.0
+chase_range = 600.0
+lose_target_range = 600.0
+ai_attack_range = 600.0
 crit_chance = 0.1
 crit_multiplier = 1.2
 
-[node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]
+[node name="HurtboxComponent" parent="." index="3" unique_id=1218474791]
+collision_layer = 12
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0" unique_id=2064428074]
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_q4faw")
 debug_color = Color(0.9992154, 0, 0.13348177, 0.41960785)
@@ -1267,7 +1422,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 material = SubResource("ShaderMaterial_ogyoi")
 position = Vector2(0.5, 1)
 sprite_frames = SubResource("SpriteFrames_r8m5l")
-animation = &"attack_down"
+animation = &"walk_left"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")
@@ -1287,6 +1442,7 @@ animation_component = NodePath("../AnimationComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 stats_component = NodePath("../StatsComponent")
 damage = 17
+cooldown = 0.3
 knockback_force = 60.0
 fire_frame = 7
 metadata/_custom_type_script = "uid://doq3xcghd36dc"

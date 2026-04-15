@@ -40,9 +40,11 @@ animations = [{
 }]
 
 [node name="Projectile" unique_id=60524818 instance=ExtResource("1_5hp01")]
+collision_layer = 32784
+collision_mask = 73
 
 [node name="ProjectileComponent" parent="." index="1" unique_id=74662904 node_paths=PackedStringArray("sprite")]
-speed = 400.0
+speed = 600.0
 sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="2" unique_id=115296204]

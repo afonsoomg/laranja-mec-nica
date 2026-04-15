@@ -1071,7 +1071,7 @@ radius = 514.0039
 
 [node name="Tomate" unique_id=232863277 instance=ExtResource("1_uq37f")]
 collision_layer = 7
-collision_mask = 7
+collision_mask = 3
 script = ExtResource("7_lamsl")
 hit_pause_duration = 0.3
 attack_windup_duration = 0.5
@@ -1109,7 +1109,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=1852374921]
 material = SubResource("ShaderMaterial_mrurf")
 sprite_frames = SubResource("SpriteFrames_r8m5l")
-animation = &"attack_down"
+animation = &"walk_up"
 
 [node name="DamageDigitComponent" parent="." index="8" unique_id=301667582 node_paths=PackedStringArray("hurtbox_component")]
 hurtbox_component = NodePath("../HurtboxComponent")

@@ -15,6 +15,14 @@ var _crit_buff_bonus: float = 0.0
 var _crit_buff_token: int = 0
 var _crit_modifier_id: StringName = &""
 
+@export_group("Crit Buff Visual")
+@export var buff_visual_color: Color = Color(1.0, 0.75, 0.2, 1.0)
+@export_range(0.0, 1.0, 0.01) var buff_visual_intensity: float = 0.65
+@export var buff_visual_pulse_speed: float = 6.0
+
+func _ready() -> void:
+	_set_crit_buff_visual(false)
+
 
 func apply_crit_buff(bonus: float, duration: float) -> bool:	
 	if stats_component == null:
@@ -37,6 +45,7 @@ func apply_crit_buff(bonus: float, duration: float) -> bool:
 	var current_token := _crit_buff_token
 
 	stats_component.add_modifier(&"crit_chance", _crit_modifier_id, bonus)
+	_set_crit_buff_visual(true)
 	Observer.log_info(LOG_CATEGORY, "Crit buff applied. Current crit chance=%.3f" % stats_component.get_crit_chance())
 	
 	if audio_component:
@@ -61,6 +70,7 @@ func _remove_crit_buff_later(token: int, duration: float) -> void:
 		return
 
 	_remove_crit_modifier()
+	_set_crit_buff_visual(false)
 	
 	Observer.log_info(LOG_CATEGORY, "Crit buff ended. Current crit chance=%.3f" % stats_component.get_crit_chance())
 	
@@ -80,3 +90,12 @@ func _remove_crit_modifier() -> void:
 		return
 
 	stats_component.remove_modifier(&"crit_chance", _crit_modifier_id)
+
+func _set_crit_buff_visual(active: bool) -> void:
+	if animated_sprite_2d == null or animated_sprite_2d.material == null:
+		return
+
+	var material := animated_sprite_2d.material
+	material.set_shader_parameter("buff_color", buff_visual_color)
+	material.set_shader_parameter("buff_pulse_speed", buff_visual_pulse_speed)
+	material.set_shader_parameter("buff_intensity", buff_visual_intensity if active else 0.0)

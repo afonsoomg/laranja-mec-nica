@@ -106,6 +106,8 @@ func _physics_process(delta: float) -> void:
 	if combat_state.is_dodging:
 		move_component.set_move_input(Vector2.ZERO)
 		move_component.set_running(false)
+		if dodge_component != null:
+			dodge_component.tick_physics(delta)
 		animation_component.update_animation()
 		super._physics_process(delta)
 		return

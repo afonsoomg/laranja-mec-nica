@@ -93,6 +93,9 @@ func _on_area_entered(area: Area2D) -> void:
 
 	if _belongs_to_owner(hurtbox):
 		return
+		
+	if not _is_player_hurtbox(hurtbox):
+		return
 
 	if _hit_targets.has(hurtbox):
 		return
@@ -132,6 +135,18 @@ func _extract_hurtbox(target: Node) -> HurtboxComponent:
 			return child as HurtboxComponent
 
 	return null
+
+func _is_player_hurtbox(hurtbox: HurtboxComponent) -> bool:
+	if hurtbox == null:
+		return false
+
+	var current: Node = hurtbox
+	while current != null:
+		if current.is_in_group("player"):
+			return true
+		current = current.get_parent()
+
+	return false
 
 
 func _belongs_to_owner(target: Node) -> bool:
