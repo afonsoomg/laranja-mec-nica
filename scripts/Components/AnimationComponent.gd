@@ -118,8 +118,26 @@ func play_heavy_release_directional(dir: Vector2) -> void:
 		"attack_" + suffix
 	])
 	locked_action_kind = "heavy_attack"
-	
-	
+
+
+func play_dodge_directional(dir: Vector2) -> void:
+	if is_dying:
+		return
+
+	var suffix := _direction_suffix(dir)
+	action_facing = suffix
+	locked_action_animation = _select_available_animation(["dodge_" + suffix])
+	locked_action_kind = "dodge"
+
+
+func cancel_dodge_animation() -> void:
+	if locked_action_kind != "dodge":
+		return
+
+	locked_action_animation = ""
+	locked_action_kind = ""
+
+
 func play_hurt() -> void:
 	interrupt_for_hurt()
 
@@ -265,7 +283,11 @@ func _on_animation_finished() -> void:
 			locked_action_animation = ""
 			locked_action_kind = ""
 			_trace_transition("attack_animation_finished", {"animation": finished_animation})
-			
+	elif finished_animation.begins_with("dodge_"):
+		if locked_action_kind == "dodge":
+			locked_action_animation = ""
+			locked_action_kind = ""
+			_trace_transition("dodge_animation_finished", {"animation": finished_animation})
 	elif finished_animation.begins_with("hurt_"):
 		is_hurt = false
 		_hurt_recovery_token += 1

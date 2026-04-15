@@ -19,7 +19,7 @@ resource_local_to_scene = true
 radius = 195.50256
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yc03e"]
-radius = 33.06055
+radius = 29.017237
 
 [node name="EnemyBase" unique_id=232863277 instance=ExtResource("1_6kwvc")]
 script = ExtResource("2_3iigx")

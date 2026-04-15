@@ -1093,7 +1093,7 @@ attack_damage = 15
 knockback_force = 120.0
 chase_range = 500.0
 lose_target_range = 600.0
-ai_attack_range = 150.0
+ai_attack_range = 120.0
 crit_chance = 0.2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" parent_id_path=PackedInt32Array(1218474791) index="0" unique_id=2064428074]

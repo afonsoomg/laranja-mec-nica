@@ -79,6 +79,7 @@ func _ready() -> void:
 
 	_assert_phase_invariants("ready")
 
+
 func can_start_attack() -> bool:
 	if current_phase != CombatPhase.IDLE:
 		return false

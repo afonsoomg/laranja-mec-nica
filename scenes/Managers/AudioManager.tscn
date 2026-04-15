@@ -6,7 +6,9 @@
 script = ExtResource("1_njxxp")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1781097154]
+bus = &"Música"
 
 [node name="AmbientPlayer" type="AudioStreamPlayer" parent="." unique_id=1377050494]
+bus = &"Ambiente"
 
 [node name="UIRoot" type="Node" parent="." unique_id=655052327]

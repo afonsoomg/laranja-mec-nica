@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://dp3wwdbrvn8ca" path="res://scripts/GUI/player_hud/player_hud.gd" id="1_du66t"]
 [ext_resource type="PackedScene" uid="uid://bo2ek8op504dv" path="res://scenes/GUI/player_hud/button_hud.tscn" id="1_hxs4v"]
 [ext_resource type="PackedScene" uid="uid://bey48chabo4yp" path="res://scenes/GUI/gameUI/buttonCustom.tscn" id="3_ai6bw"]
-[ext_resource type="FontFile" uid="uid://co0oihmsn4gar" path="res://scenes/GUI/gameUI/Orange Days.otf" id="3_bnvsp"]
 [ext_resource type="PackedScene" uid="uid://cljdbobr4p7fi" path="res://scenes/GUI/player_hud/tittleCustom2.tscn" id="3_eu382"]
-[ext_resource type="Script" uid="uid://bcpw7ghv47rny" path="res://scenes/GUI/gameUI/audio_control.gd" id="4_eu382"]
+[ext_resource type="Script" path="res://scenes/GUI/gameUI/audio_control.gd" id="4_eu382"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ubfc"]
 bg_color = Color(0.9274502, 0.43629345, 0.1898736, 1)
@@ -733,23 +732,18 @@ size_flags_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="voltar_menu_hud" type="Button" parent="MarginContainer/HBoxContainer" unique_id=318540341 instance=ExtResource("1_hxs4v")]
+[node name="voltar_menu_hud" parent="MarginContainer/HBoxContainer" unique_id=318540341 instance=ExtResource("1_hxs4v")]
 visible = false
-custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = SubResource("FontFile_koj14")
-theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
-text = "↩"
 
-[node name="pause" type="Button" parent="MarginContainer/HBoxContainer" unique_id=39371608 instance=ExtResource("1_hxs4v")]
-custom_minimum_size = Vector2(35, 35)
+[node name="pause" parent="MarginContainer/HBoxContainer" unique_id=39371608 instance=ExtResource("1_hxs4v")]
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_koj14")
-theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
@@ -791,45 +785,41 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="continuar" type="Button" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1574001125 instance=ExtResource("1_hxs4v")]
+[node name="continuar" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1574001125 instance=ExtResource("1_hxs4v")]
 process_mode = 2
 custom_minimum_size = Vector2(200, 35)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_bnvsp")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
 text = "Continuar"
 
-[node name="opcoes" type="Button" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1303933778 instance=ExtResource("1_hxs4v")]
+[node name="opcoes" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1303933778 instance=ExtResource("1_hxs4v")]
 process_mode = 2
 custom_minimum_size = Vector2(200, 35)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_bnvsp")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
 text = "Opções"
 
-[node name="voltar_menu_pause" type="Button" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=475835934 instance=ExtResource("1_hxs4v")]
+[node name="voltar_menu_pause" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=475835934 instance=ExtResource("1_hxs4v")]
 process_mode = 2
 custom_minimum_size = Vector2(200, 35)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_bnvsp")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")
 text = "Votlar ao Menu"
 
-[node name="pixin" type="Button" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1426728662 instance=ExtResource("1_hxs4v")]
+[node name="pixin" parent="MarginContainer/PauseMenu/Panel/pausebuttons" unique_id=1426728662 instance=ExtResource("1_hxs4v")]
 visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_koj14")
-theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_7uxd7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_688v3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5jwb")

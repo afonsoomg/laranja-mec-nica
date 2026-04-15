@@ -98,15 +98,14 @@ func _physics_process(delta: float) -> void:
 		super._physics_process(delta)
 		return
 	
-	
-	dodge_component.tick(delta)
 	if interaction_component != null:
 		interaction_component.tick(self)
 	_handle_item_use_input()
 	_handle_combat_input(delta)
 
 	if combat_state.is_dodging:
-		_update_locomotion_state_from_live_input()
+		move_component.set_move_input(Vector2.ZERO)
+		move_component.set_running(false)
 		animation_component.update_animation()
 		super._physics_process(delta)
 		return
@@ -354,34 +353,22 @@ func _clear_attack_intent(reason: String) -> void:
 
 
 func _try_start_dodge() -> void:
-	if combat_state.is_dodging:
-		return
-
-	if not dodge_component.can_start_dodge():
+	if dodge_component == null:
 		return
 
 	var dodge_dir := _get_dodge_direction()
 	if dodge_dir == Vector2.ZERO:
 		return
 
-	if not stamina_component.can_spend(_get_dodge_stamina_cost()):
-		return
-
-	if not combat_state.start_dodge():
+	var cost := _get_dodge_stamina_cost()
+	if not stamina_component.spend(cost):
 		return
 
 	if not dodge_component.start_dodge(dodge_dir):
-		combat_state.finish_dodge()
-		return
-
-	if not stamina_component.spend(_get_dodge_stamina_cost()):
-		dodge_component.finish_dodge()
-		combat_state.finish_dodge()
+		stamina_component.restore(cost)
 		return
 
 	_clear_attack_intent("dodge_started")
-	move_component.cancel_forced_velocity()
-	move_component.facing_direction = dodge_dir
 
 
 func _get_mouse_attack_direction() -> Vector2:
@@ -403,6 +390,7 @@ func _get_dodge_direction() -> Vector2:
 		return facing_dir.normalized()
 		
 	return Vector2.DOWN
+
 
 func _quantize_to_4_directions(dir: Vector2) -> Vector2:
 	if dir == Vector2.ZERO:
@@ -441,18 +429,20 @@ func _on_attack_started(_direction: Vector2) -> void:
 
 
 func _on_dodge_started() -> void:
-	pass
+	_clear_attack_intent("dodge_started")
+	move_component.cancel_forced_velocity()
 
 
 func _on_dodge_finished() -> void:
-	pass
+	if dodge_component != null and dodge_component.is_dodging:
+		dodge_component.force_stop("combat_state_finished")
+	if animation_component != null:
+		animation_component.cancel_dodge_animation()
+	_update_locomotion_state_from_live_input()
 
 
 func _on_component_dodge_finished() -> void:
 	_update_locomotion_state_from_live_input()
-	
-	if combat_state != null:
-		combat_state.finish_dodge()
 
 
 func _on_attack_or_charge_cancelled(reason: String) -> void:

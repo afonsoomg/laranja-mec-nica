@@ -11,6 +11,7 @@ var health_component: HealthComponent
 var knockback_component: KnockbackComponent
 
 @export var can_receive_hits: bool = true
+var dodge_invulnerable: bool = false
 
 
 func _ready() -> void:
@@ -28,9 +29,9 @@ func _ready() -> void:
 
 
 func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_force: float = 0.0, is_critical: bool = false) -> void:
-	if not can_receive_hits:
+	if not can_receive_hits or dodge_invulnerable:
 		return
-
+	
 	if health_component == null or health_component.is_dead:
 		return
 
@@ -41,8 +42,13 @@ func receive_hit(damage: int, hit_direction: Vector2 = Vector2.ZERO, knockback_f
 	
 	health_component.take_damage(damage)
 
+
 func _on_owner_died() -> void:
 	can_receive_hits = false
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
 	killed.emit()
+
+
+func set_dodge_invulnerable(value: bool) -> void:
+	dodge_invulnerable = value

@@ -21,8 +21,10 @@ func _ready() -> void:
 	if ambient_player:
 		ambient_player.bus = "Ambiente"
 
+
 func clear_tilemaps() -> void:
 	tilemaps.clear()
+
 
 func add_tilemap(tilemap: TileMapLayer) -> void:
 	if tilemap == null:
@@ -32,6 +34,7 @@ func add_tilemap(tilemap: TileMapLayer) -> void:
 	if tilemaps.has(tilemap):
 		return
 	tilemaps.push_back(tilemap)
+
 
 func play_footstep(position: Vector2) -> void:
 	var valid_tile_data: Array[TileData] = []
@@ -57,12 +60,14 @@ func play_footstep(position: Vector2) -> void:
 
 	if footstep_sounds.has(tile_type):
 		var audio_player := AudioStreamPlayer2D.new()
+		audio_player.bus = "Efeitos"
 		audio_player.stream = footstep_sounds[tile_type].pick_random()
 		get_tree().root.add_child(audio_player)
 		audio_player.global_position = position
 		audio_player.play()
 		await audio_player.finished
 		audio_player.queue_free()
+
 
 func play_music(track: AudioStream) -> void:
 	if music_player == null or track == null:
@@ -72,10 +77,12 @@ func play_music(track: AudioStream) -> void:
 	music_player.stream = track
 	music_player.play()
 
+
 func stop_music() -> void:
 	if music_player == null:
 		return
 	music_player.stop()
+
 
 func play_ambient(loop_stream: AudioStream) -> void:
 	if ambient_player == null or loop_stream == null:
@@ -85,10 +92,12 @@ func play_ambient(loop_stream: AudioStream) -> void:
 	ambient_player.stream = loop_stream
 	ambient_player.play()
 
+
 func stop_ambient() -> void:
 	if ambient_player == null:
 		return
 	ambient_player.stop()
+
 
 func play_ui(sound: AudioStream) -> void:
 	if ui_root == null or sound == null:

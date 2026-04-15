@@ -3,6 +3,7 @@ extends Node
 const Observer = preload("res://scripts/utils/observability.gd")
 const LOG_CATEGORY := "GameInstance"
 
+
 @export var main_menu_scene: PackedScene
 @export var world_scene: PackedScene
 @export var game_over_scene: PackedScene
@@ -99,6 +100,7 @@ func load_main_menu() -> void:
 	else:
 		Observer.log_warning(LOG_CATEGORY, "Main menu scene is missing start_game signal.")
 
+
 func load_world() -> void:
 	_flow_state = &"running"
 	get_tree().paused = false
@@ -131,6 +133,7 @@ func load_world() -> void:
 
 	_set_hud(player_hud_scene, player)
 
+
 func load_game_over() -> void:
 	_flow_state = &"idle"
 	get_tree().paused = false
@@ -157,6 +160,7 @@ func load_end_screen(scene_override: PackedScene = null) -> void:
 	_flow_state = &"idle"
 	get_tree().paused = false
 	_clear_current_hud()
+	_reset_fade_overlay()
 
 	var target_scene := scene_override if scene_override != null else default_end_screen_scene
 	if target_scene == null:
