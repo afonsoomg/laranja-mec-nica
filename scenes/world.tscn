@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cse0ivpwit2qb" path="res://entities/collectables/collectable_base.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://7pq4a3327ntt" path="res://entities/breakable_base.tscn" id="6_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://brb5vxl2obxjb" path="res://entities/player/Laranjo.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://co1wel6m431k2" path="res://scenes/Levels/newLevel/newLevel/newLab.tscn" id="7_4mrxx"]
 
 [node name="World" type="Node2D" unique_id=1833840015]
 script = ExtResource("1_w7kh3")
@@ -15,6 +16,7 @@ world_ambient = ExtResource("3_jhx03")
 enemy_scene = ExtResource("4_i7141")
 collectable_scene = ExtResource("5_4mrxx")
 breakable_scene = ExtResource("6_7r4gi")
+gameplay_level_scene = ExtResource("7_4mrxx")
 
 [node name="LevelHolder" type="Node" parent="." unique_id=830589296]
 

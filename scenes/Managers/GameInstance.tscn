@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://doeo0nwa2tkfg" path="res://scripts/game_instance.gd" id="1_kjoll"]
 [ext_resource type="PackedScene" uid="uid://cgqmjsrhsdiuk" path="res://scenes/GUI/gameUI/main_menu.tscn" id="2_ygtck"]
 [ext_resource type="PackedScene" uid="uid://c5k85di8ir738" path="res://scenes/world.tscn" id="3_68c7u"]
+[ext_resource type="PackedScene" uid="uid://bqxfn6gdkkvqc" path="res://scenes/GUI/gameUI/intro_cinematic.tscn" id="4_nk6nh"]
 [ext_resource type="PackedScene" uid="uid://bigaaa7fww176" path="res://scenes/GUI/gameUI/GameOver.tscn" id="4_qn760"]
 [ext_resource type="PackedScene" uid="uid://c3m5bijh62cvp" path="res://scenes/GUI/player_hud/player_hud.tscn" id="5_nk6nh"]
 [ext_resource type="PackedScene" uid="uid://7a7ylsuhtpks" path="res://scenes/GUI/gameUI/end_screen.tscn" id="6_68c7u"]
@@ -11,6 +12,7 @@
 script = ExtResource("1_kjoll")
 main_menu_scene = ExtResource("2_ygtck")
 world_scene = ExtResource("3_68c7u")
+intro_scene = ExtResource("4_nk6nh")
 game_over_scene = ExtResource("4_qn760")
 player_hud_scene = ExtResource("5_nk6nh")
 default_end_screen_scene = ExtResource("6_68c7u")

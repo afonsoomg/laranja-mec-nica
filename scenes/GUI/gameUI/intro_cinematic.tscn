@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bqxfn6gdkkvqc"]
+
+[ext_resource type="Script" uid="uid://cje3vkidb72s4" path="res://scripts/GUI/gameUI/intro_cinematic.gd" id="1_6mdp8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.0666667, 0.0666667, 0.0823529, 0.92)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="IntroCinematic" type="Control" unique_id=2119609635]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6mdp8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=679872731]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=796687847]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1103985987]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer" unique_id=67881220]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1808433512]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "LARANJA MECÂNICA"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=544389420]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Escape do laboratório"
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1607775924]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Aperte Enter para skipar"
+horizontal_alignment = 1

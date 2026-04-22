@@ -6,6 +6,7 @@ const LOG_CATEGORY := "GameInstance"
 
 @export var main_menu_scene: PackedScene
 @export var world_scene: PackedScene
+@export var intro_scene: PackedScene
 @export var game_over_scene: PackedScene
 @export var player_hud_scene: PackedScene
 @export var default_end_screen_scene: PackedScene
@@ -99,6 +100,24 @@ func load_main_menu() -> void:
 		Observer.connect_once_safe(menu.start_game, _on_start_game, "GameInstance.load_main_menu start_game")
 	else:
 		Observer.log_warning(LOG_CATEGORY, "Main menu scene is missing start_game signal.")
+
+func load_intro() -> void:
+	_flow_state = &"intro"
+	get_tree().paused = false
+	_clear_current_hud()
+	_reset_fade_overlay()
+
+	var intro := _set_scene(intro_scene)
+	if intro == null:
+		Observer.log_warning(LOG_CATEGORY, "Intro scene failed to load. Falling back to world.")
+		load_world()
+		return
+
+	if intro.has_signal("intro_finished"):
+		Observer.connect_once_safe(intro.intro_finished, _on_intro_finished, "GameInstance.load_intro intro_finished")
+	else:
+		Observer.log_warning(LOG_CATEGORY, "Intro scene is missing intro_finished signal. Falling back to world.")
+		load_world()
 
 
 func load_world() -> void:
@@ -233,6 +252,17 @@ func _play_fade_out(duration: float) -> void:
 
 
 func _on_start_game() -> void:
+	_flow_state = &"transition"
+	await _play_fade_out(0.35)
+
+	if intro_scene != null:
+		load_intro()
+		return
+
+	load_world()
+
+
+func _on_intro_finished() -> void:
 	load_world()
 
 

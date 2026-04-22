@@ -16,6 +16,8 @@ const LOG_CATEGORY := "World"
 @onready var enemies_holder: Node = $Enemies
 @onready var collectables_holder: Node = $Collectables
 @onready var breakables_holder: Node = $Breakables
+@export var gameplay_level_scene: PackedScene
+@export_file("*.tscn") var gameplay_level_path: String = "res://scenes/Levels/Lab/Lab_Scene.tscn"
 
 signal player_died
 signal level_completed(completion_message: String, message_duration: float, delay_before_fade: float, end_scene_path: String, fade_duration: float)
@@ -25,7 +27,7 @@ var _is_ending: bool = false
 func _ready() -> void:
 	AudioManagerCustom.play_music(world_music)
 	AudioManagerCustom.play_ambient(world_ambient)
-	load_level("res://scenes/Levels/Lab/Lab_Scene.tscn")
+	load_configured_level()
 		
 	if health_component == null:
 		Observer.log_error(LOG_CATEGORY, "Player HealthComponent not found.")
@@ -34,6 +36,32 @@ func _ready() -> void:
 
 	Observer.connect_once_safe(health_component.died, _on_player_died, "World._ready player_died")
 		
+
+
+func load_configured_level() -> void:
+	if gameplay_level_scene != null:
+		load_level_scene(gameplay_level_scene)
+		return
+
+	load_level(gameplay_level_path)
+
+
+func load_level_scene(level_scene: PackedScene) -> void:
+	if level_scene == null:
+		push_warning("World.load_level_scene called with null scene.")
+		return
+
+	AudioManagerCustom.clear_tilemaps()
+
+	for child in level_holder.get_children():
+		child.queue_free()
+
+	var level := level_scene.instantiate()
+	level_holder.add_child(level)
+
+	_register_tilemaps_for_audio(level)
+	_setup_spawns(level)
+	_register_end_game_areas(level)
 
 func load_level(level_path: String) -> void:
 	AudioManagerCustom.clear_tilemaps()
