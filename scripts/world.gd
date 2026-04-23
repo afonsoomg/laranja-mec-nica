@@ -9,6 +9,7 @@ const LOG_CATEGORY := "World"
 @export var enemy_scene: PackedScene
 @export var collectable_scene: PackedScene
 @export var breakable_scene: PackedScene
+@export var allow_legacy_named_spawns: bool = false
 
 @onready var level_holder: Node = $LevelHolder
 @onready var player : CharacterBase = $PlayerCharacter
@@ -123,8 +124,8 @@ func _setup_spawns(level: Node) -> void:
 					}
 				)
 			continue
-
-		_setup_legacy_spawn(marker)
+		elif allow_legacy_named_spawns:
+			_setup_legacy_spawn(marker)
 
 	_apply_player_spawn(player_spawns, spawn_root)
 

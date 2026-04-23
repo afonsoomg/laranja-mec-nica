@@ -5,16 +5,17 @@ extends Control
 @export var ui_hover_sound: AudioStream
 @onready var main_buttons: PanelContainer = $MarginContainer/MainButtons
 @onready var opcoes: Panel = $Opcoes
+@onready var sobre_panel: Panel = $SobrePanel
 
-
+enum MenuState { MAIN, OPTIONS, ABOUT }
+var _state: MenuState = MenuState.MAIN
 
 signal start_game
 
 func _ready() -> void:
 	AudioManagerCustom.play_music(menu_music)
 	AudioManagerCustom.stop_ambient()
-	main_buttons.visible = true
-	opcoes.visible = false
+	_set_menu_state(MenuState.MAIN)
 
 
 func _on_jogar_pressed() -> void:
@@ -34,14 +35,23 @@ func _on_mouse_hover() -> void:
 
 
 func _on_opcoes_pressed() -> void:
-	print("Opções Selecionada")
-	main_buttons.visible = false
-	opcoes.visible = true
+	_set_menu_state(MenuState.OPTIONS)
 
 
 func _on_voltar_opcoes_pressed() -> void:
-	_ready()
+	_set_menu_state(MenuState.MAIN)
 
 
 func _on_sobre_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/GUI/gameUI/sobre_nos.tscn")
+	_set_menu_state(MenuState.ABOUT)
+	
+	
+func _on_voltar_sobre_pressed() -> void:
+	_set_menu_state(MenuState.MAIN)
+
+
+func _set_menu_state(next_state: MenuState) -> void:
+	_state = next_state
+	main_buttons.visible = _state == MenuState.MAIN
+	opcoes.visible = _state == MenuState.OPTIONS
+	sobre_panel.visible = _state == MenuState.ABOUT

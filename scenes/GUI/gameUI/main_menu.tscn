@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://b75qrcxerncy4" path="res://assets/audio/music/game-menu-ambience.wav" id="6_kdru7"]
 [ext_resource type="PackedScene" uid="uid://cljdbobr4p7fi" path="res://scenes/GUI/player_hud/tittleCustom2.tscn" id="7_kwttq"]
 [ext_resource type="FontFile" uid="uid://co0oihmsn4gar" path="res://scenes/GUI/gameUI/Orange Days.otf" id="8_2oqb0"]
-[ext_resource type="Script" uid="uid://bcpw7ghv47rny" path="res://scenes/GUI/gameUI/audio_control.gd" id="8_tqqvp"]
+[ext_resource type="Script" path="res://scenes/GUI/gameUI/audio_control.gd" id="8_tqqvp"]
 [ext_resource type="PackedScene" uid="uid://dyjkdv4kpa5tp" path="res://scenes/GUI/gameUI/labelcutommi.tscn" id="10_nop76"]
 
 [sub_resource type="Image" id="Image_0sokw"]
@@ -940,6 +940,68 @@ value = 1.0
 script = ExtResource("8_tqqvp")
 audio_bus_name = "UI"
 
+[node name="SobrePanel" type="Panel" parent="." unique_id=1043398934]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -130.0
+offset_right = 230.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Titulo" parent="SobrePanel" unique_id=683857508 instance=ExtResource("7_kwttq")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 8.0
+offset_right = 170.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Equipe:"
+horizontal_alignment = 1
+
+[node name="Equipe" parent="SobrePanel" unique_id=2033884796 instance=ExtResource("10_nop76")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -28.0
+offset_right = 180.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Afonso Pordeus
+Jéssica Figueiredo
+Sara Reyes
+Vitor Borges
+Vinicius Toscano
+
+"
+
+[node name="voltar_opcoes" parent="SobrePanel" unique_id=724509594 instance=ExtResource("3_qta86")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -90.75
+offset_top = -70.0
+offset_right = 102.25
+offset_bottom = -13.0
+grow_vertical = 0
+text = "VOLTAR"
+
 [connection signal="mouse_entered" from="MarginContainer/MainButtons/VBoxContainer/jogar" to="." method="_on_mouse_hover"]
 [connection signal="pressed" from="MarginContainer/MainButtons/VBoxContainer/jogar" to="." method="_on_jogar_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/MainButtons/VBoxContainer/opcoes" to="." method="_on_mouse_hover"]
@@ -953,3 +1015,4 @@ audio_bus_name = "UI"
 [connection signal="value_changed" from="Opcoes/VBoxContainer/efeitosContainer2/AudioEfeitosControl" to="Opcoes/VBoxContainer/efeitosContainer2/AudioEfeitosControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Opcoes/VBoxContainer/ambienteContainer3/AudioAmbienteControl" to="Opcoes/VBoxContainer/ambienteContainer3/AudioAmbienteControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Opcoes/VBoxContainer/uiContainer4/AudioUIControl" to="Opcoes/VBoxContainer/uiContainer4/AudioUIControl" method="_on_value_changed"]
+[connection signal="pressed" from="SobrePanel/voltar_opcoes" to="." method="_on_voltar_opcoes_pressed"]

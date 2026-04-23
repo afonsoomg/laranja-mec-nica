@@ -8,6 +8,7 @@ const LOG_CATEGORY := "PlayerHUD"
 
 signal exit_requested
 signal back_to_menu_requested
+signal note_panel_closed
 
 var player: CharacterBase
 var health_component: HealthComponent
@@ -158,6 +159,7 @@ func _update_inventory_label() -> void:
 func _input(event: InputEvent) -> void:
 	if note_panel.visible and event.is_action_pressed("ui_cancel"):
 		note_panel.visible = false
+		note_panel_closed.emit()
 		get_viewport().set_input_as_handled()
 
 
@@ -238,6 +240,7 @@ func _on_opcoes_pressed() -> void:
 	opcoes.visible = true
 
 func _on_voltar_opcoes_pressed() -> void:
-	confirm_exit.hide()
-	get_tree().paused = false
-	pause_menu.visible = false
+	opcoes.visible = false
+	pausebuttons.visible = true
+	get_tree().paused = true
+	pause_menu.visible = true

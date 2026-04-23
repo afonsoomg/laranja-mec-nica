@@ -1,14 +1,39 @@
 [gd_scene format=3 uid="uid://0pori3wds3to"]
 
 [ext_resource type="Script" uid="uid://c0ljput0xa6eo" path="res://scripts/interaction/NoteInteractable.gd" id="1_note"]
+[ext_resource type="AudioStream" uid="uid://df5lg7fvbwnhf" path="res://assets/audio/sfx/carta/sfx_letter_open_01.wav" id="2_cpdrb"]
 [ext_resource type="Texture2D" uid="uid://t1d1ww02i7vx" path="res://assets/images/BLANK1.png" id="2_f0hyk"]
+[ext_resource type="AudioStream" uid="uid://dtbcu4ud0fxhg" path="res://assets/audio/sfx/carta/sfx_letter_open_02.wav" id="3_t3d2a"]
+[ext_resource type="AudioStream" uid="uid://d1dboau68tefu" path="res://assets/audio/sfx/carta/sfx_letter_open_03.wav" id="4_4uc2t"]
+[ext_resource type="AudioStream" uid="uid://kciacl2pn55n" path="res://assets/audio/sfx/carta/sfx_letter_close_01.wav" id="5_ktykt"]
+[ext_resource type="AudioStream" uid="uid://bofe8nhfxh1gg" path="res://assets/audio/sfx/carta/sfx_letter_close_02.wav" id="6_2ckop"]
+[ext_resource type="AudioStream" uid="uid://borspcjlhyeie" path="res://assets/audio/sfx/carta/sfx_letter_close_03.wav" id="7_wekvr"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_buw2o"]
+random_pitch = 1.0222514
+random_volume_offset_db = 0.63
+streams_count = 3
+stream_0/stream = ExtResource("2_cpdrb")
+stream_1/stream = ExtResource("3_t3d2a")
+stream_2/stream = ExtResource("4_4uc2t")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ats4n"]
+random_pitch = 1.0110353
+random_volume_offset_db = 0.63
+streams_count = 3
+stream_0/stream = ExtResource("5_ktykt")
+stream_1/stream = ExtResource("6_2ckop")
+stream_2/stream = ExtResource("7_wekvr")
 
 [sub_resource type="RectangleShape2D" id="RectShape_note"]
 size = Vector2(12, 8)
 
-[node name="NoteInteractable" type="Area2D" unique_id=834969841]
+[node name="NoteInteractable" type="Area2D" unique_id=834969841 node_paths=PackedStringArray("sfx_player")]
 collision_mask = 2
 script = ExtResource("1_note")
+sfx_player = NodePath("SfxPlayer")
+open_sfx = SubResource("AudioStreamRandomizer_buw2o")
+close_sfx = SubResource("AudioStreamRandomizer_ats4n")
 prompt_text = "Ler anotação"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1475661477]
@@ -18,3 +43,6 @@ texture = ExtResource("2_f0hyk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=851166532]
 shape = SubResource("RectShape_note")
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=745007037]
+bus = &"Efeitos"

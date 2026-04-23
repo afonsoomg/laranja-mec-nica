@@ -58,8 +58,9 @@ animations = [{
 [node name="AduboBarCollectable" unique_id=300314204 instance=ExtResource("1_1kxsa")]
 scale = Vector2(2, 2)
 script = ExtResource("2_e877c")
-crit_bonus = 0.9
-buff_duration = 15.0
+item_id = &"fertilizer_bar"
+amount = 1
+full_inventory_message = "Sem espaço para mais barra de adubo."
 collect_sfx = ExtResource("3_0mgka")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=180836247]

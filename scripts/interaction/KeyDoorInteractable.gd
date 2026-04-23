@@ -8,6 +8,9 @@ class_name KeyDoorInteractable
 @export var collision_node: CollisionShape2D
 @export var closed_visual: CanvasItem
 @export var opened_visual: CanvasItem
+@export var sfx_player: AudioStreamPlayer2D
+@export var open_sfx: AudioStream
+@export var closed_sfx: AudioStream
 
 var is_open: bool = false
 
@@ -32,16 +35,19 @@ func interact(interactor: Node) -> void:
 
 	if not inventory.has_key(required_key_id):
 		_show_message(missing_key_message)
+		_play_sfx(closed_sfx)
 		return
 
 	if consume_key_on_open and not inventory.consume_item(required_key_id, 1):
 		_show_message(missing_key_message)
+		_play_sfx(closed_sfx)
 		return
 
 	is_open = true
 	interaction_enabled = false
 	prompt_text = opened_prompt_text
 	_update_visual_state()
+	_play_sfx(open_sfx)
 	_show_message("Porta aberta.")
 
 
@@ -60,3 +66,9 @@ func _show_message(message: String) -> void:
 	var hud := get_tree().get_first_node_in_group("player_hud") as PlayerHUD
 	if hud:
 		hud.show_message(message)
+
+func _play_sfx(sound: AudioStream) -> void:
+	if sfx_player == null or sound == null:
+		return
+	sfx_player.stream = sound
+	sfx_player.play()
